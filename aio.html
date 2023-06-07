@@ -216,7 +216,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="meet-docker.html">4. Introducing the Docker Command Line</a>
+        <a href="docker-cli.html">4. Using the Docker command line</a>
     </div>
 <!--/div.accordion-header-->
         
@@ -228,7 +228,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="running-containers.html">5. Exploring and Running Containers</a>
+        <a href="creating-container-images.html">5. Creating Your Own Container Images</a>
     </div>
 <!--/div.accordion-header-->
         
@@ -240,31 +240,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="managing-containers.html">6. Cleaning Up Containers</a>
-    </div>
-<!--/div.accordion-header-->
-        
-  </div>
-<!--/div.accordion-item-->
-</div>
-<!--/div.accordion-flush-->
-
-<div class="accordion accordion-flush" id="accordionFlush8">
-  <div class="accordion-item">
-    <div class="accordion-header" id="flush-heading8">
-        <a href="creating-container-images.html">7. Creating Your Own Container Images</a>
-    </div>
-<!--/div.accordion-header-->
-        
-  </div>
-<!--/div.accordion-item-->
-</div>
-<!--/div.accordion-flush-->
-
-<div class="accordion accordion-flush" id="accordionFlush9">
-  <div class="accordion-item">
-    <div class="accordion-header" id="flush-heading9">
-        <a href="advanced-containers.html">8. Creating More Complex Container Images</a>
+        <a href="advanced-containers.html">6. Creating More Complex Container Images</a>
     </div>
 <!--/div.accordion-header-->
         
@@ -329,7 +305,7 @@
         
 <section id="aio-introduction"><p>Content from <a href="introduction.html">Introducing Containers</a></p>
 <hr>
-<p> Last updated on 2023-06-06 | 
+<p> Last updated on 2023-06-07 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -634,7 +610,7 @@ the resources they use.</li>
 </div>
 </div></section><section id="aio-docker-hub"><p>Content from <a href="docker-hub.html">The Docker Hub</a></p>
 <hr>
-<p> Last updated on 2023-06-06 | 
+<p> Last updated on 2023-06-07 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/docker-hub.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -768,7 +744,7 @@ the format:</p>
   rocker/tidyverse:latest
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <figure><img src="fig/docker-hub/tidyverse.gif" alt="rocker/tidyverse:latest" class="figure mx-auto d-block"></figure>
 </div>
@@ -782,7 +758,7 @@ the format:</p>
   mathworks/matlab:r2022b
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <figure><img src="fig/docker-hub/matlab.gif" alt="mathworks/matlab" class="figure mx-auto d-block"></figure>
 </div>
@@ -796,7 +772,7 @@ the format:</p>
   continuumio/anaconda3:master
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <figure><img src="fig/docker-hub/anaconda.gif" alt="continuumio/anaconda3" class="figure mx-auto d-block"></figure>
 </div>
@@ -899,7 +875,7 @@ by tags.</li>
 </div>
 </section></section><section id="aio-docker-desktop"><p>Content from <a href="docker-desktop.html">Docker Desktop</a></p>
 <hr>
-<p> Last updated on 2023-06-06 | 
+<p> Last updated on 2023-06-07 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/docker-desktop.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1535,928 +1511,555 @@ interact with the containers adequately.</li>
 </div>
 </div>
 </div>
-</section></section><section id="aio-meet-docker"><p>Content from <a href="meet-docker.html">Introducing the Docker Command Line</a></p>
+</section></section><section id="aio-docker-cli"><p>Content from <a href="docker-cli.html">Using the Docker command line</a></p>
 <hr>
-<p> Last updated on 2023-06-06 | 
+<p> Last updated on 2023-06-07 | 
         
-        <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/meet-docker.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/docker-cli.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right"> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<p>So far, we have seen how easily you can find images and run
+containers in Docker Desktop. However, we have also seen Docker
+Desktop’s limitations, why couldn’t we do anything useful with our
+Alpine container?</p>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What actually happens when I run a container?</li>
+<li>How can I control the behaviour of containers?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Learn the lifecycle of Docker containers</li>
+<li>Learn how to use the Docker command line to perform tasks we learned
+to do in Docker Desktop</li>
+<li>Learn to perform more advanced Docker tasks, only possible in the
+command line</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>To understand this, we need to learn about the lifecycle of Docker
+containers.</p>
+<section id="container-lifecycle"><h2 class="section-heading">Container lifecycle<a class="anchor" aria-label="anchor" href="#container-lifecycle"></a>
+</h2>
+<hr class="half-width">
+<p>So, what happens when we run a Docker container?</p>
+<figure><img src="fig/docker_life_0.png" alt="A flowchart showing the lifecycle of a Docker container." class="figure mx-auto d-block"></figure><div class="section level3">
+<h3 id="startup">Startup<a class="anchor" aria-label="anchor" href="#startup"></a>
+</h3>
+<p>When we run a Docker container, the first set of actions occur during
+the “startup” phase:</p>
+<ul>
+<li>First, Docker checks if you already have the container image, and
+downloads it if you don’t (known as a pull)</li>
+<li>Next, the container image is used to create the container and start
+the container’s runtime environment</li>
+</ul>
+</div>
 <div class="section level3">
-<h3 id="docker-command-line">Docker command line<a class="anchor" aria-label="anchor" href="#docker-command-line"></a>
+<h3 id="default-command">Default Command<a class="anchor" aria-label="anchor" href="#default-command"></a>
 </h3>
-<div class="overview card">
-<h2 class="card-header">Overview</h2>
-<div class="row g-0">
-<div class="col-md-4">
-<div class="card-body">
-<div class="inner">
-<h3 class="card-title">Questions</h3>
+<p>Once the container has started, it executes its default command.</p>
+<p>The default command is specified by the image’s creator and is formed
+of two parts:</p>
 <ul>
-<li>How do I know Docker is installed and running?</li>
-<li>How do I interact with Docker?</li>
+<li>Entrypoint: The base command for the container (may be omitted,
+default: ““)</li>
+<li>Command: Parameters for the base command (or, if entrypoint omitted,
+the whole default command)</li>
 </ul>
+<p>When the container runs, Entrypoint and Command are concatenated to
+form the default command which is then executed.</p>
 </div>
-</div>
-</div>
-<div class="col-md-8">
-<div class="card-body">
-<div class="inner bordered">
-<h3 class="card-title">Objectives</h3>
-<ul>
-<li>Explain how to check that Docker is installed and is ready to
-use.</li>
-<li>Demonstrate some initial Docker command line interactions.</li>
-<li>Use the built-in help for Docker commands.</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>Start the Docker application that you installed in working through
-the setup instructions for this session. Note that this might not be
-necessary if your laptop is running Linux or if the installation added
-the Docker application to your startup process.</p>
-<div id="you-may-need-to-login-to-docker-hub" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="you-may-need-to-login-to-docker-hub" class="callout-inner">
-<h3 class="callout-title">You may need to login to Docker Hub<a class="anchor" aria-label="anchor" href="#you-may-need-to-login-to-docker-hub"></a>
+<div class="section level3">
+<h3 id="shutdown">Shutdown<a class="anchor" aria-label="anchor" href="#shutdown"></a>
 </h3>
-<div class="callout-content">
-<p>The Docker application will usually provide a way for you to log in
-to the Docker Hub using the application’s menu (macOS) or systray icon
-(Windows) and it is usually convenient to do this when the application
-starts. This will require you to use your Docker Hub username and your
-password. We will not actually require access to the Docker Hub until
-later in the course but if you can login now, you should do so.</p>
+<p>Whether a container shuts down depends on the default command. A
+container will not shutdown until its default process has finished.</p>
+<p>Therefore, a command the runs to completion will allow a container to
+shut down, but a service that runs indefinitely will not.</p>
 </div>
-</div>
-</div>
-<div id="determining-your-docker-hub-username" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="determining-your-docker-hub-username" class="callout-inner">
-<h3 class="callout-title">Determining your Docker Hub username<a class="anchor" aria-label="anchor" href="#determining-your-docker-hub-username"></a>
+<div class="section level3">
+<h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<div class="callout-content">
-<p>If you no longer recall your Docker Hub username, e.g., because you
-have been logging into the Docker Hub using your email address, you can
-find out what it is through the steps:</p>
-<ul>
-<li>Open <a href="https://hub.docker.com/" class="external-link">https://hub.docker.com/</a>
-in a web browser window</li>
-<li>Sign-in using your email and password (don’t tell us what it
-is)</li>
-<li>In the top-right of the screen you will see your username</li>
-</ul>
+<p>Let’s take a look at some examples.</p>
+<div class="section level4">
+<h4 id="example-1">Example 1<a class="anchor" aria-label="anchor" href="#example-1"></a>
+</h4>
+<figure><img src="fig/docker_life_1.png" alt="A flowchart showing the lifecycle of a Docker container. with an example" class="figure mx-auto d-block"></figure><p>In example 1, an Entrypoint of “echo” is given along with a Command
+of “hello world” to the container.</p>
+<p>This works in exactly the same way as running the following in a
+standard terminal:</p>
+<pre><code>$ echo hello world</code></pre>
+</div>
+<div class="section level4">
+<h4 id="example-2">Example 2<a class="anchor" aria-label="anchor" href="#example-2"></a>
+</h4>
+<figure><img src="fig/docker_life_2.png" alt="A flowchart showing the lifecycle of a Docker container. with an example" class="figure mx-auto d-block"></figure><p>In example 2, an Entrypoint of “sleep” is given along with a Command
+of “infinity” to the container.</p>
+<p>This causes the container to run the sleep command indefinitely,
+meaning that the default command never finishes, and the container stays
+alive without shutting down.</p>
+<p>This example may seem artificial, but it is common to have containers
+that run indefinitely. A common example would be a webserver which
+renders a website, running until stopped or changed.</p>
 </div>
 </div>
-</div>
-<p>Once your Docker application is running, open a shell (terminal)
-window, and run the following command to check that Docker is installed
-and the command line tools are working correctly. Below is the output
-for a Mac version, but the specific version is unlikely to matter much:
-it does not have to precisely match the one listed below.</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker <span class="at">--version</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Docker version 20.10.5, build 55c4c88</code></pre>
-</div>
-<p>The above command has not actually relied on the part of Docker that
-runs containers, just that Docker is installed and you can access it
-correctly from the command line.</p>
-<p>A command that checks that Docker is working correctly is the
-<code>docker container ls</code> command (we cover this command in more
-detail later in the course).</p>
-<p>Without explaining the details, output on a newly installed system
-would likely be:</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container ls</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</code></pre>
-</div>
-<p>(The command <code>docker system info</code> could also be used to
-verify that Docker is correctly installed and operational but it
-produces a larger amount of output.)</p>
-<p>However, if you instead get a message similar to the following</p>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?</code></pre>
-</div>
-<p>then you need to check that you have started the Docker Desktop,
-Docker Engine, or however else you worked through the setup
-instructions.</p>
-</div>
-<section id="getting-help"><h2 class="section-heading">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</section><section id="return-to-alpine"><h2 class="section-heading">Return to Alpine<a class="anchor" aria-label="anchor" href="#return-to-alpine"></a>
 </h2>
 <hr class="half-width">
-<p>Often when working with a new command line tool, we need to get help.
-These tools often have some sort of subcommand or flag (usually
-<code>help</code>, <code>-h</code>, or <code>--help</code>) that
-displays a prompt describing how to use the tool. For Docker, it’s no
-different. If we run <code>docker --help</code>, we see the following
-output (running <code>docker</code> also produces the help message):</p>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<p>So, how does this explain why the Alpine container seemed so
+uninteresting?</p>
+<p>First, let’s apply what we have learned about the lifecycle of a
+Docker container. Let’s find out what the Entrypoint and Command for the
+Alpine container are. To do this we will use the Docker command line
+interface.</p>
+<div class="section level3">
+<h3 id="docker-command-line-syntax">Docker command line syntax<a class="anchor" aria-label="anchor" href="#docker-command-line-syntax"></a>
 </h3>
-<pre class="output" tabindex="0"><code>
-Usage:  docker [OPTIONS] COMMAND
-
-A self-sufficient runtime for containers
-
-Options:
-      --config string      Location of client config files (default "/Users/vini/.docker")
-  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")
-  -D, --debug              Enable debug mode
-  -H, --host list          Daemon socket(s) to connect to
-  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
-      --tls                Use TLS; implied by --tlsverify
-      --tlscacert string   Trust certs signed only by this CA (default "/Users/vini/.docker/ca.pem")
-      --tlscert string     Path to TLS certificate file (default "/Users/vini/.docker/cert.pem")
-      --tlskey string      Path to TLS key file (default "/Users/vini/.docker/key.pem")
-      --tlsverify          Use TLS and verify the remote
-  -v, --version            Print version information and quit
-
-Management Commands:
-  app*        Docker App (Docker Inc., v0.9.1-beta3)
-  builder     Manage builds
-  buildx*     Build with BuildKit (Docker Inc., v0.5.1-docker)
-  config      Manage Docker configs
-  container   Manage containers
-  context     Manage contexts
-  image       Manage images
-  manifest    Manage Docker image manifests and manifest lists
-  network     Manage networks
-  node        Manage Swarm nodes
-  plugin      Manage plugins
-  scan*       Docker Scan (Docker Inc., v0.6.0)
-  secret      Manage Docker secrets
-  service     Manage services
-  stack       Manage Docker stacks
-  swarm       Manage Swarm
-  system      Manage Docker
-  trust       Manage trust on Docker images
-  volume      Manage volumes
-
-Commands:
-  attach      Attach local standard input, output, and error streams to a running container
-  build       Build an image from a Dockerfile
-  commit      Create a new image from a container's changes
-  cp          Copy files/folders between a container and the local filesystem
-  create      Create a new container
-  diff        Inspect changes to files or directories on a container's filesystem
-  events      Get real time events from the server
-  exec        Run a command in a running container
-  export      Export a container's filesystem as a tar archive
-  history     Show the history of an image
-  images      List images
-  import      Import the contents from a tarball to create a filesystem image
-  info        Display system-wide information
-  inspect     Return low-level information on Docker objects
-  kill        Kill one or more running containers
-  load        Load an image from a tar archive or STDIN
-  login       Log in to a Docker registry
-  logout      Log out from a Docker registry
-  logs        Fetch the logs of a container
-  pause       Pause all processes within one or more containers
-  port        List port mappings or a specific mapping for the container
-  ps          List containers
-  pull        Pull an image or a repository from a registry
-  push        Push an image or a repository to a registry
-  rename      Rename a container
-  restart     Restart one or more containers
-  rm          Remove one or more containers
-  rmi         Remove one or more images
-  run         Run a command in a new container
-  save        Save one or more images to a tar archive (streamed to STDOUT by default)
-  search      Search the Docker Hub for images
-  start       Start one or more stopped containers
-  stats       Display a live stream of container(s) resource usage statistics
-  stop        Stop one or more running containers
-  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
-  top         Display the running processes of a container
-  unpause     Unpause all processes within one or more containers
-  update      Update configuration of one or more containers
-  version     Show the Docker version information
-  wait        Block until one or more containers stop, then print their exit codes
-
-Run 'docker COMMAND --help' for more information on a command.</code></pre>
+<p>The general syntax for the Docker command line explained in this
+diagram:</p>
+<figure><img src="fig/docker_cmd.png" alt="A diagram showing the syntactic structure of a Docker command" class="figure mx-auto d-block"></figure><p>There is a base command, always “docker”. A specialising command
+which specifies the type of the object you wish to act on. The action
+command which select the actual process that will beformed and finally
+the name of the object you wish to act on. You may also need to add
+extra arguments and switches.</p>
 </div>
-<p>There is a list of commands and the end of the help message says:
-<code>Run 'docker COMMAND --help' for more information on a command.</code>
-For example, take the <code>docker container ls</code> command that we
-ran previously. We can see from the Docker help prompt that
-<code>container</code> is a Docker command, so to get help for that
-command, we run:</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="section level3">
+<h3 id="inspecting-images">Inspecting images<a class="anchor" aria-label="anchor" href="#inspecting-images"></a>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container <span class="at">--help</span>  <span class="co"># or instead 'docker container'</span></span></code></pre>
+<p>Applying this, we want to <strong>inspect</strong> the
+<strong>image</strong> of <strong>Alpine</strong> to find out the
+Entrypoint and Command. We can do this by running the command below,
+where we have specified an extra argument <code>-f</code> which is a
+string specifying the output format of the command (without it we would
+get a large JSON dump describing the container).</p>
+<p>```{% raw %} docker inspect alpine -f “Entrypoint:
+{{.Config.Entrypoint}} Command: {{.Config.Cmd}}” {% endraw %}~~~ {:
+.language-bash}</p>
+<pre><code>
+Entrypoint: [] Command: [/bin/sh]
+</code></pre>
+<p>{: .output}</p>
+<p>So, we can see from this command that Alpine specifies: * Entrypoint:
+null (unspecified) * Command: /bin/sh</p>
+<p>Therefore, the default command for Alpine is: “/bin/sh”.</p>
+<p>What is wrong with this? Shouldn’t this just open a terminal
+prompt?</p>
+<p>Not in this case! Running a command in a Docker container is not
+quite like running it in your terminal.</p>
+<p>When you use your terminal, you are able to type commands and
+interact with the underlying system. By default however, Docker does not
+allow containers to do this. Without special measures, a Docker
+container has no way of recieving interactions and instead sends a empty
+signal to the sh process. sh is programmed to exit when it recieves an
+empty signal and therefore finishes its process.</p>
+<pre><code>
+$ /bin/sh              # you might expect Docker to be running the default command like this
+$ /bin/sh \&lt; /dev/null  # but actually, it is like this!
+</code></pre>
+<p>This is why the Alpine contatainer seemed so uninteresting, in Docker
+Desktop there was no way for us to provide an interactive session to the
+container! It is possible to change this behavior, but not using Docker
+Desktop. Instead, we now need to dig in to the more powerful and
+flexible Docker Command Line Interface.</p>
+<blockquote>
+<p>This behavior can also be seen on other shell-like containers, for
+example those with “bash” or “python” as default commands. {:
+.callout}</p>
+</blockquote>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>
-Usage:  docker container COMMAND
-
-Manage containers
-
-Commands:
-  attach      Attach local standard input, output, and error streams to a running container
-  commit      Create a new image from a container's changes
-  cp          Copy files/folders between a container and the local filesystem
-  create      Create a new container
-  diff        Inspect changes to files or directories on a container's filesystem
-  exec        Run a command in a running container
-  export      Export a container's filesystem as a tar archive
-  inspect     Display detailed information on one or more containers
-  kill        Kill one or more running containers
-  logs        Fetch the logs of a container
-  ls          List containers
-  pause       Pause all processes within one or more containers
-  port        List port mappings or a specific mapping for the container
-  prune       Remove all stopped containers
-  rename      Rename a container
-  restart     Restart one or more containers
-  rm          Remove one or more containers
-  run         Run a command in a new container
-  start       Start one or more stopped containers
-  stats       Display a live stream of container(s) resource usage statistics
-  stop        Stop one or more running containers
-  top         Display the running processes of a container
-  unpause     Unpause all processes within one or more containers
-  update      Update configuration of one or more containers
-  wait        Block until one or more containers stop, then print their exit codes
-
-Run 'docker container COMMAND --help' for more information on a command.</code></pre>
-</div>
-<p>There’s also help for the <code>container ls</code> command:</p>
-<div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container ls <span class="at">--help</span>  <span class="co"># this one actually requires the '--help' flag</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Usage:  docker container ls [OPTIONS]
-
-List containers
-
-Aliases:
-  ls, ps, list
-
-Options:
-  -a, --all             Show all containers (default shows just running)
-  -f, --filter filter   Filter output based on conditions provided
-      --format string   Pretty-print containers using a Go template
-  -n, --last int        Show n last created containers (includes all states) (default -1)
-  -l, --latest          Show the latest created container (includes all states)
-      --no-trunc        Don't truncate output
-  -q, --quiet           Only display container IDs
-  -s, --size            Display total file sizes</code></pre>
-</div>
-<p>You may notice that there are many commands that stem from the
-<code>docker</code> command. Instead of trying to remember all possible
-commands and options, it’s better to learn how to effectively get help
-from the command line. Although we can always search the web, getting
-the built-in help from our tool is often much faster and may provide the
-answer right away. This applies not only to Docker, but also to most
-command line-based tools.</p>
-<div id="docker-command-line-interface-cli-syntax" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="docker-command-line-interface-cli-syntax" class="callout-inner">
-<h3 class="callout-title">Docker Command Line Interface (CLI)
-syntax<a class="anchor" aria-label="anchor" href="#docker-command-line-interface-cli-syntax"></a>
-</h3>
-<div class="callout-content">
-<p>In this lesson we use the newest Docker CLI syntax <a href="https://www.docker.com/blog/whats-new-in-docker-1-13/" class="external-link">introduced
-with the Docker Engine version 1.13</a>. This new syntax combines
-commands into groups you will most often want to interact with. In the
-help example above you can see <code>image</code> and
-<code>container</code> management commands, which can be used to
-interact with your images and containers respectively. With this new
-syntax you issue commands using the following pattern
-<code>docker [command] [subcommand] [additional options]</code></p>
-<p>Comparing the output of two help commands above, you can see that the
-same thing can be achieved in multiple ways. For example to start a
-Docker container using the old syntax you would use
-<code>docker run</code>. To achieve the same with the new syntax, you
-use <code>docker container run</code> instead. Even though the old
-approach is shorter and still officially supported, the new syntax is
-more descriptive, less error-prone and is therefore recommended.</p>
-</div>
-</div>
-</div>
-<div id="exploring-a-command" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="exploring-a-command" class="callout-inner">
-<h3 class="callout-title">Exploring a command<a class="anchor" aria-label="anchor" href="#exploring-a-command"></a>
-</h3>
-<div class="callout-content">
-<p>Run <code>docker --help</code> and pick a command from the list.
-Explore the help prompt for that command. Try to guess how a command
-would work by looking at the <code>Usage:</code> section of the
-prompt.</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  Show me the solution
-  </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<p>Suppose we pick the <code>docker image build</code> command:</p>
-<div class="codewrapper sourceCode" id="cb11">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image build <span class="at">--help</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Usage:  docker image build [OPTIONS] PATH | URL | -
-
-Build an image from a Dockerfile
-
-Options:
-     --add-host list           Add a custom host-to-IP mapping (host:ip)
-     --build-arg list          Set build-time variables
-     --cache-from strings      Images to consider as cache sources
-     --cgroup-parent string    Optional parent cgroup for the container
-     --compress                Compress the build context using gzip
-     --cpu-period int          Limit the CPU CFS (Completely Fair Scheduler) period
-     --cpu-quota int           Limit the CPU CFS (Completely Fair Scheduler) quota
- -c, --cpu-shares int          CPU shares (relative weight)
-     --cpuset-cpus string      CPUs in which to allow execution (0-3, 0,1)
-     --cpuset-mems string      MEMs in which to allow execution (0-3, 0,1)
-     --disable-content-trust   Skip image verification (default true)
- -f, --file string             Name of the Dockerfile (Default is 'PATH/Dockerfile')
-     --force-rm                Always remove intermediate containers
-     --iidfile string          Write the image ID to the file
-     --isolation string        Container isolation technology
-     --label list              Set metadata for an image
- -m, --memory bytes            Memory limit
-     --memory-swap bytes       Swap limit equal to memory plus swap: '-1' to enable unlimited swap
-     --network string          Set the networking mode for the RUN instructions during build (default "default")
-     --no-cache                Do not use cache when building the image
-     --pull                    Always attempt to pull a newer version of the image
- -q, --quiet                   Suppress the build output and print image ID on success
-     --rm                      Remove intermediate containers after a successful build (default true)
-     --security-opt strings    Security options
-     --shm-size bytes          Size of /dev/shm
- -t, --tag list                Name and optionally a tag in the 'name:tag' format
-     --target string           Set the target build stage to build.
-     --ulimit ulimit           Ulimit options (default [])</code></pre>
-</div>
-<p>We could try to guess that the command could be run like this:</p>
-<div class="codewrapper sourceCode" id="cb13">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image build .</span></code></pre>
-</div>
-<p>or</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image build https://github.com/docker/rootfs.git</span></code></pre>
-</div>
-<p>Where <code>https://github.com/docker/rootfs.git</code> could be any
-relevant URL that supports a Docker image.</p>
-</div>
-</div>
-</div>
-</div>
-<p>{% comment %}</p>
-<!--  LocalWords:  keypoints links.md endcomment systray
- -->
-<p>{% endcomment %}</p>
-<div id="keypoints1" class="callout keypoints">
-<div class="callout-square">
-<i class="callout-icon" data-feather="key"></i>
-</div>
-<div class="callout-inner">
-<h3 class="callout-title">Keypoints<a class="anchor" aria-label="anchor" href="#keypoints1"></a>
-</h3>
-<div class="callout-content">
-<ul>
-<li>A toolbar icon indicates that Docker is ready to use (on Windows and
-macOS).</li>
-<li>You will typically interact with Docker using the command line.</li>
-<li>To learn how to run a certain Docker command, we can type the
-command followed by the <code>--help</code> flag.</li>
-</ul>
-</div>
-</div>
-</div>
-</section></section><section id="aio-running-containers"><p>Content from <a href="running-containers.html">Exploring and Running Containers</a></p>
-<hr>
-<p> Last updated on 2023-06-06 | 
-        
-        <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/running-containers.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<div class="text-end">
-          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right"> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
-        </div>
-<div class="overview card">
-<h2 class="card-header">Overview</h2>
-<div class="row g-0">
-<div class="col-md-4">
-<div class="card-body">
-<div class="inner">
-<h3 class="card-title">Questions</h3>
-<ul>
-<li>How do I interact with Docker containers and container images on my
-computer?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-md-8">
-<div class="card-body">
-<div class="inner bordered">
-<h3 class="card-title">Objectives</h3>
-<ul>
-<li>Use the correct command to see which Docker container images are on
-your computer.</li>
-<li>Be able to download new Docker container images.</li>
-<li>Demonstrate how to start an instance of a container from a container
-image.</li>
-<li>Describe at least two ways to execute commands inside a running
-Docker container.</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="reminder-of-terminology-container-images-and-containers" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="reminder-of-terminology-container-images-and-containers" class="callout-inner">
-<h3 class="callout-title">Reminder of terminology: container images and
-containers<a class="anchor" aria-label="anchor" href="#reminder-of-terminology-container-images-and-containers"></a>
-</h3>
-<div class="callout-content">
-<p>Recall that a <em>container image</em> is the template from which
-particular instances of <em>containers</em> will be created.</p>
-</div>
-</div>
-</div>
-<p>Let’s explore our first Docker container. The Docker team provides a
-simple container image online called <code>hello-world</code>. We’ll
-start with that one.</p>
-<section id="downloading-docker-images"><h2 class="section-heading">Downloading Docker images<a class="anchor" aria-label="anchor" href="#downloading-docker-images"></a>
+</section><section id="running-a-container"><h2 class="section-heading">Running a container<a class="anchor" aria-label="anchor" href="#running-a-container"></a>
 </h2>
 <hr class="half-width">
-<p>The <code>docker image</code> command is used to interact with Docker
-container images. You can find out what container images you have on
-your computer by using the following command (“ls” is short for
-“list”):</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image ls</span></code></pre>
-</div>
-<p>If you’ve just installed Docker, you won’t see any container images
-listed.</p>
-<p>To get a copy of the <code>hello-world</code> Docker container image
-from the internet, run this command:</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image pull hello-world</span></code></pre>
-</div>
-<p>You should see output like this:</p>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Using default tag: latest
-latest: Pulling from library/hello-world
-1b930d010525: Pull complete
-Digest: sha256:f9dfddf63636d84ef479d645ab5885156ae030f611a56f3a7ac7f2fdd86d7e4e
-Status: Downloaded newer image for hello-world:latest
-docker.io/library/hello-world:latest</code></pre>
-</div>
-<div id="docker-hub" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="docker-hub" class="callout-inner">
-<h3 class="callout-title">Docker Hub<a class="anchor" aria-label="anchor" href="#docker-hub"></a>
-</h3>
-<div class="callout-content">
-<p>Where did the <code>hello-world</code> container image come from? It
-came from the Docker Hub website, which is a place to share Docker
-container images with other people. More on that in a later episode.</p>
-</div>
-</div>
-</div>
-<div id="exercise-check-on-your-images" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="exercise-check-on-your-images" class="callout-inner">
-<h3 class="callout-title">Exercise: Check on Your Images<a class="anchor" aria-label="anchor" href="#exercise-check-on-your-images"></a>
-</h3>
-<div class="callout-content">
-<p>What command would you use to see if the <code>hello-world</code>
-Docker container image had downloaded successfully and was on your
-computer? Give it a try before checking the solution.</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  Show me the solution
-  </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
-<div class="accordion-body">
-<p>To see if the <code>hello-world</code> container image is now on your
-computer, run:</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image ls</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>Note that the downloaded <code>hello-world</code> container image is
-not in the folder where you are in the terminal! (Run <code>ls</code> by
-itself to check.) The container image is not a file like our normal
-programs and documents; Docker stores it in a specific location that
-isn’t commonly accessed, so it’s necessary to use the special
-<code>docker image</code> command to see what Docker container images
-you have on your computer.</p>
-</section><section id="running-the-hello-world-container"><h2 class="section-heading">Running the <code>hello-world</code> container<a class="anchor" aria-label="anchor" href="#running-the-hello-world-container"></a>
+<p>So, how does the Docker command line address this? Can we use the
+Docker CLI to interact with our containers?</p>
+<p>Let’s now focus on running Docker containers using the CLI.</p>
+<p>Again, we will use the docker base command, this time specialising
+this command with ‘run’ and the name of an image; to tell Docker that we
+want to start up the specified container image.</p>
+<pre><code>
+$ docker run alpine
+</code></pre>
+<p>You will likely see output similar to the below:</p>
+<pre><code>
+&gt; \##Unable to find image 'alpine:latest' locally
+&gt; latest: Pulling from library/alpine
+&gt; f56be85fc22e: Already exists
+&gt; Digest: sha256:124c7d2707904eea7431fffe91522a01e5a861a624ee31d03372cc1d138a3126
+&gt; Status: Downloaded newer image for alpine:latest
+</code></pre>
+<p>{: .output}</p>
+<p>This output shows docker recognising that it does not have the Alpine
+image locally, and beginning the process of downloading and storing the
+image.</p>
+<p>But is something missing? We don’t see any other output? Let’s run
+the command again.</p>
+<pre><code>
+$ docker run alpine
+</code></pre>
+<pre><code>
+&gt; </code></pre>
+<p>{: .output}</p>
+<p>This time there is no output at all, with the image already
+downloaded it is able to run without downloading. But why is no output
+produced? This is for the same reason as when we tried running Alpine in
+Docker Desktop (as explained above), the Docker run command is not
+sending any commands, and the default command exits automatically.</p>
+<blockquote>
+<h2 id="downloading-containers">Downloading containers</h2>
+<p>When we run docker run, the image we ask for is automatically
+downloaded. If you wanted to download in image without running this is
+also possible. You can use:</p>
+</blockquote>
+<pre><code>
+$ docker pull alpine
+</code></pre>
+<p>{: .callout}</p>
+<p>Why don’t we finally try and make Alpine do something?</p>
+</section><section id="overriding-the-default-command"><h2 class="section-heading">Overriding the default command<a class="anchor" aria-label="anchor" href="#overriding-the-default-command"></a>
 </h2>
 <hr class="half-width">
-<p>To create and run containers from named Docker container images you
-use the <code>docker container run</code> command. Try the following
-<code>docker container run</code> invocation. Note that it does not
-matter what your current working directory is.</p>
-<div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run hello-world</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://hub.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/get-started/</code></pre>
-</div>
-<p>What just happened? When we use the <code>docker container run</code>
-command, Docker does three things:</p>
-<table class="table">
-<colgroup>
-<col width="33%">
-<col width="36%">
-<col width="30%">
-</colgroup>
-<thead><tr class="header">
-<th>1. Starts a Running Container</th>
-<th>2. Performs Default Action</th>
-<th>3. Shuts Down the Container</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td>Starts a running container, based on the container image. Think of
-this as the “alive” or “inflated” version of the container – it’s
-actually doing something.</td>
-<td>If the container has a default action set, it will perform that
-default action. This could be as simple as printing a message (as above)
-or running a whole analysis pipeline!</td>
-<td>Once the default action is complete, the container stops running (or
-exits). The container image is still there, but nothing is actively
-running.</td>
-</tr></tbody>
-</table>
-<p>The <code>hello-world</code> container is set up to run an action by
-default – namely to print this message.</p>
-<div id="using-docker-container-run-to-get-the-image" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="using-docker-container-run-to-get-the-image" class="callout-inner">
-<h3 class="callout-title">Using <code>docker container run</code> to get
-the image<a class="anchor" aria-label="anchor" href="#using-docker-container-run-to-get-the-image"></a>
-</h3>
-<div class="callout-content">
-<p>We could have skipped the <code>docker image pull</code> step; if you
-use the <code>docker container run</code> command and you don’t already
-have a copy of the Docker container image, Docker will automatically
-pull the container image first and then run it.</p>
-</div>
-</div>
-</div>
-</section><section id="running-a-container-with-a-chosen-command"><h2 class="section-heading">Running a container with a chosen command<a class="anchor" aria-label="anchor" href="#running-a-container-with-a-chosen-command"></a>
+<p>To get the Alpine image to do something interesting; we will want to
+overwrite the default command.</p>
+<p>This can be done in the Docker CLI, by specifying the desired
+command, after the docker run command and image name.</p>
+<p>For example, if we wanted the Alpine container to print “hello
+world”, we could use the standard Unix command, echo.</p>
+<pre><code>
+$ docker run alpine echo "hello world"
+</code></pre>
+<pre><code>
+&gt; hello world
+</code></pre>
+<p>{: .output}</p>
+<p>Great! We have finally managed to do something interesting with the
+Alpine image.</p>
+<p>This is a big step, but how can we evolve from here? What if we tried
+to generalise our printing command?</p>
+<p>We can do this by modifying the entrypoint portion of the default
+command (remember: the entrypoint is the portion of the default command
+which prefixes the command that comes after the image name).</p>
+<p>This way we can have just the text we want to print after the image
+name.</p>
+<p>We do this by adding the ‘–entrypoint’ switch to our Docker command,
+followed by the command we want to become the entrypoint.</p>
+<pre><code>
+$ docker run --entrypoint echo alpine "hello world"
+$ docker run --entrypoint echo alpine "lovely day"
+</code></pre>
+<pre><code>
+&gt; hello world
+&gt; lovely day
+</code></pre>
+<p>{: .output}</p>
+<p>Wonderful! But this needn’t be limited to just echo, let’s use this
+approach to get some more information about the container, by printing
+the contents of a special file called ‘os-release’.</p>
+<pre><code>
+$ docker run alpine cat /etc/os-release
+</code></pre>
+<pre><code>
+NAME="Alpine Linux"
+ID=alpine
+VERSION\_ID=3.17.3
+PRETTY\_NAME="Alpine Linux v3.17"
+HOME\_URL="[https://alpinelinux.org/](https://alpinelinux.org/)"
+BUG\_REPORT\_URL="[https://gitlab.alpinelinux.org/alpine/aports/-/issues](https://gitlab.alpinelinux.org/alpine/aports/-/issues)"
+</code></pre>
+<p>{: .output}</p>
+<blockquote>
+<h2 id="exercise-make-the-container-use-cat-as-a-base-command">Exercise:
+Make the container use cat as a base command</h2>
+<p>Can you make the Alpine container use cat as its base command? Can
+you print the os-release information using this approach?</p>
+<blockquote>
+<h2 id="solution">Solution</h2>
+<pre><code>$ docker run --entrypoint cat alpine /etc/os-release</code></pre>
+<p>{: .language-bash} {: .solution} {: .challenge}</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="exercise-print-the-users-present-in-the-alpine-container">Exercise:
+Print the users present in the Alpine container</h2>
+<p>Can you make the Alpine container print the contents of the
+/etc/passwd file? (which contains details of the registered users of a
+Linux system)</p>
+<blockquote>
+<h2 id="solution-1">Solution</h2>
+<pre><code>$ docker run --entrypoint cat alpine /etc/passwd</code></pre>
+<p>or ~~~ $ docker run alpine cat /etc/passwd ~~~ {: .language-bash} {:
+.solution} {: .challenge}</p>
+</blockquote>
+</blockquote>
+<p>We can see from the output that we are indeed running in an Alpine
+container and now have a powerful way to execute single commands in a
+Docker container.</p>
+</section><section id="running-a-container-interactively"><h2 class="section-heading">Running a container interactively<a class="anchor" aria-label="anchor" href="#running-a-container-interactively"></a>
 </h2>
 <hr class="half-width">
-<p>But what if we wanted to do something different with the container?
-The output just gave us a suggestion of what to do – let’s use a
-different Docker container image to explore what else we can do with the
-<code>docker container run</code> command. The suggestion above is to
-use <code>ubuntu</code>, but we’re going to run a different type of
-Linux, <code>alpine</code> instead because it’s quicker to download.</p>
-<div id="run-the-alpine-docker-container" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="run-the-alpine-docker-container" class="callout-inner">
-<h3 class="callout-title">Run the Alpine Docker container<a class="anchor" aria-label="anchor" href="#run-the-alpine-docker-container"></a>
-</h3>
-<div class="callout-content">
-<p>Try downloading the <code>alpine</code> container image and using it
-to run a container. You can do it in two steps, or one. What are
-they?</p>
-</div>
-</div>
-</div>
-<p>What happened when you ran the Alpine Docker container?</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine</span></code></pre>
-</div>
-<p>If you have never used the <code>alpine</code> Docker container image
-on your computer, Docker probably printed a message that it couldn’t
-find the container image and had to download it. If you used the
-<code>alpine</code> container image before, the command will probably
-show no output. That’s because this particular container is designed for
-you to provide commands yourself. Try running this instead:</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine cat /etc/os-release</span></code></pre>
-</div>
-<p>You should see the output of the <code>cat /etc/os-release</code>
-command, which prints out the version of Alpine Linux that this
-container is using and a few additional bits of information.</p>
-<div id="hello-world-part-2" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="hello-world-part-2" class="callout-inner">
-<h3 class="callout-title">Hello World, Part 2<a class="anchor" aria-label="anchor" href="#hello-world-part-2"></a>
-</h3>
-<div class="callout-content">
-<p>Can you run a copy of the <code>alpine</code> container and make it
-print a “hello world” message?</p>
-<p>Give it a try before checking the solution.</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2">
-  Show me the solution
-  </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
-<div class="accordion-body">
-<p>Use the same command as above, but with the <code>echo</code> command
-to print a message.</p>
-<div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine echo <span class="st">'Hello World'</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>So here, we see another option – we can provide commands at the end
-of the <code>docker container run</code> command and they will execute
-inside the running container.</p>
-</section><section id="running-containers-interactively"><h2 class="section-heading">Running containers interactively<a class="anchor" aria-label="anchor" href="#running-containers-interactively"></a>
+<p>But what if we wanted to run a series of commands? What if we wanted
+to be able to explore within a container?</p>
+<p>We will look now at how we can create interactive sessions for using
+Docker containers.</p>
+<p>Luckily this is straightforward, we simply need to modify our
+standard Docker command to include two new flags.</p>
+<p>We need to add: * ‘-i’ to enable interactivity * ‘-t’ to enable a TTY
+connection (the ability to type things!)</p>
+<p>Let’s try this with the Alpine image:</p>
+<pre><code>
+$ docker run -i -t alpine
+</code></pre>
+<pre><code>
+/ #
+</code></pre>
+<p>{: .output}</p>
+<p>You are now inside the container! Let’s try some familiar
+commands.</p>
+<pre><code>
+/ # cat /etc/os-release
+</code></pre>
+<pre><code>
+NAME="Alpine Linux"
+ID=alpine
+VERSION\_ID=3.17.3
+PRETTY\_NAME="Alpine Linux v3.17"
+HOME\_URL="[https://alpinelinux.org/](https://alpinelinux.org/)"
+BUG\_REPORT\_URL="[https://gitlab.alpinelinux.org/alpine/aports/-/issues](https://gitlab.alpinelinux.org/alpine/aports/-/issues)"
+</code></pre>
+<p>{: .output}</p>
+<p>You can see we get the same output as earlier, but this time the
+container remains live and we remain inside the container.</p>
+<p>You can now exit the container by running:</p>
+<pre><code>
+/ # exit
+</code></pre>
+<p>Using containers in this interactive way can be useful, but we have
+to be careful as (by default) our changes will not persist.</p>
+<p>You can see this for yourself with the following process</p>
+<pre><code>
+$ docker run -i -t alpine
+/ # touch hello-world
+/ # echo "hi everyone" &gt; hello-world
+/ # cat hello-world
+/ # exit
+$ docker run -i -t alpine
+/ # cat hello-world
+</code></pre>
+<pre><code>
+First time:
+
+&gt; hi everyone
+&gt; Second time:
+&gt; cat: can't open 'hello-world': No such file or directory
+</code></pre>
+<p>{: .output}</p>
+<p>You can see that, while we were still interacting with the container,
+our file continued to exist. Once we left, it was gone!</p>
+</section><section id="getting-files-in-to-the-container"><h2 class="section-heading">Getting files in to the container<a class="anchor" aria-label="anchor" href="#getting-files-in-to-the-container"></a>
 </h2>
 <hr class="half-width">
-<p>In all the examples above, Docker has started the container, run a
-command, and then immediately stopped the container. But what if we
-wanted to keep the container running so we could log into it and test
-drive more commands? The way to do this is by adding the interactive
-flags <code>-i</code> and <code>-t</code> (usually combined as
-<code>-it</code>) to the <code>docker container run</code> command and
-provide a shell (<code>bash</code>,<code>sh</code>, etc.) as our
-command. The <code>alpine</code> Docker container image doesn’t include
-<code>bash</code> so we need to use <code>sh</code>.</p>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<p>Now that we are figuring out how to work with containers, let’s
+imagine a situation. We are working in a data science lab, and our
+supervisor has asked us to run some tools that they have developed;
+which they are distributing in Docker.</p>
+<p>The first tool, called Random, generates a series of random numbers.
+The second tool, named Datamash, performs simple statistical analyses on
+single columns of data. Let’s figure out how to use these tools and some
+of the hurdles we will have to overcome.</p>
+<p>First, let’s download the tools:</p>
+<pre><code>
+$ docker pull ghcr.io/uomresearchit/random
+$ docker pull ghcr.io/uomresearchit/datamash
+</code></pre>
+<p>Great! But… how can we check what has happened? How can we know we
+have the images? Let’s check with:</p>
+<pre><code>
+$ docker image ls
+</code></pre>
+<pre><code>
+REPOSITORY                                       TAG                            IMAGE ID       CREATED         SIZE
+ghcr.io/uomresearchit/datamash                   latest                         a0143c45d868   5 minutes ago   49.7MB
+ghcr.io/uomresearchit/random                     latest                         b39bc463abfd   6 weeks ago     7.04MB
+</code></pre>
+<p>{: .output}</p>
+<p>You should see output similar to the above, with the images we just
+pulled listed.</p>
+<p>Now we have the tools let’s try running them. We’ll start by
+generating our data:</p>
+<pre><code>
+$ docker run ghcr.io/uomresearchit/random
+</code></pre>
+<pre><code>
+[...]
+[Lot's of numbers!]
+[...]
+22307
+21278
+28211
+21151
+9209
+</code></pre>
+<p>{: .output}</p>
+<p>We can see this produces a <strong>lot</strong> of output. Let’s
+write it to file instead:</p>
+<pre><code>
+$ docker run ghcr.io/uomresearchit/random &gt; local\_data.txt
+</code></pre>
+<p>We now have a datafile we can use on our other tool. Our supervisor
+has told us a couple of helpful things about this container, apparently
+all you have to do is give the container the filename you want to
+analyse.</p>
+<p>Let’s try that!</p>
+<pre><code>
+$ docker run ghcr.io/uomresearchit/datamash local\_data.txt
+</code></pre>
+<pre><code>
+Traceback (most recent call last):
+File "//mean.py", line 7, in &lt;module&gt;
+with open(args.filename) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'local\_data.txt'
+</code></pre>
+<p>{: .output}</p>
+<p>We gave the right filename… So why hasn’t this worked? The answer is
+simple, but has profound implications.</p>
+<p>The file we specified is present on our machine, but not inside the
+container! The container has its own, completely isolated
+filesystem.</p>
+<p>This can really help, the container’s file are stored in a nice,
+safe, isolated place perfectly tailored for the application. But then,
+how can we give our file to the container, in order for it to be
+analysed?</p>
+<div class="section level3">
+<h3 id="using-mounts-and-volumes">Using mounts and volumes<a class="anchor" aria-label="anchor" href="#using-mounts-and-volumes"></a>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> alpine sh</span></code></pre>
+<p>Docker’s answer to this is to allow you to selectively expose files
+and folders on your machine to the container you are running.</p>
+<p>Docker calls these bind mounts and they take the following form:</p>
+<figure><img src="fig/docker_mount.png" alt="" class="figure mx-auto d-block"><figcaption>A breakdown of the command for mounting a file into a
+container.</figcaption></figure><p>Using this command we specify the type of mount we want (more on this
+later!), the name of a local file (or directory) to mount to the
+container and the path and filename which we would like inside the
+container.</p>
+<blockquote>
+<h2 id="pwd">$PWD</h2>
+<p>You will notice we used an envirnoment variable (denoted by $) to
+specify the location of our local file. This is because the docker
+command needs the full path to a file to mount correctly, it wont work
+if you do ./local_file.txt!” {: .callout}</p>
+</blockquote>
+<p>Let’s try this out with our datamash container:</p>
+<pre><code>
+$ docker run --mount type=bind,source="$PWD"/local\_data.txt,target=/local\_data.txt ghcr.io/uomresearchit/datamash local\_data.txt
+</code></pre>
+<pre><code>
+Data file data.txt, selected.
+Number of entries: 100.0
+Sum: 1681522.0
+Mean: 16815.22
+</code></pre>
+<p>{: .output}</p>
+<p>Wonderful! The container works now. But that syntax is very clunky…
+Can it be shortened? The answer is yes, but it requires care - let’s
+investigate.</p>
+<p>Try out the following command:</p>
+<pre><code>
+$ docker run -v $PWD/data.txt:/data.txt ghcr.io/uomresearchit/datamash data.txt
+</code></pre>
+<p>It works just like before! But there is a hidden danger here.</p>
+<p>So far we have only discussed bind mounts. These are a simple
+mechanism for binding bits of your local filesystem into containers.
+There is another method for getting files into container, called
+volumes.</p>
+<p>Volumes are the isolated, persistent filesystems for containers, they
+can be shared between containers and are very useful for retaining
+information between container runs.</p>
+<p>However, they are not particularly useful for getting files from host
+to container!</p>
+<p>Can you spot the difference?</p>
+<pre><code>
+$ docker run -v data.txt:/data.txt ghcr.io/uomresearchit/datamash data.txt
+</code></pre>
+<pre><code>
+Traceback (most recent call last):
+File "//mean.py", line 7, in &lt;module&gt;
+with open(args.filename) as f:
+IsADirectoryError: [Errno 21] Is a directory: 'data.txt'
+</code></pre>
+<p>{: .output}</p>
+<p>Why has this not worked? The answer is that Docker has created a
+volume! Not mounted our file! This is because the Docker command
+requires absolute paths, if a path doesn’t evaluate correclty then it
+assumes you are naming a new volume.</p>
+<p>See this bit of the Docker man page:</p>
+<pre><code>
+\-v|--volume[\=[[HOST-DIR:]CONTAINER-DIR[:OPTIONS]]]
+Create a bind mount. If you specify, -v /HOST-DIR:/CONTAINER-DIR, Docker
+bind mounts /HOST-DIR in the host to /CONTAINER-DIR in the Docker
+container. If 'HOST-DIR' is omitted,  Docker automatically creates the new
+volume on the host.
+</code></pre>
+<p>For this reason, we would recommend using the full (clunky) syntax of
+the mount command.</p>
 </div>
-<div id="technically" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="technically" class="callout-inner">
-<h3 class="callout-title">Technically…<a class="anchor" aria-label="anchor" href="#technically"></a>
+</section><section id="running-services-in-docker"><h2 class="section-heading">Running services in Docker<a class="anchor" aria-label="anchor" href="#running-services-in-docker"></a>
+</h2>
+<hr class="half-width">
+<p>This impermanence can be a challenge! What if we</p>
+</section><section id="long-running-processes"><h2 class="section-heading">Long running processes<a class="anchor" aria-label="anchor" href="#long-running-processes"></a>
+</h2>
+<hr class="half-width">
+<p>docker container with python analysis built in and simple upload
+portal</p>
+</section><section id="docker-exec"><h2 class="section-heading">Docker Exec<a class="anchor" aria-label="anchor" href="#docker-exec"></a>
+</h2>
+<hr class="half-width">
+<div class="section level3">
+<h3 id="copying-files">Copying files<a class="anchor" aria-label="anchor" href="#copying-files"></a>
 </h3>
-<div class="callout-content">
-<p>Technically, the interactive flag is just <code>-i</code> – the extra
-<code>-t</code> (combined as <code>-it</code> above) is the “pseudo-TTY”
-option, a fancy term that means a text interface. This allows you to
-connect to a shell, like <code>sh</code>, using a command line. Since
-you usually want to have a command line when running interactively, it
-makes sense to use the two together.</p>
+<p>docker cp</p>
 </div>
-</div>
-</div>
-<p>Your prompt should change significantly to look like this:</p>
-<div class="codewrapper sourceCode" id="cb11">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/</span> <span class="co">#</span></span></code></pre>
-</div>
-<p>That’s because you’re now inside the running container! Try these
-commands:</p>
-<ul>
-<li><code>pwd</code></li>
-<li><code>ls</code></li>
-<li><code>whoami</code></li>
-<li><code>echo $PATH</code></li>
-<li><code>cat /etc/os-release</code></li>
-</ul>
-<p>All of these are being run from inside the running container, so
-you’ll get information about the container itself, instead of your
-computer. To finish using the container, type <code>exit</code>.</p>
-<div class="codewrapper sourceCode" id="cb12">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/</span> <span class="co"># exit</span></span></code></pre>
-</div>
-<div id="practice-makes-perfect" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="practice-makes-perfect" class="callout-inner">
-<h3 class="callout-title">Practice Makes Perfect<a class="anchor" aria-label="anchor" href="#practice-makes-perfect"></a>
-</h3>
-<div class="callout-content">
-<p>Can you find out the version of Ubuntu installed on the
-<code>ubuntu</code> container image? (Hint: You can use the same command
-as used to find the version of alpine.)</p>
-<p>Can you also find the <code>apt-get</code> program? What does it do?
-(Hint: try passing <code>--help</code> to almost any command will give
-you more information.)</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3">
-  Solution 1 – Interactive
-  </h4>
-</button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
-<div class="accordion-body">
-<p>Run an interactive busybox container – you can use
-<code>docker image pull</code> first, or just run it with this
-command:</p>
-<div class="codewrapper sourceCode" id="cb13">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> ubuntu sh</span></code></pre>
-</div>
-<p>OR you can get the bash shell instead</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> ubuntu bash</span></code></pre>
-</div>
-<p>Then try, running these commands</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/#</span> cat /etc/os-release</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/#</span> apt-get <span class="at">--help</span></span></code></pre>
-</div>
-<p>Exit when you’re done.</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/#</span> exit</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
-  <h4 class="accordion-header" id="headingSolution4">
-  Solution 2 – Run commands
-  </h4>
-</button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
-<div class="accordion-body">
-<p>Run a ubuntu container, first with a command to read out the Linux
-version:</p>
-<div class="codewrapper sourceCode" id="cb17">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run ubuntu cat /etc/os-release</span></code></pre>
-</div>
-<p>Then run a container with a command to print out the apt-get
-help:</p>
-<div class="codewrapper sourceCode" id="cb18">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run ubuntu apt-get <span class="at">--help</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="even-more-options" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="even-more-options" class="callout-inner">
-<h3 class="callout-title">Even More Options<a class="anchor" aria-label="anchor" href="#even-more-options"></a>
-</h3>
-<div class="callout-content">
-<p>There are many more options, besides <code>-it</code> that can be
-used with the <code>docker container run</code> command! A few of them
-will be covered in <a href="/advanced-containers">later episodes</a> and
-we’ll share two more common ones here:</p>
-<ul>
-<li><p><code>--rm</code>: this option guarantees that any running
-container is completely removed from your computer after the container
-is stopped. Without this option, Docker actually keeps the “stopped”
-container around, which you’ll see in a later episode. Note that this
-option doesn’t impact the <em>container images</em> that you’ve pulled,
-just running instances of containers.</p></li>
-<li><p><code>--name=</code>: By default, Docker assigns a random name
-and ID number to each container instance that you run on your computer.
-If you want to be able to more easily refer to a specific running
-container, you can assign it a name using this option.</p></li>
-</ul>
-</div>
-</div>
-</div>
+</section><section id="docker-ps"><h2 class="section-heading">Docker ps<a class="anchor" aria-label="anchor" href="#docker-ps"></a>
+</h2>
+<hr class="half-width"></section><section id="managing-the-system"><h2 class="section-heading">Managing the system<a class="anchor" aria-label="anchor" href="#managing-the-system"></a>
+</h2>
+<hr class="half-width">
+<p>docker stats ### Removing images ### docker image rm ### Removing
+containers ### docker rm ### Removing images and containers ### docker
+system prune docker system prune -a</p>
+</section><section id="sum-up"><h2 class="section-heading">Sum up<a class="anchor" aria-label="anchor" href="#sum-up"></a>
+</h2>
+<hr class="half-width">
+<p>docker run –rm –name mydocker –entrypoint thing –mount</p>
+<p>in compose</p>
 </section><section id="conclusion"><h2 class="section-heading">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
 <hr class="half-width">
-<p>So far, we’ve seen how to download Docker container images, use them
-to run commands inside running containers, and even how to explore a
-running container from the inside. Next, we’ll take a closer look at all
-the different kinds of Docker container images that are out there.</p>
-<p>{% comment %}</p>
+<p>We have learned about the lifecycle of Docker containers, what
+happens when they are started and how their behaviour is controled. We
+have learned to run containers in the Docker command line interace and
+how to interact with them directly.</p>
+<p>{% include links.md %}</p>
+<p>{% comment %}
 <!--  LocalWords:  keypoints amd64 fce289e99eb9 zen_dubinsky links.md
- -->
-<!--  LocalWords:  eager_engelbart endcomment
- -->
-<p>{% endcomment %}</p>
+ --> <!--  LocalWords:  eager_engelbart endcomment
+ --> {% endcomment %}</p>
+<p>```</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -2466,268 +2069,16 @@ the different kinds of Docker container images that are out there.</p>
 </h3>
 <div class="callout-content">
 <ul>
-<li>The <code>docker image pull</code> command downloads Docker
-container images from the internet.</li>
-<li>The <code>docker image ls</code> command lists Docker container
-images that are (now) on your computer.</li>
-<li>The <code>docker container run</code> command creates running
-containers from container images and can run commands inside them.</li>
-<li>When using the <code>docker container run</code> command, a
-container can run a default action (if it has one), a user specified
-action, or a shell to be used interactively.</li>
-</ul>
-</div>
-</div>
-</div>
-</section></section><section id="aio-managing-containers"><p>Content from <a href="managing-containers.html">Cleaning Up Containers</a></p>
-<hr>
-<p> Last updated on 2023-06-06 | 
-        
-        <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/managing-containers.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<div class="text-end">
-          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right"> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
-        </div>
-<section id="removing-images"><h2 class="section-heading">Removing images<a class="anchor" aria-label="anchor" href="#removing-images"></a>
-</h2>
-<hr class="half-width">
-<div class="overview card">
-<h2 class="card-header">Overview</h2>
-<div class="row g-0">
-<div class="col-md-4">
-<div class="card-body">
-<div class="inner">
-<h3 class="card-title">Questions</h3>
-<ul>
-<li>How do I interact with a Docker container on my computer?</li>
-<li>How do I manage my containers and container images?</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-md-8">
-<div class="card-body">
-<div class="inner bordered">
-<h3 class="card-title">Objectives</h3>
-<ul>
-<li>Explain how to list running and completed containers.</li>
-<li>Know how to list and remove container images.</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>The container images and their corresponding containers can start to
-take up a lot of disk space if you don’t clean them up occasionally, so
-it’s a good idea to periodically remove containers and container images
-that you won’t be using anymore.</p>
-<p>In order to remove a specific container image, you need to find out
-details about the container image, specifically, the “Image ID”. For
-example, say my laptop contained the following container image:</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image ls</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>REPOSITORY       TAG         IMAGE ID       CREATED          SIZE
-hello-world      latest      fce289e99eb9   15 months ago    1.84kB</code></pre>
-</div>
-<p>You can remove the container image with a
-<code>docker image rm</code> command that includes the <em>Image
-ID</em>, such as:</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image rm fce289e99eb9</span></code></pre>
-</div>
-<p>or use the container image name, like so:</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image rm hello-world</span></code></pre>
-</div>
-<p>However, you may see this output:</p>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Error response from daemon: conflict: unable to remove repository reference "hello-world" (must force) - container e7d3b76b00f4 is using its referenced image fce289e99eb9</code></pre>
-</div>
-<p>This happens when Docker hasn’t cleaned up some of the previously
-running containers based on this container image. So, before removing
-the container image, we need to be able to see what containers are
-currently running, or have been run recently, and how to remove
-these.</p>
-</section><section id="what-containers-are-running"><h2 class="section-heading">What containers are running?<a class="anchor" aria-label="anchor" href="#what-containers-are-running"></a>
-</h2>
-<hr class="half-width">
-<p>Working with containers, we are going to shift back to the command:
-<code>docker container</code>. Similar to <code>docker image</code>, we
-can list running containers by typing:</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container ls</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</code></pre>
-</div>
-<p>Notice that this command didn’t return any containers because our
-containers all exited and thus stopped running after they completed
-their work.</p>
-<div id="docker-ps" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="docker-ps" class="callout-inner">
-<h3 class="callout-title">
-<code>docker ps</code><a class="anchor" aria-label="anchor" href="#docker-ps"></a>
-</h3>
-<div class="callout-content">
-<p>The command <code>docker ps</code> serves the same purpose as
-<code>docker container ls</code>, and comes from the Unix shell command
-<code>ps</code> which describes running processes.</p>
-</div>
-</div>
-</div>
-</section><section id="what-containers-have-run-recently"><h2 class="section-heading">What containers have run recently?<a class="anchor" aria-label="anchor" href="#what-containers-have-run-recently"></a>
-</h2>
-<hr class="half-width">
-<p>There is also a way to list running containers, and those that have
-completed recently, which is to add the
-<code>--all</code>/<code>-a</code> flag to the
-<code>docker container ls</code> command as shown below.</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container ls <span class="at">--all</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
-9c698655416a        hello-world         "/hello"            2 minutes ago       Exited (0) 2 minutes ago                       zen_dubinsky
-6dd822cf6ca9        hello-world         "/hello"            3 minutes ago       Exited (0) 3 minutes ago                       eager_engelbart</code></pre>
-</div>
-<div id="keeping-it-clean" class="callout callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="keeping-it-clean" class="callout-inner">
-<h3 class="callout-title">Keeping it clean<a class="anchor" aria-label="anchor" href="#keeping-it-clean"></a>
-</h3>
-<div class="callout-content">
-<p>You might be surprised at the number of containers Docker is still
-keeping track of. One way to prevent this from happening is to add the
-<code>--rm</code> flag to <code>docker container run</code>. This will
-completely wipe out the record of the run container when it exits. If
-you need a reference to the running container for any reason,
-<strong>don’t</strong> use this flag.</p>
-</div>
-</div>
-</div>
-</section><section id="how-do-i-remove-an-exited-container"><h2 class="section-heading">How do I remove an exited container?<a class="anchor" aria-label="anchor" href="#how-do-i-remove-an-exited-container"></a>
-</h2>
-<hr class="half-width">
-<p>To delete an exited container you can run the following command,
-inserting the <code>CONTAINER ID</code> for the container you wish to
-remove. It will repeat the <code>CONTAINER ID</code> back to you, if
-successful.</p>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container rm 9c698655416a</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>9c698655416a</code></pre>
-</div>
-<p>An alternative option for deleting exited containers is the
-<code>docker container prune</code> command. Note that this command
-doesn’t accept a container ID as an option because it deletes ALL exited
-containers! <strong>Be careful</strong> with this command as deleting
-the container is <strong>forever</strong>. <strong>Once a container is
-deleted you can not get it back.</strong> If you have containers you may
-want to reconnect to, you should <strong>not</strong> use this command.
-It will ask you if to confirm you want to remove these containers, see
-output below. If successful it will print the full
-<code>CONTAINER ID</code> back to you for each container it has
-removed.</p>
-<div class="codewrapper sourceCode" id="cb12">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container prune</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>WARNING! This will remove all stopped containers.
-Are you sure you want to continue? [y/N] y
-Deleted Containers:
-9c698655416a848278d16bb1352b97e72b7ea85884bff8f106877afe0210acfc
-6dd822cf6ca92f3040eaecbd26ad2af63595f30bb7e7a20eacf4554f6ccc9b2b</code></pre>
-</div>
-</section><section id="removing-images-for-real-this-time"><h2 class="section-heading">Removing images, for real this time<a class="anchor" aria-label="anchor" href="#removing-images-for-real-this-time"></a>
-</h2>
-<hr class="half-width">
-<p>Now that we’ve removed any potentially running or stopped containers,
-we can try again to delete the <code>hello-world</code>
-<strong>container image</strong>.</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image rm hello-world</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Untagged: hello-world:latest
-Untagged: hello-world@sha256:5f179596a7335398b805f036f7e8561b6f0e32cd30a32f5e19d17a3cda6cc33d
-Deleted: sha256:fce289e99eb9bca977dae136fbe2a82b6b7d4c372474c9235adc1741675f587e
-Deleted: sha256:af0b15c8625bb1938f1d7b17081031f649fd14e6b233688eea3c5483994a66a3</code></pre>
-</div>
-<p>The reason that there are a few lines of output, is that a given
-container image may have been formed by merging multiple underlying
-layers. Any layers that are used by multiple Docker container images
-will only be stored once. Now the result of <code>docker image ls</code>
-should no longer include the <code>hello-world</code> container
-image.</p>
-<p>{% comment %}</p>
-<!--  LocalWords:  keypoints amd64 fce289e99eb9 zen_dubinsky links.md
- -->
-<!--  LocalWords:  eager_engelbart endcomment
- -->
-<p>{% endcomment %}</p>
-<div id="keypoints1" class="callout keypoints">
-<div class="callout-square">
-<i class="callout-icon" data-feather="key"></i>
-</div>
-<div class="callout-inner">
-<h3 class="callout-title">Keypoints<a class="anchor" aria-label="anchor" href="#keypoints1"></a>
-</h3>
-<div class="callout-content">
-<ul>
-<li>
-<code>docker container</code> has subcommands used to interact and
-manage containers.</li>
-<li>
-<code>docker image</code> has subcommands used to interact and
-manage container images.</li>
-<li>
-<code>docker container ls</code> or <code>docker ps</code> can
-provide information on currently running containers.</li>
+<li>asdf</li>
+<li>asdf</li>
+<li>asdf</li>
 </ul>
 </div>
 </div>
 </div>
 </section></section><section id="aio-creating-container-images"><p>Content from <a href="creating-container-images.html">Creating Your Own Container Images</a></p>
 <hr>
-<p> Last updated on 2023-06-06 | 
+<p> Last updated on 2023-06-07 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/creating-container-images.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3227,7 +2578,7 @@ images.</li>
 </div>
 </section></section><section id="aio-advanced-containers"><p>Content from <a href="advanced-containers.html">Creating More Complex Container Images</a></p>
 <hr>
-<p> Last updated on 2023-06-06 | 
+<p> Last updated on 2023-06-07 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/advanced-containers.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3895,8 +3246,8 @@ container images by using the <code>COPY</code> instruction in your
   "url": "https://uomresearchit.github.io/docker-introduction-R/aio.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction-R/aio.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2023-06-06",
-  "datePublished": "2023-06-06"
+  "dateModified": "2023-06-07",
+  "datePublished": "2023-06-07"
 }
 
   </script><script>
