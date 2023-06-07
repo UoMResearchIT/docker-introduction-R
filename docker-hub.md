@@ -122,34 +122,6 @@ as can be seen in these examples
 ![](fig/docker-hub/anaconda.gif){alt='continuumio/anaconda3'}
 :::::::::::::::::::::::::
 
----
-# FIXME: This is what it used to be before R, it looked nicer...
-# {::options parse_block_html="true" /}
-# <div>
-# <ul class="nav nav-tabs nav-justified" role="tablist">
-#   <li role="presentation" class="active">
-#     <a href="#tidyverse" aria-controls="tidyverse" role="tab" data-toggle="tab">tidyverse</a>  </li>
-#   <li role="presentation">
-#     <a href="#matlab" aria-controls="matlab" role="tab" data-toggle="tab">matlab</a>  </li>
-#   <li role="presentation">
-#     <a href="#anaconda3" aria-controls="anaconda3" role="tab" data-toggle="tab">anaconda3</a>  </li>
-# </ul>
-# <div class="tab-content">
-#   <article role="tabpanel" class="tab-pane active" id="tidyverse">
-#   ![rocker/tidyverse:latest](fig/docker-hub/tidyverse.gif){alt='rocker/tidyverse:latest'}
-#   </article>
-#   <article role="tabpanel" class="tab-pane" id="matlab">
-#   ![mathworks/matlab](fig/docker-hub/matlab.gif){alt='mathworks/matlab'}
-#   </article>
-#   <article role="tabpanel" class="tab-pane" id="anaconda3">
-#   ![continuumio/anaconda3](fig/docker-hub/anaconda.gif){alt='continuumio/anaconda3'}
-#   </article>
-# </div>
-# </div>
-# <br/>
-# {::options parse_block_html="false" /}
----
-
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ## Repositories

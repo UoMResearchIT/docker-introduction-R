@@ -29,33 +29,6 @@ Please seek help at the start of the lesson if you have not been able to establi
 
 Installing Docker on different platforms requires different procedures and generally requires root / administrator access for a successful installation. Please follow the pointers below for assistance in finding the correct installation procedures.
 
-
-### Lists
-
-
-#### Workbench
-
-In general
-
-::::::::::::::::::: {.panel-tabset}
-
-##### Correct Syntax
-
-text after the list
-
-
-##### Incorrect Syntax
-
-text after the list
-
-
-##### Lists in fenced divs
-
-Lists
-
-:::::::::::::::::::
-
-
 <br>
 
 :::::::::::::::: solution
