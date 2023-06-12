@@ -68,16 +68,3 @@ for this lesson.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
-
-{% comment %}
-
-TODO: systematically check for Windows-isms
-
-<!--  LocalWords:  prereq links.md endcomment
- -->
-
-{% endcomment %}
-
-

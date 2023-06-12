@@ -8,38 +8,44 @@ One of the reasons why Docker is useful is that there is a lot of content (conta
 Each container image represents a complete software
 installation that you can use and access without any extra work!
 
-::::::::::::::::::::::::::::::::::::::: objectives
 
+::::::::::::::::::::::::::::::::::::::: objectives
 - Explore the Docker Hub webpage for a popular Docker container image.
 - Find the list of tags for a particular Docker container image.
 - Identify the three components of a container image's identifier.
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 :::::::::::::::::::::::::::::::::::::::: questions
-
 - What is the Docker Hub, and why is it useful?
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 A lot of these images are hosted in the Docker Hub.
 
+
 ## Introducing the Docker Hub
 
-The Docker Hub is an online repository of container images, a vast number of which are publicly available. A large number of the container images are curated by the developers of the software that they package. Also, many commonly used pieces of software that have been containerized into images are officially endorsed, which means that you can trust the container images to have been checked for functionality, stability, and that they don't contain malware.
+The Docker Hub is an online repository of container images, a vast number of which are publicly available.
+A large number of the container images are curated by the developers of the software that they package.
+Also, many commonly used pieces of software that have been containerized into images are officially endorsed,
+which means that you can trust the container images to have been checked for functionality,
+stability, and that they don't contain malware.
+
 
 :::::::::::::::::::::::::::::::::::::::::  callout
-
 ## Docker can be used without connecting to the Docker Hub
 
-Note that while the Docker Hub is well integrated into Docker functionality, the Docker Hub is certainly not required for all types of use of Docker containers. For example, some organizations may run container infrastructure that is entirely disconnected from the Internet.
-
-
+Note that while the Docker Hub is well integrated into Docker functionality,
+the Docker Hub is certainly not required for all types of use of Docker containers.
+For example, some organizations may run container infrastructure that is entirely disconnected from the Internet.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ## Exploring an example Docker Hub page
 
-As an example of a Docker Hub page, let's explore the page for the official Python language container images. Open your web browser to [https://hub.docker.com](https://hub.docker.com)
+As an example of a Docker Hub page, let's explore the page for the official Python language container images.
+Open your web browser to [https://hub.docker.com](https://hub.docker.com)
 
 ![](fig/docker-hub/landing.png){alt='Dockerhub\_landing'}
 
@@ -55,35 +61,35 @@ There is upwards from 10,000 images related to python alone.
 
 There is also some useful information that can help us choose the image that we want, which we will point out in a moment.
 
-For now, lets go to the top result, the [python](https://hub.docker.com/_/python) container image (which is endorsed by the Docker team) to see what is on a typical Docker Hub software page.
+For now, lets go to the top result, the [python](https://hub.docker.com/_/python) container image
+(which is endorsed by the Docker team) to see what is on a typical Docker Hub software page.
 
 ![](fig/docker-hub/python.png){alt='Dockerhub\_python'}
 
-The top-left provides information about the name, short description, popularity (i.e., more than a billion downloads in the case of this container image), and endorsements.
+The top-left provides information about the name, short description,
+popularity (i.e., more than a billion downloads in the case of this container image), and endorsements.
 
 The top-right provides the command to pull this container image to your computer.
 
 The main body of the page contains many used headings, such as:
 
-- Which tags (i.e., container image versions) are supported;
-- Summary information about where to get help, which computer architectures are supported, etc.;
-- A longer description of the container image;
-- Examples of how to use the container image; and
+- Which tags (i.e., container image versions) are supported.
+- Summary information about where to get help, which computer architectures are supported, etc.
+- A longer description of the container image.
+- Examples of how to use the container image.
 - The license that applies.
 
 The "How to use the image" section of most container images' pages will provide examples that are likely to cover your intended use of the container image.
 
+
 ## Container Image versions and owners
 
-A single Docker Hub page can have many different versions of container images,
-based on the version of the software inside.  These
-versions are indicated by "tags". When referring to the specific version of a container image
-by its tag, you use a colon, `:`, like this:
-
+A single Docker Hub page can have many different versions of container images, based on the version of the software inside.
+These versions are indicated by "tags".
+When referring to the specific version of a container image by its tag, you use a colon, `:`, like this:
 ```
 CONTAINER_IMAGE_NAME:TAG
 ```
-
 If we click the version tag for `alpine3.18` of this image, Docker Hub shows it as `python:alpine3.18`
 
 ![](fig/docker-hub/python_alpine318.png){alt='Dockerhub\_python'}
@@ -98,11 +104,9 @@ into this category, as would the container images maintained by organizations li
 groups like [rocker](https://hub.docker.com/u/rocker), a group that builds community R container images.
 
 In these cases, the "owner", that is the  group- or individual- that manage the container image is part of the image name, and it is given in the format:
-
 ```
 OWNER/CONTAINER_IMAGE_NAME:TAG
 ```
-
 as can be seen in these examples
 
 <br/>
@@ -111,31 +115,28 @@ as can be seen in these examples
 ### rocker/tidyverse:latest
 ![](fig/docker-hub/tidyverse.gif){alt='rocker/tidyverse:latest'}
 :::::::::::::::::::::::::
-
 :::::::::::::::: solution
 ### mathworks/matlab:r2022b
 ![](fig/docker-hub/matlab.gif){alt='mathworks/matlab'}
 :::::::::::::::::::::::::
-
 :::::::::::::::: solution
 ### continuumio/anaconda3:master
 ![](fig/docker-hub/anaconda.gif){alt='continuumio/anaconda3'}
 :::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::::  callout
 
+:::::::::::::::::::::::::::::::::::::::::  callout
 ## Repositories
 
 The technical name for the contents of a Docker Hub page is a "repository."
 The tag indicates the specific version of the container image that you'd like
 to use from a particular repository. So a slightly more accurate version of
 the above example is:
-
 ```
 OWNER/REPOSITORY:TAG
 ```
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ## Choosing Container Images on Docker Hub
 
@@ -168,23 +169,11 @@ Although many of the containers made for docker are hosted in the Docker Hub, th
 - [ACR](https://azure.microsoft.com/en-us/products/container-registry) from Azuere, Microsoft.
 
 
-
-{% comment %}
-
-<!--  LocalWords:  keypoints links.md endcomment
- -->
-
-{% endcomment %}
-
 :::::::::::::::::::::::::::::::::::::::: keypoints
-
 - The Docker Hub is an online repository of container images.
 - Many Docker Hub container images are public, and may be officially endorsed.
 - Each Docker Hub page about a container image provides structured information and subheadings
 - Most Docker Hub pages about container images contain sections that provide examples of how to use those container images.
 - Many Docker Hub container images have multiple versions, indicated by tags.
 - The naming convention for Docker container images is: `OWNER/CONTAINER_IMAGE_NAME:TAG`
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-

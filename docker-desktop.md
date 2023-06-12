@@ -7,7 +7,6 @@ exercises: 0
 **This episode is meant to be demonstrative, that is, you do not *need* to follow along.**
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
 - Show Docker Desktop and its components.
 - Understand what images and containers are.
 - Visualize the process of image aquisition, container execution and where it ends.
@@ -15,26 +14,27 @@ exercises: 0
 - Have a glimpse at containers that allow interaction.
 - Understand the importance of cleaning up in docker.
 - Understand the limitations of Docker Desktop.
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: questions
 
+:::::::::::::::::::::::::::::::::::::::: questions
 - What is Docker Desktop?
 - What can it be used for?
 - Why can't it replace the cli?
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 We will present the Docker Desktop dashboard, as it will be useful to understand key concepts of docker, such as images and containers.
 However, it is important to note that while it is mostly is free, some features are offered at a premium.
 Also, it is not fully functional on all operating systems; it can produce conflicts with the docker engine on Linux, for example.
+
 
 ## Getting images
 
 Setting up docker in Windows or Mac will have installed Docker Desktop by default.
 If you open the application you will likely see something like this:
 ![](fig/docker-desktop/00_lo.gif){alt='Docker Desktop being opened for the first time.'}
+
 You'll notice that the panel on the left has a tab for 'Images' and another for 'Containers'.
 These will be the focus for the episode, and we will ignore most other features.
 
@@ -55,6 +55,7 @@ Once you find the image you were looking for, you can either download it (pull),
 
 We'll start by downloading the latest versions of `hello-world`, `docker/getting-started` and `alpine`.
 
+
 ## Inspecting images
 
 The 'Images' tab on the left panel will show all the images in your system, so you will be able to see them here.
@@ -70,6 +71,7 @@ Nevertheless, this is a very nice and quick way to explore an image.
 
 If we now inspect the `docker/getting-started` image, for example, we can see that it detects some vulnerabilities:
 ![](fig/docker-desktop/06_image_inspection_gs.png){alt='Inspecting image getting-started.'}
+
 You can even further inspect the vulnerable layers by looking at the command
 ![](fig/docker-desktop/07_image_inspection_gs_2.png){alt='Inspecting image command in getting-started.'}
 
@@ -77,6 +79,7 @@ This all looks rather scary, and it is important that we are careful with the im
 It is therefore quite useful to be able to analize them like this.
 This image, in particular, is from a verified publisher (Docker Inc. no less!), and has been downloaded over 10M times,
 so the container is likely not maliicous.
+
 
 ## Running containers
 
@@ -94,10 +97,6 @@ The optional settings allow you to modify the container's name, so that you can 
 Lets add an appropriate name and confirm with the 'Run' button.
 ![](fig/docker-desktop/10_optional_settings.png){alt='Run optional settings.'}
 
-
-::::::::::::::::::: discussion
-#
-
 You will likely be taken to a 'Logs' tab inside the container that you just ran.
 The logs show the output of this particular image, 'Hello from Docker!' among other things.
 
@@ -106,7 +105,8 @@ We are looking at a container now, not an image, and so we were re-located.
 
 Exploring the 'Inspect' tab will show us some information, but for now we are more interested in what the 'Terminal' and 'Stats' tabs have to say.
 They both seem to indicate that we need to *run* or *start* the container.
-::::::::::::::::::::::::::::::
+
+<br>
 
 :::::::::::::::: solution
 ### Logs tab
@@ -145,6 +145,7 @@ One of the containers we named, and the other has some gibberish as a name (Dock
 As mentioned before, the *image* is used as a template, and as many *containers* as we want can be created from it.
 If we go back to the 'Images' tab and run `hello world` again, we'll see a new container appear.
 
+
 ## Interacting with containers
 
 Not all containers are as short lived as the one we've been using.
@@ -152,14 +153,12 @@ If we run the `docker/getting-started` image that we had pulled earlier, we will
 You can immediately notice the status under the container name is 'RUNNING' now.
 nal *inside* the container.
 
-::::::::::::::::::: discussion
-#
 The 'Logs' tab is not too informative, but the 'Inspect' tab already shows more information.
 A process called 'nginx' is running.
 The 'Terminal' and 'Stats' tabs changed the most.
 Since the container is still running, the stats get shown, and we are able to launch a termi
 
-::::::::::::::::::::::::::::::
+<br>
 
 :::::::::::::::: solution
 ### Logs tab
@@ -190,30 +189,25 @@ At this point this container is very much like a VM.
 We can modify things, like for example making a directory with `mkdir`, and see it has been created with `ls` again.
 ![](fig/docker-desktop/23_gettingstarted_mkdir.png){alt='Terminal, mkdir and ls inside getting-started container.'}
 
-::::::::::::::::::: discussion
-#
 But we can do more than that, we can install things. For example, you'll notice that `htop` is not installed.
 Since the `getting-started` image is based on Alpine, we can install it using `apk add htop`, and we can now use it.
 
-::::::::::::::::::::::::::::::
+<br>
 
 :::::::::::::::: solution
-### Installing htop 1
+### Installing htop
 ![](fig/docker-desktop/24_gettingstarted_htop.png){alt='Terminal, installing htop inside getting-started container.'}
 :::::::::::::::::::::::::
 :::::::::::::::: solution
-### Installing htop 2
+### Running htop
 ![](fig/docker-desktop/25_gettingstarted_htop2.png){alt='Terminal, running htop inside getting-started container.'}
 :::::::::::::::::::::::::
 
-
-::::::::::::::::::: discussion
-#
 The container does not need to stay alive forever, and you can see that there is a 'stop' icon on the top right.
 If we stop the container, we get a familiar empty tab in 'Terminal' and 'Stats'.
 The 'Containers' tab on the left will also show the container status as 'Exited'
 
-::::::::::::::::::::::::::::::
+<br>
 
 :::::::::::::::: solution
 ### Terminal tab
@@ -240,12 +234,14 @@ We can see that the first container we created from the `getting-started` image 
 the new container (which is still running, by the way).
 ![](fig/docker-desktop/30_gettingstarted_2_containers.png){alt='Containers after new run of getting-started image.'}
 
+
 ## Reviving containers
 
 We *can* get the old container running again, although this is rarely something we'd *want* to do.
 In Docker Desktop, all we need to do is click on the 'Start' button from the 'Containers' list.
 The terminal will appear empty, because it is a new session, but you will even be able to 'recall' commands.
 ![](fig/docker-desktop/31-32.gif){alt='Reviving container getting-started.'}
+
 
 ## Cleaning up
 
@@ -267,6 +263,7 @@ Let's try and get rid of the containers then.
 We can conveniently select them all with the tickbox at the top, and an option to 'Delete' shows up.
 Clicking on it will prompt for confirmation, and we can go ahead and accept.
 ![](fig/docker-desktop/36-38.gif){alt='Deleting containers.'}
+
 All our containers are now gone. Forever.
 
 ***Warning:*** You have to be careful here, this action deleted even the containers that were running.
@@ -277,6 +274,7 @@ For docker, an image is 'In use' as long as at least one container has been crea
 We have just deleted all the containers created from either of these images.
 This tells Docker that they are no longer being used, and can therefore be safely deleted.
 ![](fig/docker-desktop/39-42.gif){alt='Successfully deleting images.'}
+
 
 ## Limitations - Why not Docker Desktop?
 
@@ -292,12 +290,7 @@ That was fast, and uneventful.
 Not even a single output to the 'Logs'.
 No way to open a terminal inside Alpine.
 
-
-::::::::::::::::::: discussion
-#
-
-
-::::::::::::::::::::::::::::::
+<br>
 
 :::::::::::::::: solution
 ### Logs tab
@@ -323,12 +316,10 @@ Let's try something different.
 There's a program called `cowsay` that lets you print messages as if a cow was saying them.
 Searching for that image shows that there is one by `beatrixxx32` with a reasonable number of downloads.
 ![](fig/docker-desktop/48_cowsay.png){alt='Search of cowsay image.'}
+
 So lets pull that image and run it.
 
-::::::::::::::::::: discussion
-#
-
-::::::::::::::::::::::::::::::
+<br>
 
 :::::::::::::::: solution
 ### Logs tab
@@ -365,14 +356,11 @@ This is the case for most images, and so Docker Desktop (as it is now) cannot re
 In the next episode, we will use docker from the command line, and all of the advantages it brings will become aparent.
 
 
-
 :::::::::::::::::::::::::::::::::::::::: keypoints
-
 - Docker Desktop is a great dashboard that allows us to understand and visualize the lifecycle of images and containers.
 - Images are snapshots of an environment, easily distributable and ready to be used as *templates* for containers.
 - Containers are executions of the images, often with configuration added on top, and usually meant for single use.
 - Running a container usually implies creating a new copy, so it is important to clean up regularly.
 - Docker Desktop could potentially be all you need to use if you only *consume* images out of the box.
 - However, it is very limited in most cases (even for *consumers*), and rarely allows the user to configure and interact with the containers adequately.
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::

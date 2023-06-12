@@ -5,48 +5,41 @@ exercises: 0
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
 - Show how software depending on other software leads to configuration management problems.
 - Identify the problems that software installation can pose for research.
 - Explain the advantages of containerization.
 - Explain how using containers can solve software configuration problems
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 :::::::::::::::::::::::::::::::::::::::: questions
-
 - What are containers, and why might they be useful to me?
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::::  callout
 
-## Learning about Docker Containers
+:::::::::::::::::::::::::::::::::::::::::  callout
+### Learning about Docker Containers
 
 The Australian Research Data Commons has produced a short introductory video
 about Docker containers that covers many of the points below. Watch it before
 or after you go through this section to reinforce your understanding!
 
-[How can software containers help your research?](https://www.youtube.com/watch?v=HelrQnm3v4g)
-
-Australian Research Data Commons, 2021. *How can software containers help your research?*. [video] Available at: [https://www.youtube.com/watch?v=HelrQnm3v4g](https://www.youtube.com/watch?v=HelrQnm3v4g) DOI: [http://doi.org/10.5281/zenodo.5091260](https://doi.org/10.5281/zenodo.5091260)
-
-
+*[How can software containers help your research?](https://www.youtube.com/watch?v=HelrQnm3v4g)*
+Australian Research Data Commons, 2021. DOI: [10.5281/zenodo.5091260](https://doi.org/10.5281/zenodo.5091260)
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ### Scientific Software Challenges
 
 :::::::::::::::::::::::::::::::::::::::  challenge
-
 ## What's Your Experience?
 
 Take a minute to think about challenges that you have experienced in using
 scientific software (or software in general!) for your research. Then,
 share with your neighbors and try to come up with a list of common gripes or
 challenges.
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 You may have come up with some of the following:
 
@@ -66,17 +59,16 @@ or missing piece may stop the whole thing from working or break something that w
 already running. It's no surprise that this situation is sometimes
 informally termed "dependency hell".
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
+:::::::::::::::::::::::::::::::::::::::  challenge
 ## Software and Science
 
 Again, take a minute to think about how the software challenges we've discussed
 could impact (or have impacted!) the quality of your work.
 Share your thoughts with your neighbors. What can go wrong if our software
 doesn't work?
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 Unsurprisingly, software installation and configuration challenges can have
 negative consequences for research:
@@ -90,9 +82,10 @@ Thankfully there are ways to get underneath (a lot of) this mess: containers
 to the rescue! Containers provide a way to package up software dependencies
 and access to resources such as files and communications networks in a uniform manner.
 
-### What is a Container? What is Docker?
 
-[Docker][Docker] is a tool that allows you to build what are called "containers." It's
+## What is a Container? What is Docker?
+
+[Docker](https://www.docker.com/) is a tool that allows you to build what are called "containers." It's
 not the only tool that can create containers, but is the one we've chosen for
 this workshop. But what *is* a container?
 
@@ -126,9 +119,9 @@ together that should stay together, software containers standardize the descript
 creation of a complete software system: you can drop a container into any computer with
 the container software installed (the 'container host'), and it should "just work".
 
-:::::::::::::::::::::::::::::::::::::::::  callout
 
-## Virtualization
+:::::::::::::::::::::::::::::::::::::::::  callout
+### Virtualization
 
 Containers are an example of what's called **virtualization** -- having a
 second "virtual" computer running and accessible from a main or **host**
@@ -139,9 +132,8 @@ a computer would.
 A container is considered a lightweight version of a virtual machine;
 underneath, the container is (usually) using the Linux kernel and simply has some
 flavour of Linux + the filesystem inside.
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 One final term: while the **container** is an alternative filesystem layer that you
 can access and run from your computer, the **container image** is the 'recipe' or template
@@ -153,7 +145,8 @@ can be used to create multiple copies of the same shape (or container)
 and is relatively unchanging, where cookies come and go. If you want a
 different type of container (cookie) you need a different container image (cookie cutter).
 
-### Putting the Pieces Together
+
+## Putting the Pieces Together
 
 Think back to some of the challenges we described at the beginning. The many layers
 of scientific software installations make it hard to install and re-install
@@ -173,7 +166,8 @@ This solves several of our problems:
 The rest of this workshop will show you how to download and run containers from pre-existing
 container images on your own computer, and how to create and share your own container images.
 
-### Use cases for containers
+
+## Use cases for containers
 
 Now that we have discussed a little bit about containers -- what they do and the
 issues they attempt to address -- you may be able to think of a few potential use
@@ -191,16 +185,7 @@ a research context include:
   same software and configuration in the future -- capturing your workflow.
 
 
-
-{% comment %}
-
-<!--  LocalWords:  keypoints links.md endcomment
- -->
-
-{% endcomment %}
-
 :::::::::::::::::::::::::::::::::::::::: keypoints
-
 - Almost all software depends on other software components to function, but these components have independent evolutionary paths.
 - Small environments that contain only the software that is needed for a given task are easier to replicate and maintain.
 - Critical systems that cannot be upgraded, due to cost, difficulty, etc. need to be reproduced on newer systems in a maintainable and self-documented way.
@@ -208,7 +193,6 @@ a research context include:
 - Containerization improves upon the virtualization of whole computers by allowing efficient management of the host computer's memory and storage resources.
 - Containers are built from 'recipes' that define the required set of software components and the instructions necessary to build/install them within a container image.
 - Docker is just one software platform that can create containers and the resources they use.
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
