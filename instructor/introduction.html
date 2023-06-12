@@ -144,12 +144,21 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         1. Introducing Containers
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+        
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#what-is-a-container-what-is-docker">What is a Container? What is Docker?</a></li>
+<li><a href="#putting-the-pieces-together">Putting the Pieces Together</a></li>
+<li><a href="#use-cases-for-containers">Use cases for containers</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
         
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -250,7 +259,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Introducing Containers</h1>
-        <p> Last updated on 2023-06-07 | 
+        <p> Last updated on 2023-06-12 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -303,11 +312,9 @@ problems</li>
 introductory video about Docker containers that covers many of the
 points below. Watch it before or after you go through this section to
 reinforce your understanding!</p>
-<p><a href="https://www.youtube.com/watch?v=HelrQnm3v4g" class="external-link">How can
-software containers help your research?</a></p>
-<p>Australian Research Data Commons, 2021. <em>How can software
-containers help your research?</em>. [video] Available at: <a href="https://www.youtube.com/watch?v=HelrQnm3v4g" class="external-link">https://www.youtube.com/watch?v=HelrQnm3v4g</a>
-DOI: <a href="https://doi.org/10.5281/zenodo.5091260" class="external-link">http://doi.org/10.5281/zenodo.5091260</a></p>
+<p><em><a href="https://www.youtube.com/watch?v=HelrQnm3v4g" class="external-link">How can
+software containers help your research?</a></em> Australian Research
+Data Commons, 2021. DOI: <a href="https://doi.org/10.5281/zenodo.5091260" class="external-link">10.5281/zenodo.5091260</a></p>
 </div>
 </div>
 </div>
@@ -386,12 +393,12 @@ containers to the rescue! Containers provide a way to package up
 software dependencies and access to resources such as files and
 communications networks in a uniform manner.</p>
 </div>
-<div class="section level3">
-<h3 id="what-is-a-container-what-is-docker">What is a Container? What is Docker?<a class="anchor" aria-label="anchor" href="#what-is-a-container-what-is-docker"></a></h3>
-<p>[Docker][Docker] is a tool that allows you to build what are called
-“containers.” It’s not the only tool that can create containers, but is
-the one we’ve chosen for this workshop. But what <em>is</em> a
-container?</p>
+<section id="what-is-a-container-what-is-docker"><h2 class="section-heading">What is a Container? What is Docker?<a class="anchor" aria-label="anchor" href="#what-is-a-container-what-is-docker"></a>
+</h2>
+<hr class="half-width"><p><a href="https://www.docker.com/" class="external-link">Docker</a> is a tool that allows
+you to build what are called “containers.” It’s not the only tool that
+can create containers, but is the one we’ve chosen for this workshop.
+But what <em>is</em> a container?</p>
 <p>To understand containers, let’s first talk briefly about your
 computer.</p>
 <p>Your computer has some standard pieces that allow it to work – often
@@ -467,10 +474,9 @@ used to create multiple copies of the same shape (or container) and is
 relatively unchanging, where cookies come and go. If you want a
 different type of container (cookie) you need a different container
 image (cookie cutter).</p>
-</div>
-<div class="section level3">
-<h3 id="putting-the-pieces-together">Putting the Pieces Together<a class="anchor" aria-label="anchor" href="#putting-the-pieces-together"></a></h3>
-<p>Think back to some of the challenges we described at the beginning.
+</section><section id="putting-the-pieces-together"><h2 class="section-heading">Putting the Pieces Together<a class="anchor" aria-label="anchor" href="#putting-the-pieces-together"></a>
+</h2>
+<hr class="half-width"><p>Think back to some of the challenges we described at the beginning.
 The many layers of scientific software installations make it hard to
 install and re-install scientific software – which ultimately, hinders
 reliability and reproducibility.</p>
@@ -492,10 +498,9 @@ depending on the circumstances.</li>
 </ul><p>The rest of this workshop will show you how to download and run
 containers from pre-existing container images on your own computer, and
 how to create and share your own container images.</p>
-</div>
-<div class="section level3">
-<h3 id="use-cases-for-containers">Use cases for containers<a class="anchor" aria-label="anchor" href="#use-cases-for-containers"></a></h3>
-<p>Now that we have discussed a little bit about containers – what they
+</section><section id="use-cases-for-containers"><h2 class="section-heading">Use cases for containers<a class="anchor" aria-label="anchor" href="#use-cases-for-containers"></a>
+</h2>
+<hr class="half-width"><p>Now that we have discussed a little bit about containers – what they
 do and the issues they attempt to address – you may be able to think of
 a few potential use cases in your area of work. Some examples of common
 use cases for containers in a research context include:</p>
@@ -511,11 +516,7 @@ system).</li>
 <li>Archiving the container images so you can repeat analysis/modelling
 using the same software and configuration in the future – capturing your
 workflow.</li>
-</ul><p>{% comment %}</p>
-<!--  LocalWords:  keypoints links.md endcomment
- -->
-<p>{% endcomment %}</p>
-<div id="keypoints1" class="callout keypoints">
+</ul><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
@@ -543,11 +544,7 @@ the resources they use.</li>
 </ul></div>
 </div>
 </div>
-</div>
-
-
-
-      </div> <!-- / div.lesson-content -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/index.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="../instructor/docker-hub.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -600,8 +597,8 @@ the resources they use.</li>
   "url": "https://uomresearchit.github.io/docker-introduction-R/instructor/introduction.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction-R/instructor/introduction.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2023-06-07",
-  "datePublished": "2023-06-07"
+  "dateModified": "2023-06-12",
+  "datePublished": "2023-06-12"
 }
 
   </script><script>

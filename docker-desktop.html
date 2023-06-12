@@ -73,8 +73,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="discuss.html">Discussion</a></li><li><a class="dropdown-item" href="reference.html">Reference</a></li>
-          </ul></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul></li>
       </ul></div>
     <form class="d-flex col-md-2 search-form">
       <fieldset disabled><input class="form-control me-2 searchbox" type="search" placeholder="Search" aria-label="Search"><button class="btn btn-outline-success tablet-search-button" type="submit">
@@ -235,7 +234,7 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-                      <li><a href="discuss.html">Discussion</a></li><li><a href="reference.html">Reference</a></li>
+                      
                     </ul></div>
                 </div>
               </div>
@@ -264,7 +263,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Docker Desktop</h1>
-        <p> Last updated on 2023-06-07 | 
+        <p> Last updated on 2023-06-12 | 
         
         <a href="https://github.com/UoMResearchIT/docker-introduction-R/edit/main/episodes/docker-desktop.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -318,10 +317,10 @@ on Linux, for example.</p>
 </h2>
 <hr class="half-width"><p>Setting up docker in Windows or Mac will have installed Docker
 Desktop by default. If you open the application you will likely see
-something like this: <img src="fig/docker-desktop/00_lo.gif" alt="Docker Desktop being opened for the first time." class="figure"> You’ll notice
-that the panel on the left has a tab for ‘Images’ and another for
-‘Containers’. These will be the focus for the episode, and we will
-ignore most other features.</p>
+something like this: <img src="fig/docker-desktop/00_lo.gif" alt="Docker Desktop being opened for the first time." class="figure"></p>
+<p>You’ll notice that the panel on the left has a tab for ‘Images’ and
+another for ‘Containers’. These will be the focus for the episode, and
+we will ignore most other features.</p>
 <p>On the top you’ll also find a search icon, which links to Docker Hub,
 and allows us to search for the images we saw in the previous episode
 directly from here.</p>
@@ -348,8 +347,9 @@ here. If you go to DockerHub you’ll find links to the Github site, where
 you’ll see that the image is not as simple as it looks. Nevertheless,
 this is a very nice and quick way to explore an image.</p>
 <p>If we now inspect the <code>docker/getting-started</code> image, for
-example, we can see that it detects some vulnerabilities: <img src="fig/docker-desktop/06_image_inspection_gs.png" alt="Inspecting image getting-started." class="figure"> You can even further inspect
-the vulnerable layers by looking at the command <img src="fig/docker-desktop/07_image_inspection_gs_2.png" alt="Inspecting image command in getting-started." class="figure"></p>
+example, we can see that it detects some vulnerabilities: <img src="fig/docker-desktop/06_image_inspection_gs.png" alt="Inspecting image getting-started." class="figure"></p>
+<p>You can even further inspect the vulnerable layers by looking at the
+command <img src="fig/docker-desktop/07_image_inspection_gs_2.png" alt="Inspecting image command in getting-started." class="figure"></p>
 <p>This all looks rather scary, and it is important that we are careful
 with the images that we download. It is therefore quite useful to be
 able to analize them like this. This image, in particular, is from a
@@ -369,13 +369,6 @@ settings. <img src="fig/docker-desktop/09_image_run_prompt.png" alt="Run confirm
 <p>The optional settings allow you to modify the container’s name, so
 that you can easily identify it afterwards. Lets add an appropriate name
 and confirm with the ‘Run’ button. <img src="fig/docker-desktop/10_optional_settings.png" alt="Run optional settings." class="figure"></p>
-<div id="section" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="section" class="callout-inner">
-<h3 class="callout-title"></h3>
-<div class="callout-content">
 <p>You will likely be taken to a ‘Logs’ tab inside the container that
 you just ran. The logs show the output of this particular image, ‘Hello
 from Docker!’ among other things.</p>
@@ -386,9 +379,7 @@ were re-located.</p>
 now we are more interested in what the ‘Terminal’ and ‘Stats’ tabs have
 to say. They both seem to indicate that we need to <em>run</em> or
 <em>start</em> the container.</p>
-</div>
-</div>
-</div>
+<p><br></p>
 <div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
@@ -468,21 +459,12 @@ we run the <code>docker/getting-started</code> image that we had pulled
 earlier, we will see something different happen. You can immediately
 notice the status under the container name is ‘RUNNING’ now. nal
 <em>inside</em> the container.</p>
-<div id="section-1" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="section-1" class="callout-inner">
-<h3 class="callout-title"></h3>
-<div class="callout-content">
 <p>The ‘Logs’ tab is not too informative, but the ‘Inspect’ tab already
 shows more information. A process called ‘nginx’ is running. The
 ‘Terminal’ and ‘Stats’ tabs changed the most. Since the container is
 still running, the stats get shown, and we are able to launch a
 termi</p>
-</div>
-</div>
-</div>
+<p><br></p>
 <div id="accordionSolution5" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
@@ -548,25 +530,16 @@ files are a dead giveaway that we are inside the container. At this
 point this container is very much like a VM. We can modify things, like
 for example making a directory with <code>mkdir</code>, and see it has
 been created with <code>ls</code> again. <img src="fig/docker-desktop/23_gettingstarted_mkdir.png" alt="Terminal, mkdir and ls inside getting-started container." class="figure"></p>
-<div id="section-2" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="section-2" class="callout-inner">
-<h3 class="callout-title"></h3>
-<div class="callout-content">
 <p>But we can do more than that, we can install things. For example,
 you’ll notice that <code>htop</code> is not installed. Since the
 <code>getting-started</code> image is based on Alpine, we can install it
 using <code>apk add htop</code>, and we can now use it.</p>
-</div>
-</div>
-</div>
+<p><br></p>
 <div id="accordionSolution9" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution9" aria-expanded="false" aria-controls="collapseSolution9">
   <h4 class="accordion-header" id="headingSolution9">
-  Installing htop 1
+  Installing htop
   </h4>
 </button>
 <div id="collapseSolution9" class="accordion-collapse collapse" aria-labelledby="headingSolution9" data-bs-parent="#accordionSolution9">
@@ -579,7 +552,7 @@ using <code>apk add htop</code>, and we can now use it.</p>
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution10" aria-expanded="false" aria-controls="collapseSolution10">
   <h4 class="accordion-header" id="headingSolution10">
-  Installing htop 2
+  Running htop
   </h4>
 </button>
 <div id="collapseSolution10" class="accordion-collapse collapse" aria-labelledby="headingSolution10" data-bs-parent="#accordionSolution10">
@@ -588,20 +561,11 @@ using <code>apk add htop</code>, and we can now use it.</p>
 </div>
 </div>
 </div>
-<div id="section-3" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="section-3" class="callout-inner">
-<h3 class="callout-title"></h3>
-<div class="callout-content">
 <p>The container does not need to stay alive forever, and you can see
 that there is a ‘stop’ icon on the top right. If we stop the container,
 we get a familiar empty tab in ‘Terminal’ and ‘Stats’. The ‘Containers’
 tab on the left will also show the container status as ‘Exited’</p>
-</div>
-</div>
-</div>
+<p><br></p>
 <div id="accordionSolution11" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution11" aria-expanded="false" aria-controls="collapseSolution11">
@@ -678,8 +642,8 @@ this can become a problem… Particularly so because we were a bit sloppy
 and did not name the containers. Let’s try and get rid of the containers
 then. We can conveniently select them all with the tickbox at the top,
 and an option to ‘Delete’ shows up. Clicking on it will prompt for
-confirmation, and we can go ahead and accept. <img src="fig/docker-desktop/36-38.gif" alt="Deleting containers." class="figure"> All our
-containers are now gone. Forever.</p>
+confirmation, and we can go ahead and accept. <img src="fig/docker-desktop/36-38.gif" alt="Deleting containers." class="figure"></p>
+<p>All our containers are now gone. Forever.</p>
 <p><strong><em>Warning:</em></strong> You have to be careful here, this
 action deleted even the containers that were running. You can filter the
 containers before you select them “all”.</p>
@@ -700,17 +664,7 @@ overboard.</p>
 <code>alpine</code>. <img src="fig/docker-desktop/43_alpine.png" alt="Logs tab in container from alpine image." class="figure"></p>
 <p>That was fast, and uneventful. Not even a single output to the
 ‘Logs’. No way to open a terminal inside Alpine.</p>
-<div id="section-4" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="section-4" class="callout-inner">
-<h3 class="callout-title"></h3>
-<div class="callout-content">
-
-</div>
-</div>
-</div>
+<p><br></p>
 <div id="accordionSolution14" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution14" aria-expanded="false" aria-controls="collapseSolution14">
@@ -769,19 +723,9 @@ it.</p>
 <p>Let’s try something different. There’s a program called
 <code>cowsay</code> that lets you print messages as if a cow was saying
 them. Searching for that image shows that there is one by
-<code>beatrixxx32</code> with a reasonable number of downloads. <img src="fig/docker-desktop/48_cowsay.png" alt="Search of cowsay image." class="figure">
-So lets pull that image and run it.</p>
-<div id="section-5" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="section-5" class="callout-inner">
-<h3 class="callout-title"></h3>
-<div class="callout-content">
-
-</div>
-</div>
-</div>
+<code>beatrixxx32</code> with a reasonable number of downloads. <img src="fig/docker-desktop/48_cowsay.png" alt="Search of cowsay image." class="figure"></p>
+<p>So lets pull that image and run it.</p>
+<p><br></p>
 <div id="accordionSolution18" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution18" aria-expanded="false" aria-controls="collapseSolution18">
@@ -925,8 +869,8 @@ interact with the containers adequately.</li>
   "url": "https://uomresearchit.github.io/docker-introduction-R/docker-desktop.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction-R/docker-desktop.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2023-06-07",
-  "datePublished": "2023-06-07"
+  "dateModified": "2023-06-12",
+  "datePublished": "2023-06-12"
 }
 
   </script><script>

@@ -92,10 +92,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-<li><a class="dropdown-item" href="discuss.html">Discussion</a></li>
-<li><a class="dropdown-item" href="reference.html">Reference</a></li>
-          </ul>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
 </li>
       </ul>
 </div>
@@ -273,8 +270,7 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-                      <li><a href="discuss.html">Discussion</a></li>
-<li><a href="reference.html">Reference</a></li>
+                      
                     </ul>
 </div>
                 </div>
@@ -332,10 +328,7 @@
 <p aria-hidden="true">Image 1 of 1: ‘Docker Desktop being opened for the first time.’</p>
 <p>Setting up docker in Windows or Mac will have installed Docker
 Desktop by default. If you open the application you will likely see
-something like this: <img src="fig/docker-desktop/00_lo.gif" alt="Docker Desktop being opened for the first time." class="figure"> You’ll notice
-that the panel on the left has a tab for ‘Images’ and another for
-‘Containers’. These will be the focus for the episode, and we will
-ignore most other features.</p>
+something like this: <img src="fig/docker-desktop/00_lo.gif" alt="Docker Desktop being opened for the first time." class="figure"></p>
 <hr>
 <h3 id="docker-desktop-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Search window.’</p>
@@ -364,54 +357,57 @@ will open a window with information on how the image is built, and
 examine its packages and vulnerabilities. <img src="fig/docker-desktop/05_image_inspection.png" alt="Inspecting image hello-world." class="figure"></p>
 <hr>
 <h3 id="docker-desktop-figure-7">Figure 7</h3>
-<p aria-hidden="true">Image 1 of 2: ‘Inspecting image getting-started.’</p>
-<p aria-hidden="true">Image 2 of 2: ‘Inspecting image command in getting-started.’</p>
+<p aria-hidden="true">Image 1 of 1: ‘Inspecting image getting-started.’</p>
 <p>If we now inspect the <code>docker/getting-started</code> image, for
-example, we can see that it detects some vulnerabilities: <img src="fig/docker-desktop/06_image_inspection_gs.png" alt="Inspecting image getting-started." class="figure"> You can even further inspect
-the vulnerable layers by looking at the command <img src="fig/docker-desktop/07_image_inspection_gs_2.png" alt="Inspecting image command in getting-started." class="figure"></p>
+example, we can see that it detects some vulnerabilities: <img src="fig/docker-desktop/06_image_inspection_gs.png" alt="Inspecting image getting-started." class="figure"></p>
 <hr>
 <h3 id="docker-desktop-figure-8">Figure 8</h3>
+<p aria-hidden="true">Image 1 of 1: ‘Inspecting image command in getting-started.’</p>
+<p>You can even further inspect the vulnerable layers by looking at the
+command <img src="fig/docker-desktop/07_image_inspection_gs_2.png" alt="Inspecting image command in getting-started." class="figure"></p>
+<hr>
+<h3 id="docker-desktop-figure-9">Figure 9</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Run button from Images tab.’</p>
 <p>Let’s run the <code>hello-world</code> image by either clicking the
 ‘Run’ button in the ‘Actions’ column, from the Images tab. <img src="fig/docker-desktop/08_image_run.png" alt="Run button from Images tab." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-9">Figure 9</h3>
+<h3 id="docker-desktop-figure-10">Figure 10</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Run confirmation prompt.’</p>
 <p>A prompt will ask you to confirm ‘Run’ or modify some optional
 settings. <img src="fig/docker-desktop/09_image_run_prompt.png" alt="Run confirmation prompt." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-10">Figure 10</h3>
+<h3 id="docker-desktop-figure-11">Figure 11</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Run optional settings.’</p>
 <p>The optional settings allow you to modify the container’s name, so
 that you can easily identify it afterwards. Lets add an appropriate name
 and confirm with the ‘Run’ button. <img src="fig/docker-desktop/10_optional_settings.png" alt="Run optional settings." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-11">Figure 11</h3>
+<h3 id="docker-desktop-figure-12">Figure 12</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Logs tab in container from hello-world image.’</p>
 <figure><img src="fig/docker-desktop/11_hello_log.png" alt="Logs tab in container from hello-world image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-12">Figure 12</h3>
+<h3 id="docker-desktop-figure-13">Figure 13</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Inspect tab in container from hello-world image.’</p>
 <figure><img src="fig/docker-desktop/12_hello_inspect.png" alt="Inspect tab in container from hello-world image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-13">Figure 13</h3>
+<h3 id="docker-desktop-figure-14">Figure 14</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal tab in container from hello-world image.’</p>
 <figure><img src="fig/docker-desktop/14_hello_terminal.png" alt="Terminal tab in container from hello-world image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-14">Figure 14</h3>
+<h3 id="docker-desktop-figure-15">Figure 15</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Stats tab in container from hello-world image.’</p>
 <figure><img src="fig/docker-desktop/13_hello_stats.png" alt="Stats tab in container from hello-world image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-15">Figure 15</h3>
+<h3 id="docker-desktop-figure-16">Figure 16</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Clickling Start on the already run hello-world container.’</p>
 <p>Indeed, if we look carefully, we will find an ‘Exited (0)’ status
 under the container name, and a ‘Start’ button near the top-right
 corner. However, if we click on that button we will see the output
 duplicated in the logs, and the ‘Exited (0)’ status again. <img src="fig/docker-desktop/15_hello_start.png" alt="Clickling Start on the already run hello-world container." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-16">Figure 16</h3>
+<h3 id="docker-desktop-figure-17">Figure 17</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Running hello-world image for a second time.’</p>
 <p>If we go back to the images tab and run the image again (let’s not
 bother giving it a name this time), we’ll see that the same thing
 hapens. We get the ‘Hello from Docker!’, and the container exits. <img src="fig/docker-desktop/16_hello_2.png" alt="Running hello-world image for a second time." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-17">Figure 17</h3>
+<h3 id="docker-desktop-figure-18">Figure 18</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Containers list.’</p>
 <p>The nature of most containers is <em>ephimeral</em>. They are meant
 to execute a process, and when the process is completed, they exit. We
@@ -419,26 +415,26 @@ can confirm this by clicking on the ‘Containers’ tab on the left. This
 will exit the container inspection and show us all the containers. Both
 containers in the list have a status ‘Exited’. <img src="fig/docker-desktop/17_containers.png" alt="Containers list." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-18">Figure 18</h3>
+<h3 id="docker-desktop-figure-19">Figure 19</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Logs tab in container from getting-started image.’</p>
 <figure><img src="fig/docker-desktop/18_gettingstarted_log.png" alt="Logs tab in container from getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-19">Figure 19</h3>
+<h3 id="docker-desktop-figure-20">Figure 20</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Inspect tab in container from getting-started image.’</p>
 <figure><img src="fig/docker-desktop/19_gettingstarted_inspect.png" alt="Inspect tab in container from getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-20">Figure 20</h3>
+<h3 id="docker-desktop-figure-21">Figure 21</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal tab in container from getting-started image.’</p>
 <figure><img src="fig/docker-desktop/20_gettingstarted_terminal.png" alt="Terminal tab in container from getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-21">Figure 21</h3>
+<h3 id="docker-desktop-figure-22">Figure 22</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Stats tab in container from getting-started image.’</p>
 <figure><img src="fig/docker-desktop/21_gettingstarted_stats.png" alt="Stats tab in container from getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-22">Figure 22</h3>
+<h3 id="docker-desktop-figure-23">Figure 23</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Containers list, getting-started still running.’</p>
 <p>Before trying to do anything in the terminal, let’s look at the
 container list by clicking on the ‘Containers’ tab on the left. You’ll
 see the green icon of the container indicating that it is still live,
 and indication of how long it’s been running for. <img src="fig/docker-desktop/22_gettingstarted_containers.png" alt="Containers list, getting-started still running." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-23">Figure 23</h3>
+<h3 id="docker-desktop-figure-24">Figure 24</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal, mkdir and ls inside getting-started container.’</p>
 <p>Clicking on the container name again will take us back to the ‘Logs’
 tab in the container. Lets try and interact with the terminal inside the
@@ -450,22 +446,22 @@ point this container is very much like a VM. We can modify things, like
 for example making a directory with <code>mkdir</code>, and see it has
 been created with <code>ls</code> again. <img src="fig/docker-desktop/23_gettingstarted_mkdir.png" alt="Terminal, mkdir and ls inside getting-started container." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-24">Figure 24</h3>
+<h3 id="docker-desktop-figure-25">Figure 25</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal, installing htop inside getting-started container.’</p>
 <figure><img src="fig/docker-desktop/24_gettingstarted_htop.png" alt="Terminal, installing htop inside getting-started container." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-25">Figure 25</h3>
+<h3 id="docker-desktop-figure-26">Figure 26</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal, running htop inside getting-started container.’</p>
 <figure><img src="fig/docker-desktop/25_gettingstarted_htop2.png" alt="Terminal, running htop inside getting-started container." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-26">Figure 26</h3>
+<h3 id="docker-desktop-figure-27">Figure 27</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal tab in container from stopped getting-started image.’</p>
 <figure><img src="fig/docker-desktop/26_gettingstarted_exited_t.png" alt="Terminal tab in container from stopped getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-27">Figure 27</h3>
+<h3 id="docker-desktop-figure-28">Figure 28</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Stats tab in container from stopped getting-started image.’</p>
 <figure><img src="fig/docker-desktop/27_gettingstarted_exited_s.png" alt="Stats tab in container from stopped getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-28">Figure 28</h3>
+<h3 id="docker-desktop-figure-29">Figure 29</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Container list after stopping getting-started image.’</p>
 <figure><img src="fig/docker-desktop/28_gettingstarted_exited_c.png" alt="Container list after stopping getting-started image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-29">Figure 29</h3>
+<h3 id="docker-desktop-figure-30">Figure 30</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal in fresh getting-started image.’</p>
 <p>Now lets say I want to run the <code>getting-started</code> image
 again. So I go to the ‘Images’ tab, and click run. Now lets go to the
@@ -473,7 +469,7 @@ again. So I go to the ‘Images’ tab, and click run. Now lets go to the
 directory is not there. We’d also installed <code>htop</code>. so lets
 have a go at running it. Not there either. <img src="fig/docker-desktop/29_gettingstarted_2.png" alt="Terminal in fresh getting-started image." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-30">Figure 30</h3>
+<h3 id="docker-desktop-figure-31">Figure 31</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Containers after new run of getting-started image.’</p>
 <p>When we re-ran the <em>image</em>, we created a <strong>new</strong>
 <em>container</em>. The new container is created from the template saved
@@ -483,7 +479,7 @@ that the first container we created from the
 <code>getting-started</code> image is there, next to the new container
 (which is still running, by the way). <img src="fig/docker-desktop/30_gettingstarted_2_containers.png" alt="Containers after new run of getting-started image." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-31">Figure 31</h3>
+<h3 id="docker-desktop-figure-32">Figure 32</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Reviving container getting-started.’</p>
 <p>We <em>can</em> get the old container running again, although this is
 rarely something we’d <em>want</em> to do. In Docker Desktop, all we
@@ -491,24 +487,23 @@ need to do is click on the ‘Start’ button from the ‘Containers’ list.
 The terminal will appear empty, because it is a new session, but you
 will even be able to ‘recall’ commands. <img src="fig/docker-desktop/31-32.gif" alt="Reviving container getting-started." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-32">Figure 32</h3>
+<h3 id="docker-desktop-figure-33">Figure 33</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Failing to delete image.’</p>
 <p>The <code>hello-world</code> image was nice and useful to test docker
 was working, but it is now rather useless. If I want to delete it, the
 ‘Images’ tab on the left has a convenient bin icon to do so. Clicking on
 it will prompt you for confirmation, but it will fail. <img src="fig/docker-desktop/33-35.gif" alt="Failing to delete image." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-33">Figure 33</h3>
+<h3 id="docker-desktop-figure-34">Figure 34</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Deleting containers.’</p>
 <p>We’ve only been using Docker for 15 minutes though! You may see how
 this can become a problem… Particularly so because we were a bit sloppy
 and did not name the containers. Let’s try and get rid of the containers
 then. We can conveniently select them all with the tickbox at the top,
 and an option to ‘Delete’ shows up. Clicking on it will prompt for
-confirmation, and we can go ahead and accept. <img src="fig/docker-desktop/36-38.gif" alt="Deleting containers." class="figure"> All our
-containers are now gone. Forever.</p>
+confirmation, and we can go ahead and accept. <img src="fig/docker-desktop/36-38.gif" alt="Deleting containers." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-34">Figure 34</h3>
+<h3 id="docker-desktop-figure-35">Figure 35</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Successfully deleting images.’</p>
 <p>On the up-side, the ‘Images’ tab shows both the
 <code>hello-world</code> and the <code>getting-started</code> images as
@@ -517,44 +512,43 @@ container has been created from it. We have just deleted all the
 containers created from either of these images. This tells Docker that
 they are no longer being used, and can therefore be safely deleted. <img src="fig/docker-desktop/39-42.gif" alt="Successfully deleting images." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-35">Figure 35</h3>
+<h3 id="docker-desktop-figure-36">Figure 36</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Logs tab in container from alpine image.’</p>
 <p>Let’s go ahead and run the only image we have already pulled,
 <code>alpine</code>. <img src="fig/docker-desktop/43_alpine.png" alt="Logs tab in container from alpine image." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-36">Figure 36</h3>
+<h3 id="docker-desktop-figure-37">Figure 37</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Logs tab in container from alpine image.’</p>
 <figure><img src="fig/docker-desktop/44_alpine_logs.png" alt="Logs tab in container from alpine image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-37">Figure 37</h3>
+<h3 id="docker-desktop-figure-38">Figure 38</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Inspect tab in container from alpine image.’</p>
 <figure><img src="fig/docker-desktop/45_alpine_i.png" alt="Inspect tab in container from alpine image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-38">Figure 38</h3>
+<h3 id="docker-desktop-figure-39">Figure 39</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal tab in container from alpine image.’</p>
 <figure><img src="fig/docker-desktop/46_alpine_t.png" alt="Terminal tab in container from alpine image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-39">Figure 39</h3>
+<h3 id="docker-desktop-figure-40">Figure 40</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Stats tab in container from alpine image.’</p>
 <figure><img src="fig/docker-desktop/47_alpine_s.png" alt="Stats tab in container from alpine image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-40">Figure 40</h3>
+<h3 id="docker-desktop-figure-41">Figure 41</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Search of cowsay image.’</p>
 <p>Let’s try something different. There’s a program called
 <code>cowsay</code> that lets you print messages as if a cow was saying
 them. Searching for that image shows that there is one by
-<code>beatrixxx32</code> with a reasonable number of downloads. <img src="fig/docker-desktop/48_cowsay.png" alt="Search of cowsay image." class="figure">
-So lets pull that image and run it.</p>
+<code>beatrixxx32</code> with a reasonable number of downloads. <img src="fig/docker-desktop/48_cowsay.png" alt="Search of cowsay image." class="figure"></p>
 <hr>
-<h3 id="docker-desktop-figure-41">Figure 41</h3>
+<h3 id="docker-desktop-figure-42">Figure 42</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Logs tab in container from cowsay image.’</p>
 <figure><img src="fig/docker-desktop/50_cowsay_logs.png" alt="Logs tab in container from cowsay image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-42">Figure 42</h3>
+<h3 id="docker-desktop-figure-43">Figure 43</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Inspect tab in container from cowsay image.’</p>
 <figure><img src="fig/docker-desktop/51_cowsay_inspect.png" alt="Inspect tab in container from cowsay image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-43">Figure 43</h3>
+<h3 id="docker-desktop-figure-44">Figure 44</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Terminal tab in container from cowsay image.’</p>
 <figure><img src="fig/docker-desktop/52_cowsay_term.png" alt="Terminal tab in container from cowsay image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-44">Figure 44</h3>
+<h3 id="docker-desktop-figure-45">Figure 45</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Stats tab in container from cowsay image.’</p>
 <figure><img src="fig/docker-desktop/53_cowsay_stats.png" alt="Stats tab in container from cowsay image." class="figure mx-auto d-block"></figure><hr>
-<h3 id="docker-desktop-figure-45">Figure 45</h3>
+<h3 id="docker-desktop-figure-46">Figure 46</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Optional settings for cowsay.’</p>
 <p>We do get a cow this time, but it is not saying anything. But it does
 not know <em>what</em> to say. Going back to the cowsay image search,
@@ -565,7 +559,8 @@ we missed something in the optional settings! <img src="fig/docker-desktop/54_co
 <hr class="half-width">
 <h3 id="docker-cli-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘A flowchart showing the lifecycle of a Docker container.’</p>
-<figure><img src="fig/docker_life_0.png" alt="A flowchart showing the lifecycle of a Docker container." class="figure mx-auto d-block"></figure><hr>
+<p>So, what happens when we run a Docker container? <img src="fig/docker_life_0.png" alt="A flowchart showing the lifecycle of a Docker container." class="figure"></p>
+<hr>
 <h3 id="docker-cli-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘A flowchart showing the lifecycle of a Docker container. with an example’</p>
 <figure><img src="fig/docker_life_1.png" alt="A flowchart showing the lifecycle of a Docker container. with an example" class="figure mx-auto d-block"></figure><hr>
@@ -576,9 +571,9 @@ we missed something in the optional settings! <img src="fig/docker-desktop/54_co
 <p aria-hidden="true">Image 1 of 1: ‘A diagram showing the syntactic structure of a Docker command’</p>
 <figure><img src="fig/docker_cmd.png" alt="A diagram showing the syntactic structure of a Docker command" class="figure mx-auto d-block"></figure><hr>
 <h3 id="docker-cli-figure-5">Figure 5</h3>
-<p aria-hidden="true">Image 1 of 1: ‘[decorative]’</p>
-<figure><img src="fig/docker_mount.png" alt="" class="figure mx-auto d-block"><figcaption>A breakdown of the command for mounting a file into a
-container.</figcaption></figure><hr></section><section id="creating-container-images"><h2 class="section-heading"><a href="creating-container-images.html">Creating Your Own Container Images</a></h2>
+<p aria-hidden="true">Image 1 of 1: ‘A breakdown of the command for mounting a file into a container.’</p>
+<p>Docker calls these bind mounts and they take the following form: <img src="fig/docker_mount.png" alt="A breakdown of the command for mounting a file into a container." class="figure"></p>
+<hr></section><section id="creating-container-images"><h2 class="section-heading"><a href="creating-container-images.html">Creating Your Own Container Images</a></h2>
 <hr class="half-width"></section><section id="advanced-containers"><h2 class="section-heading"><a href="advanced-containers.html">Creating More Complex Container Images</a></h2>
 <hr class="half-width"></section>
 </div>
@@ -629,8 +624,8 @@ container.</figcaption></figure><hr></section><section id="creating-container-im
   "url": "https://uomresearchit.github.io/docker-introduction-R/images.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction-R/images.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2023-06-07",
-  "datePublished": "2023-06-07"
+  "dateModified": "2023-06-12",
+  "datePublished": "2023-06-12"
 }
 
   </script><script>
