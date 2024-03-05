@@ -268,7 +268,7 @@ presentation or as exercises)</a></li>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Creating More Complex Container Images</h1>
-        <p>Last updated on 2024-02-27 |
+        <p>Last updated on 2024-03-05 |
         
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/advanced-containers.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -325,8 +325,8 @@ containers.</li>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Desktop/docker-intro/sum</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> cd ~/Desktop/docker-intro/sum</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> ls</span></code></pre>
 </div>
 <p>This folder has both a <code>Dockerfile</code> and a Python script
 called <code>sum.py</code>. Let’s say we wanted to try running the
@@ -349,7 +349,7 @@ script using a container based on our recently created
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alice/alpine-python python3 sum.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> docker container run alice/alpine-python python3 sum.py</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -387,13 +387,12 @@ our current working directory. The option will look like this</p>
 computer) – the source – <em>visible</em> within the container that is
 about to be started, and inside this container, name the directory
 <code>/temp</code> – the target.</p>
-<div id="types-of-mounts" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="types-of-mounts" class="callout-inner">
-<h3 class="callout-title">Types of mounts<a class="anchor" aria-label="anchor" href="#types-of-mounts"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="types-of-mounts">Types of mounts<a class="anchor" aria-label="anchor" href="#types-of-mounts"></a></h3>
 <div class="callout-content">
 <p>You will notice that we set the mount <code>type=bind</code>, there
 are other types of mount that can be used in Docker
@@ -409,7 +408,7 @@ documentation</a>.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">--mount</span> type=bind,source=<span class="va">${PWD}</span>,target=/temp alice/alpine-python python3 sum.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">--mount</span> type=bind,source=<span class="va">${PWD}</span>,target=/temp alice/alpine-python python3 sum.py</span></code></pre>
 </div>
 <p>But we get the same error!</p>
 <div class="codewrapper">
@@ -425,19 +424,18 @@ us what we need:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">--mount</span> type=bind,source=<span class="va">${PWD}</span>,target=/temp alice/alpine-python python3 /temp/sum.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">--mount</span> type=bind,source=<span class="va">${PWD}</span>,target=/temp alice/alpine-python python3 /temp/sum.py</span></code></pre>
 </div>
 <p>Note that if we create any files in the <code>/temp</code> directory
 while the container is running, these files will appear on our host
 filesystem in the original directory and will stay there even when the
 container stops.</p>
-<div id="other-commonly-used-docker-run-flags" class="callout callout">
+<div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="other-commonly-used-docker-run-flags" class="callout-inner">
-<h3 class="callout-title">Other Commonly Used Docker Run Flags<a class="anchor" aria-label="anchor" href="#other-commonly-used-docker-run-flags"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="other-commonly-used-docker-run-flags">Other Commonly Used Docker Run Flags<a class="anchor" aria-label="anchor" href="#other-commonly-used-docker-run-flags"></a></h3>
 <div class="callout-content">
 <p>Docker run has many other useful flags to alter its function. A
 couple that are commonly used include <code>-w</code> and
@@ -553,7 +551,7 @@ computer? What’s inside?</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">--mount</span> type=bind,source=<span class="va">${PWD}</span>,target=/temp <span class="at">-it</span> alice/alpine-python sh</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">--mount</span> type=bind,source=<span class="va">${PWD}</span>,target=/temp <span class="at">-it</span> alice/alpine-python sh</span></code></pre>
 </div>
 <p>Once inside, you should be able to navigate to the <code>/temp</code>
 folder and see that’s contents are the same as the files on your host
@@ -561,8 +559,8 @@ computer:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/#</span> cd /temp</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/#</span> ls</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">/#</span> cd /temp</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">/#</span> ls</span></code></pre>
 </div>
 </div>
 </div>
@@ -585,12 +583,12 @@ the <code>docker-intro</code> folder.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">$</span> pwd</span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> /Users/yourname/Desktop/docker-intro/sum</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">$</span> /Users/yourname/Desktop/docker-intro/sum</span></code></pre>
 </div>
 <p>Let’s add a new line to the <code>Dockerfile</code> we’ve been using
 so far to create a copy of <code>sum.py</code>. We can do so by using
@@ -602,16 +600,15 @@ but give it a different name:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alice/alpine-sum .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alice/alpine-sum .</span></code></pre>
 </div>
-<div id="the-importance-of-command-order-in-a-dockerfile" class="callout callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="the-importance-of-command-order-in-a-dockerfile" class="callout-inner">
-<h3 class="callout-title">The Importance of Command Order in a
-Dockerfile<a class="anchor" aria-label="anchor" href="#the-importance-of-command-order-in-a-dockerfile"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="the-importance-of-command-order-in-a-dockerfile">The Importance of Command Order in a
+Dockerfile<a class="anchor" aria-label="anchor" href="#the-importance-of-command-order-in-a-dockerfile"></a></h3>
 <div class="callout-content">
 <p>When you run <code>docker build</code> it executes the build in the
 order specified in the <code>Dockerfile</code>. This order is important
@@ -656,14 +653,14 @@ this one. Once inside, try running the Python script.</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> alice/alpine-sum sh</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> alice/alpine-sum sh</span></code></pre>
 </div>
 <p>You should be able to run the python command inside the container
 like this:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/#</span> python3 /home/sum.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">/#</span> python3 /home/sum.py</span></code></pre>
 </div>
 </div>
 </div>
@@ -679,13 +676,12 @@ carefully about size – if you run <code>docker image ls</code> you’ll
 see the size of each container image all the way on the right of the
 screen. The bigger your container image becomes, the harder it will be
 to easily download.</p>
-<div id="callout4" class="callout callout">
+<div id="callout4" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="callout-inner">
-<h3 class="callout-title">Callout<a class="anchor" aria-label="anchor" href="#callout4"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>## Security warning Login credentials including passwords, tokens,
 secure access tokens or other secrets must never be stored in a
@@ -694,13 +690,12 @@ exploited when made public.</p>
 </div>
 </div>
 </div>
-<div id="copying-alternatives" class="callout callout">
+<div id="callout5" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="copying-alternatives" class="callout-inner">
-<h3 class="callout-title">Copying alternatives<a class="anchor" aria-label="anchor" href="#copying-alternatives"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="copying-alternatives">Copying alternatives<a class="anchor" aria-label="anchor" href="#copying-alternatives"></a></h3>
 <div class="callout-content">
 <p>Another trick for getting your own files into a container image is by
 using the <code>RUN</code> keyword and downloading the files from the
@@ -736,8 +731,8 @@ CMD ["python3", "/home/sum.py"]</code></pre>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alpine-sum:v1 .</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v1</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alpine-sum:v1 .</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v1</span></code></pre>
 </div>
 <p>You’ll notice that you can run the container without arguments just
 fine, resulting in <code>sum = 0</code>, but this is boring. Supplying
@@ -745,7 +740,7 @@ arguments however doesn’t work:</p>
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container run alpine-sum:v1 10 11 12</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">docker</span> container run alpine-sum:v1 10 11 12</span></code></pre>
 </div>
 <p>results in</p>
 <div class="codewrapper">
@@ -778,19 +773,18 @@ CMD ["10", "11"]</code></pre>
 <div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alpine-sum:v2 .</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Most of the time you are interested in the sum of 10 and 11:</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v2</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sometimes you have more challenging calculations to do:</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v2 12 13 14</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alpine-sum:v2 .</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co"># Most of the time you are interested in the sum of 10 and 11:</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v2</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co"># Sometimes you have more challenging calculations to do:</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v2 12 13 14</span></code></pre>
 </div>
-<div id="overriding-the-entrypoint" class="callout callout">
+<div id="callout6" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="overriding-the-entrypoint" class="callout-inner">
-<h3 class="callout-title">Overriding the ENTRYPOINT<a class="anchor" aria-label="anchor" href="#overriding-the-entrypoint"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="overriding-the-entrypoint">Overriding the ENTRYPOINT<a class="anchor" aria-label="anchor" href="#overriding-the-entrypoint"></a></h3>
 <div class="callout-content">
 <p>Sometimes you don’t want to run the image’s <code>ENTRYPOINT</code>.
 For example if you have a specialized container image that does only
@@ -798,7 +792,7 @@ sums, but you need an interactive shell to examine the container:</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> alpine-sum:v2 /bin/sh</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> alpine-sum:v2 /bin/sh</span></code></pre>
 </div>
 <p>will yield</p>
 <div class="codewrapper">
@@ -811,7 +805,7 @@ container image like so:</p>
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> <span class="at">--entrypoint</span> /bin/sh alpine-sum:v2</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="ex">$</span> docker container run <span class="at">-it</span> <span class="at">--entrypoint</span> /bin/sh alpine-sum:v2</span></code></pre>
 </div>
 </div>
 </div>
@@ -833,16 +827,15 @@ ENV PATH /home:$PATH</code></pre>
 <div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alpine-sum:v3 .</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v3 sum.py 1 2 3 4</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alpine-sum:v3 .</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="ex">$</span> docker container run alpine-sum:v3 sum.py 1 2 3 4</span></code></pre>
 </div>
-<div id="best-practices-for-writing-dockerfiles" class="callout callout">
+<div id="callout7" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="best-practices-for-writing-dockerfiles" class="callout-inner">
-<h3 class="callout-title">Best practices for writing Dockerfiles<a class="anchor" aria-label="anchor" href="#best-practices-for-writing-dockerfiles"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="best-practices-for-writing-dockerfiles">Best practices for writing Dockerfiles<a class="anchor" aria-label="anchor" href="#best-practices-for-writing-dockerfiles"></a></h3>
 <div class="callout-content">
 <p>Take a look at Nüst et al.’s “<a href="https://doi.org/10.1371/journal.pcbi.1008316" class="external-link"><em>Ten simple rules
 for writing Dockerfiles for reproducible data science</em></a>” [1] for
@@ -932,8 +925,8 @@ container images by using the <code>COPY</code> instruction in your
   "url": "https://uomresearchit.github.io/docker-introduction/instructor/advanced-containers.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/instructor/advanced-containers.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-02-27",
-  "datePublished": "2024-02-27"
+  "dateModified": "2024-03-05",
+  "datePublished": "2024-03-05"
 }
 
   </script><script>
