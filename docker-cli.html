@@ -280,7 +280,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using the Docker command line</h1>
-        <p>Last updated on 2024-03-12 |
+        <p>Last updated on 2024-03-19 |
         
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-cli.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -435,12 +435,12 @@ Desktop there was no way for us to provide an interactive session to the
 container! It is possible to change this behavior, but not using Docker
 Desktop. Instead, we now need to dig in to the more powerful and
 flexible Docker Command Line Interface.</p>
-<div id="callout1" class="callout">
+<div id="section" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="section"></h3>
+<div id="section" class="callout-inner">
+<h3 class="callout-title"></h3>
 <div class="callout-content">
 <p>This behavior can also be seen on other shell-like containers, for
 example those with “bash” or “python” as default commands.</p>
@@ -491,12 +491,13 @@ downloaded it is able to run without downloading. But why is no output
 produced? This is for the same reason as when we tried running Alpine in
 Docker Desktop (as explained above), the Docker run command is not
 sending any commands, and the default command exits automatically.</p>
-<div id="callout2" class="callout">
+<div id="downloading-containers" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="downloading-containers">Downloading containers<a class="anchor" aria-label="anchor" href="#downloading-containers"></a></h3>
+<div id="downloading-containers" class="callout-inner">
+<h3 class="callout-title">Downloading containers<a class="anchor" aria-label="anchor" href="#downloading-containers"></a>
+</h3>
 <div class="callout-content">
 <p>When we run docker run, the image we ask for is automatically
 downloaded. If you wanted to download in image without running this is
@@ -588,7 +589,7 @@ you print the os-release information using this approach?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -619,7 +620,7 @@ Linux system)</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -811,12 +812,13 @@ and folders on your machine to the container you are running.</p>
 later!), the name of a local file (or directory) to mount to the
 container and the path and filename which we would like inside the
 container.</p>
-<div id="callout3" class="callout">
+<div id="pwd" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="pwd">$PWD<a class="anchor" aria-label="anchor" href="#pwd"></a></h3>
+<div id="pwd" class="callout-inner">
+<h3 class="callout-title">$PWD<a class="anchor" aria-label="anchor" href="#pwd"></a>
+</h3>
 <div class="callout-content">
 <p>You will notice we used an envirnoment variable (denoted by $) to
 specify the location of our local file. This is because the docker
@@ -973,7 +975,7 @@ how to interact with them directly.</p>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.2" class="external-link">sandpaper (0.16.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.3" class="external-link">sandpaper (0.16.3)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -995,8 +997,8 @@ how to interact with them directly.</p>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-cli.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-cli.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-03-12",
-  "datePublished": "2024-03-12"
+  "dateModified": "2024-03-19",
+  "datePublished": "2024-03-19"
 }
 
   </script><script>

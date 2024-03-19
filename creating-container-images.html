@@ -271,7 +271,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Creating Your Own Container Images</h1>
-        <p>Last updated on 2024-03-12 |
+        <p>Last updated on 2024-03-19 |
         
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/creating-container-images.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -382,7 +382,7 @@ work?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A quick search should hopefully show that the way to install R on
 Alpine Linux is:</p>
@@ -447,14 +447,15 @@ elements are double-quoted (<code>"</code>) strings which are separated
 by commas. For example,
 <code>CMD ["ls", "-lF", "--color", "/etc"]</code> would translate to
 <code>ls -lF --color /etc</code>.</li>
-</ul><div id="callout1" class="callout">
+</ul><div id="shell-form-and-exec-form-for-cmd" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="shell-form-and-exec-form-for-cmd">
-<em>shell-form</em> and <em>exec-form</em> for
-CMD<a class="anchor" aria-label="anchor" href="#shell-form-and-exec-form-for-cmd"></a></h3>
+<div id="shell-form-and-exec-form-for-cmd" class="callout-inner">
+<h3 class="callout-title">
+<em>shell-form</em>and<em>exec-form</em>for
+CMD<a class="anchor" aria-label="anchor" href="#shell-form-and-exec-form-for-cmd"></a>
+</h3>
 <div class="callout-content">
 <p>Another way to specify the parameter for the <a href="https://docs.docker.com/engine/reference/builder/#cmd" class="external-link"><code>CMD</code>
 instruction</a> is the <em>shell-form</em>. Here you type the command as
@@ -485,7 +486,7 @@ Dockerfile to replicate the installation we did above?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Solution:</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Based on our experience above, edit the <code>Dockerfile</code> (in
 your text editor of choice) to look like this:</p>
@@ -534,12 +535,13 @@ command:</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> docker image build <span class="at">-t</span> alice/alpine-python .</span></code></pre>
 </div>
-<div id="callout2" class="callout">
+<div id="build-context" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="build-context">Build Context<a class="anchor" aria-label="anchor" href="#build-context"></a></h3>
+<div id="build-context" class="callout-inner">
+<h3 class="callout-title">Build Context<a class="anchor" aria-label="anchor" href="#build-context"></a>
+</h3>
 <div class="callout-content">
 <p>Notice that the final input to <code>docker image build</code> isn’t
 the Dockerfile – it’s a directory! In the command above, we’ve used the
@@ -581,7 +583,7 @@ world”?</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">Show me the solution</h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li><p>To see your new image, run <code>docker image ls</code>. You
 should see the name of your new container image under the “REPOSITORY”
@@ -684,12 +686,13 @@ opposite of <code>docker image pull</code> –
 <p>In a web browser, open <a href="https://hub.docker.com" class="external-link">https://hub.docker.com</a>, and on your
 user page you should now see your container image listed, for anyone to
 use or build on.</p>
-<div id="callout3" class="callout">
+<div id="logging-in" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="logging-in">Logging In<a class="anchor" aria-label="anchor" href="#logging-in"></a></h3>
+<div id="logging-in" class="callout-inner">
+<h3 class="callout-title">Logging In<a class="anchor" aria-label="anchor" href="#logging-in"></a>
+</h3>
 <div class="callout-content">
 <p>Technically, you have to be logged into Docker on your computer for
 this to work. Usually it happens by default, but if
@@ -775,7 +778,7 @@ images.</li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.2" class="external-link">sandpaper (0.16.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.3" class="external-link">sandpaper (0.16.3)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -797,8 +800,8 @@ images.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/creating-container-images.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/creating-container-images.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-03-12",
-  "datePublished": "2024-03-12"
+  "dateModified": "2024-03-19",
+  "datePublished": "2024-03-19"
 }
 
   </script><script>

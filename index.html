@@ -261,12 +261,13 @@ on your own laptop. Beyond your laptop, software container technologies
 such as Docker can also be used in the cloud and on high performance
 computing (HPC) systems. Some of the material in this lesson will be
 applicable to those environments too.</p>
-<div id="callout1" class="callout">
+<div id="containers-on-hpc-systems" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="containers-on-hpc-systems">Containers on HPC systems<a class="anchor" aria-label="anchor" href="#containers-on-hpc-systems"></a></h3>
+<div id="containers-on-hpc-systems" class="callout-inner">
+<h3 class="callout-title">Containers on HPC systems<a class="anchor" aria-label="anchor" href="#containers-on-hpc-systems"></a>
+</h3>
 <div class="callout-content">
 <p>On HPC systems it is more likely that <em>Singularity</em> rather
 than Docker will be the available container technology. If you are
@@ -305,12 +306,13 @@ files into the working directory of your shell.</li>
 </ul></div>
 </div>
 </div>
-<div id="callout2" class="callout">
+<div id="a-note-about-docker" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="a-note-about-docker">A note about Docker<a class="anchor" aria-label="anchor" href="#a-note-about-docker"></a></h3>
+<div id="a-note-about-docker" class="callout-inner">
+<h3 class="callout-title">A note about Docker<a class="anchor" aria-label="anchor" href="#a-note-about-docker"></a>
+</h3>
 <div class="callout-content">
 <p>Docker is a mature, robust and very widely used application.
 Nonetheless, it is still under extensive development. New versions are
@@ -334,12 +336,13 @@ repository][docker-introduction repository] for this lesson.</p>
 <li>If installing Docker yourself: <strong>root / administrator
 access</strong>
 </li>
-</ul><div id="callout1" class="callout">
+</ul><div id="warning" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a></h3>
+<div id="warning" class="callout-inner">
+<h3 class="callout-title">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
+</h3>
 <div class="callout-content">
 <p>Docker uses root / administrator access for basic functionality. If
 installing Docker yourself, without root / administrator rights, it will
@@ -371,7 +374,7 @@ in finding the correct installation procedures.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Windows</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Installation of Docker on Microsoft Windows comprises two central
 steps:</p>
@@ -383,12 +386,13 @@ Desktop.</p>
 these two guides.</p>
 <ol style="list-style-type: decimal"><li>Confirm that you are running Windows 10, version 2004 or higher
 (Build 19041 and higher) or Windows 11.</li>
-</ol><div id="callout2" class="callout">
+</ol><div id="check-your-windows-version" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="check-your-windows-version">Check your Windows version<a class="anchor" aria-label="anchor" href="#check-your-windows-version"></a></h3>
+<div id="check-your-windows-version" class="callout-inner">
+<h3 class="callout-title">Check your Windows version<a class="anchor" aria-label="anchor" href="#check-your-windows-version"></a>
+</h3>
 <div class="callout-content">
 <p>To check your Windows version and build number, press the Windows
 logo key + <kbd>R</kbd>, type <code>winver</code>, select OK. You can
@@ -424,12 +428,13 @@ Integration”</p></li>
 <li><p>Under “Enable integration with additional distros” select
 “Ubuntu”</p></li>
 <li><p>Close the Docker Desktop window</p></li>
-</ol><div id="callout3" class="callout">
+</ol><div id="warning-git-bash" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="warning-git-bash">Warning: Git Bash<a class="anchor" aria-label="anchor" href="#warning-git-bash"></a></h3>
+<div id="warning-git-bash" class="callout-inner">
+<h3 class="callout-title">Warning: Git Bash<a class="anchor" aria-label="anchor" href="#warning-git-bash"></a>
+</h3>
 <div class="callout-content">
 <p>If you are using Git Bash as your terminal on Windows then you should
 be aware that you may run into issues running some of the commands in
@@ -459,7 +464,7 @@ Bash.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Mac</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Please install docker following these <a href="https://docs.docker.com/desktop/install/mac-install/" class="external-link">instructions</a>.</p>
 </div>
@@ -471,7 +476,7 @@ Bash.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">Linux</h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Installation on Linux requires two steps:</p>
 <ul><li>Installation of Docker Engine</li>
@@ -483,13 +488,14 @@ and pointers to relevant installation information.</p>
 script</a>.</p>
 <p>Once the Docker Engine has been successfully installed, some <a href="https://docs.docker.com/engine/install/linux-postinstall/" class="external-link">post-installation
 steps</a> must be taken.</p>
-<div id="callout4" class="callout">
+<div id="warning-extra-action-if-you-install-docker-using-snap" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="warning-extra-action-if-you-install-docker-using-snap">Warning: Extra action if you install Docker
-using Snap<a class="anchor" aria-label="anchor" href="#warning-extra-action-if-you-install-docker-using-snap"></a></h3>
+<div id="warning-extra-action-if-you-install-docker-using-snap" class="callout-inner">
+<h3 class="callout-title">Warning: Extra action if you install Docker
+using Snap<a class="anchor" aria-label="anchor" href="#warning-extra-action-if-you-install-docker-using-snap"></a>
+</h3>
 <div class="callout-content">
 <p><a href="https://snapcraft.io/" class="external-link">Snap</a> is an app management system
 for linux - which is popular on Ubuntu and other systems. Docker is
@@ -595,7 +601,7 @@ machine)</li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.2" class="external-link">sandpaper (0.16.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.3" class="external-link">sandpaper (0.16.3)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -617,8 +623,8 @@ machine)</li>
   "url": "https://uomresearchit.github.io/docker-introduction/index.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/index.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-03-12",
-  "datePublished": "2024-03-12"
+  "dateModified": "2024-03-19",
+  "datePublished": "2024-03-19"
 }
 
   </script><script>
