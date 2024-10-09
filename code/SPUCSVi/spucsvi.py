@@ -34,12 +34,12 @@ def spucsvi():
             "mode": "lines+markers+text",
             "text": ["🦄"] * len(df),
             "textfont": {"size": 25, "color": "purple"},
-            "marker": {"size": 20, "symbol": "circle", "color": "purple"},
+            "marker": {"size": 40, "symbol": "circle", "color": "purple"},
             "customdata": l,
             "hovertemplate": "Brightness: %{y}<br>Location: %{customdata}<extra></extra>",
         }
     ]
-    return render_template("spucsvi.html", data=plot_data)
+    return render_template("spucsvi.html", data=plot_data, units=u[0])
 
 
 @app.route("/put_unicorn", methods=["POST"])

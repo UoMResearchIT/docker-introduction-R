@@ -2,6 +2,7 @@
 {% set navbar_colour = "bg-purple-200" %}
 {% set background_colour = "bg-gradient-to-r from-indigo-300 via-[#ffafbd] to-gray-300" %}
 {% set title = page_title %}
+{% set units = units %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +32,10 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="{{home_url}}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <!-- <img src="{{gene_logo}}" class="h-8" alt="Gene Logo" /> -->
+                <span class="text-5xl bg-purple-900 inline-block text-transparent bg-clip-text "> 🦄 </span>
                 <span
                     class="self-center text-5xl font-bold whitespace-nowrap bg-gradient-to-r from-pink-500 via-purple-900 to-indigo-400 inline-block text-transparent bg-clip-text">{{title}}</span>
+                <span class="text-5xl bg-purple-900 inline-block text-transparent bg-clip-text "> 🦄 </span>
             </a>
         </div>
     </nav>
@@ -57,7 +60,7 @@
                             title: 'Time'
                         },
                         yaxis: {
-                            title: 'Brightness'
+                            title: 'Brightness [ {{units}} ]'
                         }
                     };
                     Plotly.newPlot('timeseries-chart', data, layout);
