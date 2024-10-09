@@ -3,30 +3,30 @@ import config
 
 
 def get_str(location, brightness, units):
-    output = ""
+    parts = []
     if config.WRITE_DATETIME:
-        output += f"{datetime.now()},"
+        parts.append(f"{datetime.now()}")
     if config.WRITE_LOCATION:
-        output += f"{location},"
+        parts.append(f"{location}")
     if config.WRITE_BRIGHTNESS:
-        output += f"{brightness},"
+        parts.append(f"{brightness}")
     if config.WRITE_UNITS:
-        output += f"{units}"
-    output += "\n"
+        parts.append(f"{units}")
+    output = ",".join(parts) + "\n"
 
     return output
 
 
 def get_header():
-    output = ""
+    parts = []
     if config.WRITE_DATETIME:
-        output += "time,"
+        parts.append("time")
     if config.WRITE_LOCATION:
-        output += "location,"
+        parts.append("location")
     if config.WRITE_BRIGHTNESS:
-        output += "brightness,"
+        parts.append("brightness")
     if config.WRITE_UNITS:
-        output += "unit"
-    output += "\n"
+        parts.append("unit")
+    output = ",".join(parts) + "\n"
 
     return output
