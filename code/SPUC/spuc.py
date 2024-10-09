@@ -24,16 +24,19 @@ Welcome to the Space Purple Unicorn Counter!
 # ------------------------------------------------------------------------------
 # Endpoint for exporting the unicorn sightings if the EXPORT environment variable is set to True
 
-if os.environ.get('EXPORT') == 'True':
+if os.environ.get("EXPORT") == "True":
+
     @app.route("/export/", methods=["GET"])
     def chart():
         if not os.path.exists(file_path):
             return {"message": "No unicorn sightings yet!"}
-            
+
         return send_file(file_path, as_attachment=True)
+
 
 # ------------------------------------------------------------------------------
 # Endpoint for recording unicorn sightings
+
 
 @app.route("/unicorn_spotted", methods=["PUT"])
 def unicorn_sighting() -> dict:
@@ -46,7 +49,9 @@ def unicorn_sighting() -> dict:
 
     # --------------------------------------------------------------------------
     # Write the sighting to a file and print to the console
-
+    if not os.path.exists(file_path):
+        with open(file_path, "w") as unicorn_file:
+            unicorn_file.write(pf.get_header())
     with open(file_path, "a") as unicorn_file:
         # Append the location to the file
         line = pf.get_str(location, brightness, units)

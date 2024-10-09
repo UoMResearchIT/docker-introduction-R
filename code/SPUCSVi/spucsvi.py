@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 import requests
 import logging
 import pandas as pd
 from io import StringIO
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -13,19 +13,29 @@ app = Flask(__name__)
 
 @app.route("/")
 def spucsvi():
-    # get data (hit localhost 8321 at export endpoint)
+    # Get data from SPUC
     response = requests.get("http://spuc:8321/export")
     data = response.text
-    data = "time,location,brightness,unit\n2013-10-04 10:23:00,moon,100,iuhc\n2013-10-04 11:05:00,mars,200,iuhc\n2013-10-04 22:48:00,earth,300,iuhc\n"
     df = pd.read_csv(StringIO(data))
-
-    # Convert DataFrame to dictionary format for Plotly
+    # Make data Plotly-friendly
     plot_data = [
-        {"x": df["time"].tolist(), "y": df["brightness"].tolist(), "type": "timeseries"}
+        {
+            "x": df["time"].tolist(),
+            "y": df["brightness"].tolist(),
+            "type": "timeseries",
+        }
     ]
-    logger.error(f" ------------ \n{df}")
-
     return render_template("spucsvi.html", data=plot_data)
+
+
+@app.route("/put_unicorn", methods=["POST"])
+def put_unicorn():
+    location = request.form.get("location")
+    brightness = request.form.get("brightness")
+    requests.put(
+        f"http://spuc:8321/unicorn_spotted?location={location}&brightness={brightness}"
+    )
+    return redirect("/")
 
 
 if __name__ == "__main__":
