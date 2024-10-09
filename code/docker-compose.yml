@@ -8,12 +8,28 @@ services:
     ports:
       - "8321:8321"
     volumes:
-      - ${PWD}/SPUC/spuc.py /code/spuc.py
       - spuc-output:/code/output
     environment:
-      - EXPORT=False
+      - EXPORT=True
+    networks:
+      - spuc-net
+
+  spucsvi:
+    build:
+      context: SPUCSVi
+      dockerfile: Dockerfile
+    image: ghcr.io/uomresearchit/spucsvi:latest
+    container_name: spucsvi
+    ports:
+      - "8322:8322"
+    volumes:
+      - ${PWD}/SPUCSVi /code/
+    networks:
+      - spuc-net
 
 volumes:
   spuc-output:
     name: spuc-output
-      
+
+networks:
+  spuc-net:

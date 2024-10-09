@@ -1,0 +1,5 @@
+flask
+uvicorn
+requests
+pandas
+numpy
