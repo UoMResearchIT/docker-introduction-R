@@ -16,6 +16,10 @@ def spucsvi():
     # Get data from SPUC
     response = requests.get("http://spuc:8321/export")
     data = response.text
+
+    if "No unicorn sightings" in data or data == "":
+        return render_template("spucsvi.html", data=None)
+
     df = pd.read_csv(StringIO(data))
     # Make data Plotly-friendly
     plot_data = [
