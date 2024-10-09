@@ -21,12 +21,22 @@ def spucsvi():
         return render_template("spucsvi.html", data=None)
 
     df = pd.read_csv(StringIO(data))
+    t = df["time"].tolist() if "time" in df.columns else range(len(df))
+    b = df["brightness"].tolist() if "brightness" in df.columns else [1] * len(df)
+    u = df["unit"].tolist() if "unit" in df.columns else [""] * len(df)
+    l = df["location"].tolist() if "location" in df.columns else [""] * len(df)
+
     # Make data Plotly-friendly
     plot_data = [
         {
-            "x": df["time"].tolist(),
-            "y": df["brightness"].tolist(),
-            "type": "timeseries",
+            "x": t,
+            "y": b,
+            "mode": "lines+markers+text",
+            "text": ["🦄"] * len(df),
+            "textfont": {"size": 25, "color": "purple"},
+            "marker": {"size": 20, "symbol": "circle", "color": "purple"},
+            "customdata": l,
+            "hovertemplate": "Brightness: %{y}<br>Location: %{customdata}<extra></extra>",
         }
     ]
     return render_template("spucsvi.html", data=plot_data)
