@@ -21,9 +21,10 @@ def spucsvi():
         return render_template("spucsvi.html", data=None)
 
     df = pd.read_csv(StringIO(data))
+    c = df["count"].tolist() if "count" in df.columns else [None]
     t = df["time"].tolist() if "time" in df.columns else range(len(df))
     b = df["brightness"].tolist() if "brightness" in df.columns else [1] * len(df)
-    u = df["unit"].tolist() if "unit" in df.columns else [""] * len(df)
+    u = df["units"].tolist() if "units" in df.columns else [""] * len(df)
     l = df["location"].tolist() if "location" in df.columns else [""] * len(df)
 
     # Make data Plotly-friendly
@@ -39,7 +40,7 @@ def spucsvi():
             "hovertemplate": "Brightness: %{y}<br>Location: %{customdata}<extra></extra>",
         }
     ]
-    return render_template("spucsvi.html", data=plot_data, units=u[0])
+    return render_template("spucsvi.html", data=plot_data, count=c[-1], units=u[0])
 
 
 @app.route("/put_unicorn", methods=["POST"])
