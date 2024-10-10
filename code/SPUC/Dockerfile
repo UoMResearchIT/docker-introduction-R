@@ -1,13 +1,14 @@
 FROM python:3.12-slim
 
-WORKDIR /code
+WORKDIR /spuc
 
-COPY ./requirements.txt /code/requirements.txt
+COPY ./requirements.txt /spuc/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /spuc/requirements.txt
 
-COPY ./*.py /code/
-RUN mkdir /code/output
+COPY ./*.py /spuc/
+COPY ./config/*.config /spuc/config/
+RUN mkdir /spuc/output
 
-ENTRYPOINT ["python", "/code/spuc.py"]
+ENTRYPOINT ["python", "/spuc/spuc.py"]
 CMD ["--units", "iuhc"]

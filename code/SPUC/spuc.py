@@ -9,6 +9,7 @@ import print_format as pf
 from flask import Flask, send_file, request
 from waitress import serve
 
+count = None
 units = None
 app = Flask(__name__)
 
@@ -47,18 +48,31 @@ def unicorn_sighting() -> dict:
     location = request.args.get("location")
     brightness = request.args.get("brightness")
 
+    time = datetime.now()
+
     # --------------------------------------------------------------------------
-    # Write the sighting to a file and print to the console
+    # Initialize unicorn count from the file
+    global count
     if not os.path.exists(file_path):
         with open(file_path, "w") as unicorn_file:
             unicorn_file.write(pf.get_header())
+        count = 0
+    if count == None:
+        with open(file_path) as f:
+            num_lines = sum(1 for line in f)
+        count = num_lines - 1
+
+    # --------------------------------------------------------------------------
+    # Write the sighting to a file and print to the console
     with open(file_path, "a") as unicorn_file:
-        # Append the location to the file
-        line = pf.get_str(location, brightness, units)
+        # Append the location to the file (increases count by 1)
+        line = pf.get_file_str(count, time, location, brightness, units)
+        if line:
+            count += 1
         unicorn_file.write(line)
 
         # Print the line to the console
-        console_line = f"::::: ({datetime.now()}) Unicorn spotted at {location}!! Brightness: {brightness} {units}"
+        console_line = pf.get_print_str(count, time, location, brightness, units)
         print(console_line)
         sys.stdout.flush()
 
