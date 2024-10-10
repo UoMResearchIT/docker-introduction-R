@@ -15,19 +15,21 @@ def get_print_str(count, time, location, brightness, units):
     Get the string to print to the console based on the configuration in print_config
     """
     lines = []
-    with open(print_config, "r") as f:
-        for line in f:
-            if not line.startswith("#"):
-                lines.append(line.strip())
+    try:
+        with open(print_config, "r") as f:
+            for line in f:
+                if not line.startswith("#"):
+                    lines.append(line.strip())
+        if not lines:
+            lines = [f"ERROR: Empty print configuration file: {print_config}"]
+    except FileNotFoundError:
+        lines = [f"ERROR: Missing print configuration file: {print_config}"]
 
     config = "\n".join(lines)
-    output = config.format(
-        count=count,
-        time=time,
-        location=location,
-        brightness=brightness,
-        units=units,
-    )
+
+    # Replace variables in the configuration with their values
+    format_dict = {var: locals()[var] for var in data_vars}
+    output = config.format(**format_dict)
 
     return output
 
