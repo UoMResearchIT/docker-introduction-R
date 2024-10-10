@@ -18,7 +18,7 @@ file_path = f"output/{file_name}"
 
 help_string = """
 Welcome to the Space Purple Unicorn Counter!
-::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100' to record a unicorn sighting!
+::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\\&brightness=100' to record a unicorn sighting!
 ::::: Or 'curl localhost:8321/export' to download the unicorn sightings file!
 """
 
