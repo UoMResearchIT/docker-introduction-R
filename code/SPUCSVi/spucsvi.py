@@ -46,9 +46,11 @@ def spucsvi():
 def put_unicorn():
     location = request.form.get("location")
     brightness = request.form.get("brightness")
-    requests.put(
+    response = requests.put(
         f"http://spuc:8321/unicorn_spotted?location={location}&brightness={brightness}"
     )
+    if response.status_code != 200:
+        raise ValueError(f"Failed to register unicorn sighting. {response.json()["ERROR"]}")
     return redirect("/")
 
 

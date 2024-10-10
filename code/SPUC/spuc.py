@@ -48,6 +48,9 @@ def unicorn_sighting() -> dict:
     location = request.args.get("location")
     brightness = request.args.get("brightness")
 
+    if not location or not brightness:
+        return {"ERROR": "Missing data: Need location and brightness."}, 400
+
     time = datetime.now()
 
     # --------------------------------------------------------------------------
@@ -76,7 +79,7 @@ def unicorn_sighting() -> dict:
         print(console_line)
         sys.stdout.flush()
 
-    return {"message": "Unicorn sighting recorded!"}
+    return {"message": "Unicorn sighting recorded!"}, 200
 
 
 if __name__ == "__main__":
