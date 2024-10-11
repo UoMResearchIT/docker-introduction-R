@@ -22,7 +22,7 @@ def spucsvi():
 
     df = pd.read_csv(StringIO(data))
     c = df["count"].fillna(0).tolist()
-    t = df["time"].fillna(method='ffill').tolist()
+    t = df["time"].ffill().tolist()
     b = df["brightness"].fillna(0).tolist()
     u = df["units"].fillna("").tolist()
     l = df["location"].fillna("").tolist()
