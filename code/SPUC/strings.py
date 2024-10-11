@@ -8,7 +8,7 @@ data_vars = [
 ]
 
 
-def get_print_str(count, time, location, brightness, units):
+def print(count, time, location, brightness, units):
     """
     Get the string to print to the console based on the configuration in print_config
     """
@@ -32,7 +32,7 @@ def get_print_str(count, time, location, brightness, units):
     return output
 
 
-def get_file_str(count, time, location, brightness, units):
+def write(count, time, location, brightness, units):
     """
     Get the string to write to the file (includes all the data)
     """
@@ -48,7 +48,7 @@ def get_file_str(count, time, location, brightness, units):
     return output
 
 
-def get_header():
+def header():
     """
     Get all the headers to write to the file
     """

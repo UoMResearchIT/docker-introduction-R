@@ -1,10 +1,9 @@
 import os
 import sys
-from typing import Union
 from datetime import datetime
 
 import argparse
-import print_format as pf
+import strings as s
 
 from flask import Flask, send_file, request
 from waitress import serve
@@ -58,7 +57,7 @@ def unicorn_sighting() -> dict:
     global count
     if not os.path.exists(file_path):
         with open(file_path, "w") as unicorn_file:
-            unicorn_file.write(pf.get_header())
+            unicorn_file.write(s.header())
         count = 0
     if count == None:
         with open(file_path) as f:
@@ -69,13 +68,13 @@ def unicorn_sighting() -> dict:
     # Write the sighting to a file and print to the console
     with open(file_path, "a") as unicorn_file:
         # Append the location to the file (increases count by 1)
-        line = pf.get_file_str(count, time, location, brightness, units)
+        line = s.write(count, time, location, brightness, units)
         if line:
             count += 1
         unicorn_file.write(line)
 
         # Print the line to the console
-        console_line = pf.get_print_str(count, time, location, brightness, units)
+        console_line = s.print(count, time, location, brightness, units)
         print(console_line)
         sys.stdout.flush()
 
