@@ -8,7 +8,8 @@ services:
     ports:
       - "8321:8321"
     volumes:
-      - spuc-output:/code/output
+      - spuc-output:/spuc/output
+      - ${PWD}/SPUC/config:/spuc/config
     environment:
       - EXPORT=True
     networks:
@@ -23,7 +24,7 @@ services:
     ports:
       - "8322:8322"
     volumes:
-      - ${PWD}/SPUCSVi /code/
+      - ${PWD}/SPUCSVi /spucsvi/
     networks:
       - spuc-net
 

@@ -5,7 +5,7 @@ import pandas as pd
 from io import StringIO
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -21,10 +21,11 @@ def spucsvi():
         return render_template("spucsvi.html", data=None)
 
     df = pd.read_csv(StringIO(data))
-    t = df["time"].tolist() if "time" in df.columns else range(len(df))
-    b = df["brightness"].tolist() if "brightness" in df.columns else [1] * len(df)
-    u = df["unit"].tolist() if "unit" in df.columns else [""] * len(df)
-    l = df["location"].tolist() if "location" in df.columns else [""] * len(df)
+    c = df["count"].fillna(0).tolist()
+    t = df["time"].ffill().tolist()
+    b = df["brightness"].fillna(0).tolist()
+    u = df["units"].fillna("").tolist()
+    l = df["location"].fillna("").tolist()
 
     # Make data Plotly-friendly
     plot_data = [
@@ -39,16 +40,18 @@ def spucsvi():
             "hovertemplate": "Brightness: %{y}<br>Location: %{customdata}<extra></extra>",
         }
     ]
-    return render_template("spucsvi.html", data=plot_data, units=u[0])
+    return render_template("spucsvi.html", data=plot_data, count=c[-1], units=u[0])
 
 
 @app.route("/put_unicorn", methods=["POST"])
 def put_unicorn():
     location = request.form.get("location")
     brightness = request.form.get("brightness")
-    requests.put(
+    response = requests.put(
         f"http://spuc:8321/unicorn_spotted?location={location}&brightness={brightness}"
     )
+    if response.status_code != 200:
+        raise ValueError(f"Failed to register unicorn sighting. {response.json()["ERROR"]}")
     return redirect("/")
 
 
