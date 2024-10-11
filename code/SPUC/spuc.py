@@ -9,6 +9,7 @@ import print_format as pf
 from flask import Flask, send_file, request
 from waitress import serve
 
+count = None
 units = None
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ file_path = f"output/{file_name}"
 
 help_string = """
 Welcome to the Space Purple Unicorn Counter!
-::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100' to record a unicorn sighting!
+::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\\&brightness=100' to record a unicorn sighting!
 ::::: Or 'curl localhost:8321/export' to download the unicorn sightings file!
 """
 
@@ -47,22 +48,38 @@ def unicorn_sighting() -> dict:
     location = request.args.get("location")
     brightness = request.args.get("brightness")
 
+    if not location or not brightness:
+        return {"ERROR": "Missing data: Need location and brightness."}, 400
+
+    time = datetime.now()
+
     # --------------------------------------------------------------------------
-    # Write the sighting to a file and print to the console
+    # Initialize unicorn count from the file
+    global count
     if not os.path.exists(file_path):
         with open(file_path, "w") as unicorn_file:
             unicorn_file.write(pf.get_header())
+        count = 0
+    if count == None:
+        with open(file_path) as f:
+            num_lines = sum(1 for line in f)
+        count = num_lines - 1
+
+    # --------------------------------------------------------------------------
+    # Write the sighting to a file and print to the console
     with open(file_path, "a") as unicorn_file:
-        # Append the location to the file
-        line = pf.get_str(location, brightness, units)
+        # Append the location to the file (increases count by 1)
+        line = pf.get_file_str(count, time, location, brightness, units)
+        if line:
+            count += 1
         unicorn_file.write(line)
 
         # Print the line to the console
-        console_line = f"::::: ({datetime.now()}) Unicorn spotted at {location}!! Brightness: {brightness} {units}"
+        console_line = pf.get_print_str(count, time, location, brightness, units)
         print(console_line)
         sys.stdout.flush()
 
-    return {"message": "Unicorn sighting recorded!"}
+    return {"message": "Unicorn sighting recorded!"}, 200
 
 
 if __name__ == "__main__":

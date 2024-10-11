@@ -1,5 +1,4 @@
 flask
-uvicorn
+gunicorn
 requests
 pandas
-numpy
