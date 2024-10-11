@@ -6,7 +6,11 @@ import argparse
 import strings as s
 
 from flask import Flask, send_file, request
+import logging
 from waitress import serve
+
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
