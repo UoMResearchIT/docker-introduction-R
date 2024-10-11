@@ -1,5 +1,3 @@
-from datetime import datetime
-
 print_config = "config/print.config"
 data_vars = [
     "count",

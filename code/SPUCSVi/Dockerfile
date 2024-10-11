@@ -9,5 +9,4 @@ RUN pip install -r /spucsvi/requirements.txt
 COPY ./*.py /spucsvi/
 COPY ./templates /spucsvi/templates
 
-# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000","--reload"]
-CMD ["flask", "--app", "spucsvi", "run", "--debug", "--host", "0.0.0.0", "--port", "8322"]
+CMD ["gunicorn", "-w", "4", "spucsvi:app", "-b", "0.0.0.0:8322"]
