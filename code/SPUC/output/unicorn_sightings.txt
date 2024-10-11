@@ -1,3 +1,0 @@
-count,time,location,brightness,units
-0,2024-10-10 14:48:26.743842,moon,100,iuhc
-1,2024-10-10 14:48:37.749693,moon,100,iuhc
