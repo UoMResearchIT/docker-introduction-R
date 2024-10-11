@@ -10,5 +10,7 @@ COPY ./*.py /spuc/
 COPY ./config/*.config /spuc/config/
 RUN mkdir /spuc/output
 
+EXPOSE 8321
+
 ENTRYPOINT ["python", "/spuc/spuc.py"]
 CMD ["--units", "iuhc"]
