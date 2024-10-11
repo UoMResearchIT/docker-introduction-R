@@ -1,3 +1,5 @@
+import textwrap as t
+
 print_config = "config/print.config"
 data_vars = [
     "count",
@@ -58,3 +60,64 @@ def header():
     output = ",".join(parts) + "\n"
 
     return output
+
+
+def logo():
+    logo = r"""
+            \
+             \
+              \\
+               \\\
+                >\/7
+            _.-(º   \
+           (=___._/` \            ____  ____  _    _  ____
+                )  \ |\          / ___||  _ \| |  | |/ ___|
+               /   / ||\         \___ \| |_) | |  | | |
+              /    > /\\\         ___) |  __/| |__| | |___
+             j    < _\           |____/|_|    \____/ \____|
+         _.-' :      ``.
+         \ r=._\        `.       Space Purple Unicorn Counter
+        <`\\_  \         .`-.
+         \ r-7  `-. ._  ' .  `\
+          \`,      `-.`7  7)   )
+           \/         \|  \'  / `-._
+                      ||    .'
+                       \\  (
+                        >\  >
+                    ,.-' >.'
+                   <.'_.''
+                     <'
+    """
+    return logo
+
+
+def welcome(unit_long_name, units):
+    message = t.dedent(
+        f"""
+        Welcome to the Space Purple Unicorn Counter!
+
+        :::: Units set to {unit_long_name} [{units}] ::::")
+        """.rstrip()
+    )
+    return message
+
+
+def base_help():
+    help = t.dedent(
+        r"""
+        :: Try recording a unicorn sighting with:
+            curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+        """.rstrip()
+    )
+    return help
+
+
+def export_help():
+    help = t.dedent(
+        r"""
+        :::: Unicorn sightings export activated! ::::
+        :: Try downloading the unicorn sightings record with:
+            curl localhost:8321/export
+        """.rstrip()
+    )
+    return help

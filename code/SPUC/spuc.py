@@ -8,22 +8,17 @@ import strings as s
 from flask import Flask, send_file, request
 from waitress import serve
 
-count = None
-units = None
 app = Flask(__name__)
 
 file_name = "unicorn_sightings.txt"
 file_path = f"output/{file_name}"
 
-help_string = """
-Welcome to the Space Purple Unicorn Counter!
-::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\\&brightness=100' to record a unicorn sighting!
-::::: Or 'curl localhost:8321/export' to download the unicorn sightings file!
-"""
+count = None
+units = None
+
 
 # ------------------------------------------------------------------------------
 # Endpoint for exporting the unicorn sightings if the EXPORT environment variable is set to True
-
 if os.environ.get("EXPORT") == "True":
 
     @app.route("/export/", methods=["GET"])
@@ -36,14 +31,10 @@ if os.environ.get("EXPORT") == "True":
 
 # ------------------------------------------------------------------------------
 # Endpoint for recording unicorn sightings
-
-
 @app.route("/unicorn_spotted", methods=["PUT"])
 def unicorn_sighting() -> dict:
 
-    # --------------------------------------------------------------------------
     # Get the location and brightness from the request
-
     location = request.args.get("location")
     brightness = request.args.get("brightness")
 
@@ -52,7 +43,6 @@ def unicorn_sighting() -> dict:
 
     time = datetime.now()
 
-    # --------------------------------------------------------------------------
     # Initialize unicorn count from the file
     global count
     if not os.path.exists(file_path):
@@ -64,16 +54,15 @@ def unicorn_sighting() -> dict:
             num_lines = sum(1 for line in f)
         count = num_lines - 1
 
-    # --------------------------------------------------------------------------
     # Write the sighting to a file and print to the console
     with open(file_path, "a") as unicorn_file:
-        # Append the location to the file (increases count by 1)
+        # Write to file and increase count
         line = s.write(count, time, location, brightness, units)
         if line:
             count += 1
         unicorn_file.write(line)
 
-        # Print the line to the console
+        # Print to the console
         console_line = s.print(count, time, location, brightness, units)
         print(console_line)
         sys.stdout.flush()
@@ -81,11 +70,10 @@ def unicorn_sighting() -> dict:
     return {"message": "Unicorn sighting recorded!"}, 200
 
 
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 if __name__ == "__main__":
-
-    # --------------------------------------------------------------------------
     # Parse the command line arguments
-
     parser = argparse.ArgumentParser(description="Run the unicorn sighting API")
     parser.add_argument(
         "--units",
@@ -96,50 +84,21 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # --------------------------------------------------------------------------
     # Set the units
-
     units = args.units
     if units == "iuhc":
         unit_long_name = "Imperial Unicorn Hoove Candles"
     elif units == "iulu":
         unit_long_name = "Intergalactic Unicorn Luminiocity Units"
 
-    # --------------------------------------------------------------------------
     # Print the initialization message
-
-    logo = r"""
-            \\
-             \\
-              \\
-               \\
-                >\/7
-            _.-(6'  \
-           (=___._/` \            ____  ____  _    _  ____
-                )  \ |           / ___||  _ \| |  | |/ ___|
-               /   / |           \___ \| |_) | |  | | |
-              /    > /            ___) |  __/| |__| | |___
-             j    < _\           |____/|_|    \____/ \____|
-         _.-' :      ``.
-         \ r=._\        `.       Space Purple Unicorn Counter
-        <`\\_  \         .`-.
-         \ r-7  `-. ._  ' .  `\
-          \`,      `-.`7  7)   )
-           \/         \|  \'  / `-._
-                      ||    .'
-                       \\  (
-                        >\  >
-                    ,.-' >.'
-                   <.'_.''
-                     <'
-    """
-    print(logo)
-    print(f"::::: Initializing SPUC...")
-    print(f"::::: Units set to {unit_long_name} [{units}].")
-    print(f"{help_string}")
+    print(s.logo())
+    print(s.welcome(unit_long_name, units))
+    print(s.base_help())
+    if os.environ.get("EXPORT") == "True":
+        print(s.export_help())
+    print()
     sys.stdout.flush()
 
-    # --------------------------------------------------------------------------
     # Run the API
-
     serve(app, host="0.0.0.0", port=8321)
