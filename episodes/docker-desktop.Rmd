@@ -4,7 +4,15 @@ teaching: 20
 exercises: 0
 ---
 
-**This episode is meant to be demonstrative, that is, you do not *need* to follow along.**
+We will present the Docker Desktop dashboard, as it will be useful to understand key concepts of docker, such as images and containers.
+Setting up docker in Windows or Mac will have installed Docker Desktop by default.
+However, it is unlikely that you will use Docker Desktop on your day to day work.
+You are much more likely to use the command line interface to interact with Docker, and we will cover this shortly.
+
+It is also important to note that while Docker Desktop is mostly free, some features are offered at a premium.
+Also, it is not fully functional on all operating systems; it can produce conflicts with the docker engine on Linux, for example.
+
+Therefore, **this episode is meant to be demonstrative, that is, you do not *need* to follow along**.
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 - Show Docker Desktop and its components.
@@ -24,61 +32,62 @@ exercises: 0
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-We will present the Docker Desktop dashboard, as it will be useful to understand key concepts of docker, such as images and containers.
-However, it is important to note that while it is mostly is free, some features are offered at a premium.
-Also, it is not fully functional on all operating systems; it can produce conflicts with the docker engine on Linux, for example.
-
+The *Space Purple Unicorn Association* (SPUA) has instructed us to find the *Space Purple Unicorn Counter* (SPUC) container image in preparation for our important mission.
 
 ## Getting images
 
-Setting up docker in Windows or Mac will have installed Docker Desktop by default.
+One of the useful features of Docker Desktop is the ability to search and analyze container images.
+
 If you open the application you will likely see something like this:
-![](fig/docker-desktop/00_lo.gif){alt='Docker Desktop being opened for the first time.'}
+
+![](fig/docker-desktop/docker_desktop_landing.gif){alt='Docker Desktop being opened for the first time.'}
 
 You'll notice that the panel on the left has a tab for 'Images' and another for 'Containers'.
 These will be the focus for the episode, and we will ignore most other features.
 
-On the top you'll also find a search icon, which links to Docker Hub,
-and allows us to search for the images we saw in the previous episode directly from here.
+On the top blue bar you'll also find a search icon, which allows us to search for container images.
 
-\*Note that there are two tabs, one for containers and one for images.
-Make sure that you select the right tab when you search!
-![](fig/docker-desktop/01_search.png){alt='Search window.'}
+Lets go ahead and select this search box, and search for spuacv/spuc.
+*Tip*: You can also use `Ctrl+K` to start the search.
 
-In Docker Desktop you can either search by name only,
-![](fig/docker-desktop/02_search_name.png){alt='Search by name.'}
+![](fig/docker-desktop/search_spuc.png){alt='Search window.'}
 
-or include the owner. You can then select the tag from the dropdown menu.
-![](fig/docker-desktop/03_search_owner%26tag.png){alt='Search with owner and select a tag.'}
+You may have noticed that it already shows some information about the image.
+If you click on the image you'll be shown more information.
+You should be able to see the documentation, and it lets you select a tag (version) from the dropdown menu.
+
+![](fig/docker-desktop/search_select_spuc_tag.png){alt='Search and select a tag.'}
 
 Once you find the image you were looking for, you can either download it (pull), or directly run it.
 
-We'll start by downloading the latest versions of `hello-world`, `docker/getting-started` and `alpine`.
+We'll start by downloading the latest version.
+Go ahead and click on the 'Pull' button.
+
+Lets also pull the `hello-world` and `alpine` images, which will help us explore features and issues with Docker Desktop.
 
 
 ## Inspecting images
 
-The 'Images' tab on the left panel will show all the images in your system, so you will be able to see them here.
-![](fig/docker-desktop/04_pulled_3.png){alt='Images list, hello-world, getting-started and alpine.'}
+Lets now go to the 'Images' tab on the left panel.
+This shows a list of all the images in your system, so you will be able to see spuc and the other two images here.
 
-From this tab we can see some information about the images on disk, and run them, but we can also inspect the images.
+![](fig/docker-desktop/images_spuc_alpine_hello.png){alt='Images list showing spuc, alpine and hello-world.'}
+
+The list already shows some information about the images on disk, like their tag, size, and when they were created.
+It is also the place where you can run the images, or delete them.
+However, before we do that we want to *inspect* the images.
+
 Clicking on the image will open a window with information on how the image is built, and examine its packages and vulnerabilities.
-![](fig/docker-desktop/05_image_inspection.png){alt='Inspecting image hello-world.'}
+We can even see which of the *layers* of the image are vulnerable, and where they come from (Image hierarchy).
+For example, the vulnerabilities in the `spuc` image come from its base image, `python3-slim".
 
-The `hello-world` image does not seem too interesting from here.
-If you go to DockerHub you'll find links to the Github site, where you'll see that the image is not as simple as it looks.
-Nevertheless, this is a very nice and quick way to explore an image.
-
-If we now inspect the `docker/getting-started` image, for example, we can see that it detects some vulnerabilities:
-![](fig/docker-desktop/06_image_inspection_gs.png){alt='Inspecting image getting-started.'}
-
-You can even further inspect the vulnerable layers by looking at the command
-![](fig/docker-desktop/07_image_inspection_gs_2.png){alt='Inspecting image command in getting-started.'}
+![](fig/docker-desktop/image_inspecting_spuc.png){alt='Inspecting spuc image.'}
 
 This all looks rather scary, and it is important that we are careful with the images that we download.
 It is therefore quite useful to be able to analize them like this.
-This image, in particular, is from a verified publisher (Docker Inc. no less!), and has been downloaded over 10M times,
-so the container is likely not maliicous.
+The `python:3-slim` image, in particular, comes from a verified publisher, so it is unlikely to be malicious.
+
+Another interesting thing to look at is the last few lines, which usually show the command that will be run when the container is started.
 
 
 ## Running containers
@@ -87,280 +96,337 @@ The images that we just downloaded are immutable files, they are snapshots of an
 The containers are, essentially, images being *run*.
 They are executions of the image, and because they are running, they are no longer 'static'.
 
-Let's run the `hello-world` image by either clicking the 'Run' button in the 'Actions' column, from the Images tab.
-![](fig/docker-desktop/08_image_run.png){alt='Run button from Images tab.'}
+Let's run the `hello-world` image by clicking the 'Run' button in the 'Actions' column, from the Images tab.
+
+![](fig/docker-desktop/image_run_hello.png){alt='Run button from Images tab.'}
 
 A prompt will ask you to confirm 'Run' or modify some optional settings.
-![](fig/docker-desktop/09_image_run_prompt.png){alt='Run confirmation prompt.'}
+For now, lets just confirm with 'Run'.
 
-The optional settings allow you to modify the container's name, so that you can easily identify it afterwards.
-Lets add an appropriate name and confirm with the 'Run' button.
-![](fig/docker-desktop/10_optional_settings.png){alt='Run optional settings.'}
+![](fig/docker-desktop/image_run_prompt.png){alt='Run confirmation prompt.'}
 
-You will likely be taken to a 'Logs' tab inside the container that you just ran.
+You will be taken to a 'Logs' tab inside the container that you just ran.
 The logs show the output of this particular image, 'Hello from Docker!' among other things.
 
 If you look carefully, the 'Containers' tab on the left is highlighted.
 We are looking at a container now, not an image, and so we were re-located.
 
+You might also find the heading in this page strange.
+Unless you specify a name for the container (which we could have done in the optional settings),
+Docker will generate a random name for it, which is what we see here.
+
 Exploring the 'Inspect' tab will show us some information, but for now we are more interested in what the 'Terminal' and 'Stats' tabs have to say.
 They both seem to indicate that we need to *run* or *start* the container.
 
-<br>
+::: group-tab
 
-:::::::::::::::: solution
-### Logs tab
-![](fig/docker-desktop/11_hello_log.png){alt='Logs tab in container from hello-world image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Inspect tab
-![](fig/docker-desktop/12_hello_inspect.png){alt='Inspect tab in container from hello-world image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Terminal tab
-![](fig/docker-desktop/14_hello_terminal.png){alt='Terminal tab in container from hello-world image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Stats tab
-![](fig/docker-desktop/13_hello_stats.png){alt='Stats tab in container from hello-world image.'}
-:::::::::::::::::::::::::
+### Logs
+
+![](fig/docker-desktop/hello_log.png){alt='Logs tab in container from hello-world image.'}
+
+### Inspect
+
+![](fig/docker-desktop/hello_inspect.png){alt='Inspect tab in container from hello-world image.'}
+
+### Bind mounts
+
+![](fig/docker-desktop/hello_bind.png){alt='Bind mounts tab in container from hello-world image.'}
+
+### Exec
+
+![](fig/docker-desktop/hello_exec.png){alt='Exec tab in container from hello-world image.'}
+
+### Files
+
+![](fig/docker-desktop/hello_files.png){alt='Files tab in container from hello-world image.'}
+
+### Stats
+
+![](fig/docker-desktop/hello_stats.png){alt='Stats tab in container from hello-world image.'}
+
+:::
+
 
 Indeed, if we look carefully, we will find an 'Exited (0)' status under the container name, and a 'Start' button near the top-right corner.
 However, if we click on that button we will see the output duplicated in the logs, and the 'Exited (0)' status again.
-![](fig/docker-desktop/15_hello_start.png){alt='Clickling Start on the already run hello-world container.'}
 
-If we go back to the images tab and run the image again (let's not bother giving it a name this time), we'll see that the same thing hapens.
-We get the 'Hello from Docker!', and the container exits.
-![](fig/docker-desktop/16_hello_2.png){alt='Running hello-world image for a second time.'}
+![](fig/docker-desktop/hello_start.png){alt='Clickling Start on the already run hello-world container.'}
+
+If we go back to the images tab and run the image again, we'll see that the same thing hapens.
+We get the 'Hello from Docker!', and the container (with a new random name) exits.
+
+![](fig/docker-desktop/hello_re-ran.png){alt='Running hello-world image for a second time.'}
 
 The nature of most containers is *ephimeral*.
+
 They are meant to execute a process, and when the process is completed, they exit.
 We can confirm this by clicking on the 'Containers' tab on the left.
 This will exit the container inspection and show us all the containers.
+
+We have only run the `hello-world` image, but you can see there are two containers.
 Both containers in the list have a status 'Exited'.
-![](fig/docker-desktop/17_containers.png){alt='Containers list.'}
 
-You may be wondering why if we have only run the `hello-world` image, you can see there are two containers.
-One of the containers we named, and the other has some gibberish as a name (Docker generated this randomly).
+![](fig/docker-desktop/containers_list.png){alt='Containers list.'}
+
+You may be wondering why there are two containers, and not just one, given that we only used one image.
 As mentioned before, the *image* is used as a template, and as many *containers* as we want can be created from it.
-If we go back to the 'Images' tab and run `hello world` again, we'll see a new container appear.
+Every time we run the image, a new container is created.
 
+So why are there not three containers then?
+When we ran the image from the container inspection window, we were running the command on the same container.
+That's why there's only two, even though we saw the container in action three times.
+
+If we go back to the 'Images' tab and run `hello world` again, we'll see a new container appear.
+All the containers are still there, and they are not deleted automatically.
+This can actually become problematic, and we will deal with it in a bit.
 
 ## Interacting with containers
 
-Not all containers are as short lived as the one we've been using.
-If we run the `docker/getting-started` image that we had pulled earlier, we will see something different happen.
-You can immediately notice the status under the container name is 'RUNNING' now.
-nal *inside* the container.
+Not all containers are as short lived as the ones from the `hello-world` image.
+Lets try running the `spuacv/spuc`, but look at the optional settings this time.
+If you remember, we were instructed to run the container and configure a port.
+Lets add a map to the port `8321` in the local machine.
 
-The 'Logs' tab is not too informative, but the 'Inspect' tab already shows more information.
-A process called 'nginx' is running.
-The 'Terminal' and 'Stats' tabs changed the most.
-Since the container is still running, the stats get shown, and we are able to launch a termi
+![](fig/docker-desktop/run_spuc_opt.png){alt='Optional settings for spuc.'}
 
-<br>
+We are now ready to run it.
+You can immediately notice the status under the container name is 'Running',
+and instead of an option to start the container, we now get the option to stop it.
+The 'Logs' tab is not too different, but the 'Stats' tab already shows more information.
+The 'Exec' tab also looks more interesting, we get access to a terminal inside the running container.
 
-:::::::::::::::: solution
-### Logs tab
-![](fig/docker-desktop/18_gettingstarted_log.png){alt='Logs tab in container from getting-started image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Inspect tab
-![](fig/docker-desktop/19_gettingstarted_inspect.png){alt='Inspect tab in container from getting-started image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Terminal tab
-![](fig/docker-desktop/20_gettingstarted_terminal.png){alt='Terminal tab in container from getting-started image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Stats tab
-![](fig/docker-desktop/21_gettingstarted_stats.png){alt='Stats tab in container from getting-started image.'}
-:::::::::::::::::::::::::
+::: group-tab
+
+### Logs
+
+![](fig/docker-desktop/spuc_log.png){alt='Logs tab in container from spuc image.'}
+
+### Inspect
+
+![](fig/docker-desktop/spuc_inspect.png){alt='Inspect tab in container from spuc image.'}
+
+### Bind mounts
+
+![](fig/docker-desktop/spuc_bind.png){alt='Bind mounts tab in container from spuc image.'}
+
+### Exec
+
+![](fig/docker-desktop/spuc_exec.png){alt='Exec tab in container from spuc image.'}
+
+### Files
+
+![](fig/docker-desktop/spuc_files.png){alt='Files tab in container from spuc image.'}
+
+### Stats
+
+![](fig/docker-desktop/spuc_stats.png){alt='Stats tab in container from spuc image.'}
+
+:::
 
 Before trying to do anything in the terminal, let's look at the container list by clicking on the 'Containers' tab on the left.
 You'll see the green icon of the container indicating that it is still live, and indication of how long it's been running for.
-![](fig/docker-desktop/22_gettingstarted_containers.png){alt='Containers list, getting-started still running.'}
+
+![](fig/docker-desktop/containers_list_spuc_running.png){alt='Containers list, spuc still running.'}
 
 Clicking on the container name again will take us back to the 'Logs' tab in the container.
+
+:::::::::::::::::::::::::::: callout
+
+### Spot a unicorn!
+
+If you look at the logs, you'll see that the SPUC container is instructing you on how to interact with it.
+Lets go ahead and try that.
+Open a terminal and run the command `curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100`.
+If you look at the logs again, you'll see that the container has responded to your command with something like:
+
+```
+{"message":"Unicorn spotted at moon!! Brightness: 100 iuhc"}
+```
+
+The documentation also mentioned that you can configure this print by modifying the `print.config` file.
+How do we do that?
+
+::::::::::::::::::::::::::::::::::::
+
 Lets try and interact with the terminal inside the container.
-If you print the working directory with `pwd` you'll get the base directory: `/`.
-You can also list the contents with `ls`, and the `docker-entrypoint` files are a dead giveaway that we are inside the container.
-At this point this container is very much like a VM.
-We can modify things, like for example making a directory with `mkdir`, and see it has been created with `ls` again.
-![](fig/docker-desktop/23_gettingstarted_mkdir.png){alt='Terminal, mkdir and ls inside getting-started container.'}
 
-But we can do more than that, we can install things. For example, you'll notice that `htop` is not installed.
-Since the `getting-started` image is based on Alpine, we can install it using `apk add htop`, and we can now use it.
+If you print the working directory with `pwd` you'll get the app's base directory: `/spuc`.
+You can also list the contents with `ls`, and look at the app's code.
+We can even run `apt update` and install something; for example `apt install nano`.
 
-<br>
+![](fig/docker-desktop/spuc_running.gif){alt='Interacting with spuc terminal in the Exec tab.'}
 
-:::::::::::::::: solution
-### Installing htop
-![](fig/docker-desktop/24_gettingstarted_htop.png){alt='Terminal, installing htop inside getting-started container.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Running htop
-![](fig/docker-desktop/25_gettingstarted_htop2.png){alt='Terminal, running htop inside getting-started container.'}
-:::::::::::::::::::::::::
+As you might expect, We can also modify things, like for example the `print.config` file.
+Since we have installed nano, lets use it to edit the file.
+Run `nano config/print.config` and you'll see the contents of the file.
+Replace the the print config line with:
 
-The container does not need to stay alive forever, and you can see that there is a 'stop' icon on the top right.
-If we stop the container, we get a familiar empty tab in 'Terminal' and 'Stats'.
-The 'Containers' tab on the left will also show the container status as 'Exited'
+```
+::::: {time} Unicorn number {count} spotted at {location}!! Brightness: {brightness} {units}
+```
 
-<br>
+Another curl now should show the changes we made to the `print.config` file.
 
-:::::::::::::::: solution
-### Terminal tab
-![](fig/docker-desktop/26_gettingstarted_exited_t.png){alt='Terminal tab in container from stopped getting-started image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Stats tab
-![](fig/docker-desktop/27_gettingstarted_exited_s.png){alt='Stats tab in container from stopped getting-started image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Container list
-![](fig/docker-desktop/28_gettingstarted_exited_c.png){alt='Container list after stopping getting-started image.'}
-:::::::::::::::::::::::::
+At this point, it seems like the container is very much like a VM.
+However, as we've mentioned before, containers are *meant to be ephimeral*.
 
-Now lets say I want to run the `getting-started` image again. So I go to the 'Images' tab, and click run.
-Now lets go to the 'Terminal' tab, and try and find our directory with `ls`. The directory is not there.
-We'd also installed `htop`. so lets have a go at running it. Not there either.
-![](fig/docker-desktop/29_gettingstarted_2.png){alt='Terminal in fresh getting-started image.'}
+If we stop the container, we get a familiar empty tab in 'Exec' and 'Stats'.
+The 'Containers' tab on the left will also show the container status as 'Exited'.
+
+Lets go back to the 'Images' tab, and run the `spuc` image again.
+Now lets go to the 'Exec' tab, and try and edit the `print.config` file again.
+You'll notice that `nano` is not there anymore.
+If you look at the contents of the file, for example with `cat config/print.config`, you'll see that the changes we made are gone.
+
+![](fig/docker-desktop/spuc_second_container_run.png){alt='Exec in fresh spuc container.'}
 
 When we re-ran the *image*, we created a **new** *container*.
 The new container is created from the template saved in the image, and so 'our' changes have banished.
 This becomes very clear when we go back to the 'Containers' tab on the left.
-We can see that the first container we created from the `getting-started` image is there, next to
-the new container (which is still running, by the way).
-![](fig/docker-desktop/30_gettingstarted_2_containers.png){alt='Containers after new run of getting-started image.'}
+We can see that the first container we created from the `spuc` image is there,
+next to the new container (which is still running, by the way).
+
+![](fig/docker-desktop/containers_2_spuc_containers.png){alt='Containers list after new run of spuc image.'}
 
 
 ## Reviving containers
 
 We *can* get the old container running again, although this is rarely something we'd *want* to do.
 In Docker Desktop, all we need to do is click on the 'Start' button from the 'Containers' list.
-The terminal will appear empty, because it is a new session, but you will even be able to 'recall' commands.
-![](fig/docker-desktop/31-32.gif){alt='Reviving container getting-started.'}
+The terminal will appear empty, because it is a new session, but you will be able to see the changes we made before.
+![](fig/docker-desktop/spuc_revival.gif){alt='Reviving container spuc.'}
+
+
+## Naming containers
+
+We've been a bit sloppy with the containers, and they all have random names.
+It is possible to name the containers when we run them, and this can be very useful.
+However, it can also cause us a bit of problems.
+
+Lets run the `spuc` image again, and name the container `SPUC`.
+
+![](fig/docker-desktop/run_spuc_named.png){alt='Optional settings for spuc.'}
+
+If we look at the container list, it is much easier to find it, so the name is useful!
+
+However, we forgot to map the port.
+So lets stop this container, and launch another one.
+This time we'll map the port, and use the name we wanted.
+![](fig/docker-desktop/run_spuc_name_in_use_error.png){alt='Optional settings for spuc.'}
+
+This time we got an error! This is because the name `SPUC` is already "in use" by another container.
+If we want the same name, we'll have to delete the old container first.
 
 
 ## Cleaning up
 
-The `hello-world` image was nice and useful to test docker was working, but it is now rather useless.
+Lets go to the containers list, and delete the `SPUC` container.
+There is a very convenient bin icon on the right, which will prompt you for confirmation.
+
+![](fig/docker-desktop/spuc_delete_container.png){alt='Deleting container SPUC.'}
+
+You should now be able to run the `spuc` image again, and name the container `SPUC`.
+
+Since we are deleting stuff, the `hello-world` image was nice and useful to test docker was working, but it is now rather useless.
 If I want to delete it, the 'Images' tab on the left has a convenient bin icon to do so.
 Clicking on it will prompt you for confirmation, but it will fail.
-![](fig/docker-desktop/33-35.gif){alt='Failing to delete image.'}
+
+![](fig/docker-desktop/images_delete_in_use_fail.gif){alt='Failing to delete image.'}
 
 You'll probably notice that the status of the image is 'In use'.
 That seems strange though, given that all the containers from that image excited immediately.
 
-Lets have a look at the 'Containers' tab. It shows a list of 5 containers now.
-Three of them came from the `hello-world` image, and are stopped.
-Two of them came from the `getting-started` image, and are running.
+Lets have a look at the 'Containers' tab.
+Some of the containers in the list came from the `hello-world` image.
+They are now stopped, but the fact that they originated from the `hello-world` image is enough.
 
-We've only been using Docker for 15 minutes though! You may see how this can become a problem...
+We've only been using Docker for very little, and we already have a long list of containers!
+You may see how this can become a problem;
 Particularly so because we were a bit sloppy and did not name the containers.
+
 Let's try and get rid of the containers then.
 We can conveniently select them all with the tickbox at the top, and an option to 'Delete' shows up.
 Clicking on it will prompt for confirmation, and we can go ahead and accept.
-![](fig/docker-desktop/36-38.gif){alt='Deleting containers.'}
+![](fig/docker-desktop/delete_all_containers.gif){alt='Deleting containers.'}
 
-All our containers are now gone. Forever.
+All our containers are now gone. Forever. We can't get them back.
+This is fine though - they were meant to be ephimeral.
 
 ***Warning:*** You have to be careful here, this action deleted even the containers that were running.
 You can filter the containers before you select them "all".
 
-On the up-side, the 'Images' tab shows both the `hello-world` and the `getting-started` images as 'Unused' now.
+On the up-side, the 'Images' tab shows the `hello-world` image as 'Unused' now.
 For docker, an image is 'In use' as long as at least one container has been created from it.
-We have just deleted all the containers created from either of these images.
-This tells Docker that they are no longer being used, and can therefore be safely deleted.
-![](fig/docker-desktop/39-42.gif){alt='Successfully deleting images.'}
+Since we have no containers from that image, Docker now knows the images can be safely deleted.
+![](fig/docker-desktop/images_delete_hello.gif){alt='Successfully deleting images.'}
 
 
 ## Limitations - Why not Docker Desktop?
 
 We have seen many of the neat and functional bits of Docker Desktop, and it can be mighty appealing,
-particularly if you lean towards the use of graphical interfaces.
+particularly so if you lean towards the use of graphical interfaces.
 However, we've not touched on its weaknesses.
-We'll just need to point at one to feel the need to throw everything overboard.
 
-Let's go ahead and run the only image we have already pulled, `alpine`.
-![](fig/docker-desktop/43_alpine.png){alt='Logs tab in container from alpine image.'}
+One thing we have completely lost now is the record of our unicorn sightings.
+The containers are gone, and so are the changes we made to the `print.config` file.
+Data in the containers can be made persistent, but it is not the default behaviour,
+and it is something that you cannot do from Docker Desktop!
 
-That was fast, and uneventful.
-Not even a single output to the 'Logs'.
-No way to open a terminal inside Alpine.
+Another very important thing is that Docker Desktop is very limited in *how* you can run the containers.
+The optional settings let you modify the instruction with which the container is run, but it is very limited.
 
-<br>
+For example, let's run the other image we have already pulled, `alpine`,
+which is the image of a very lightweight Linux distribution.
+Go to the images list, and click on run.
 
-:::::::::::::::: solution
-### Logs tab
-![](fig/docker-desktop/44_alpine_logs.png){alt='Logs tab in container from alpine image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Inspect tab
-![](fig/docker-desktop/45_alpine_i.png){alt='Inspect tab in container from alpine image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Terminal tab
-![](fig/docker-desktop/46_alpine_t.png){alt='Terminal tab in container from alpine image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Stats tab
-![](fig/docker-desktop/47_alpine_s.png){alt='Stats tab in container from alpine image.'}
-:::::::::::::::::::::::::
+Nothing seems to have happened at all!
+Not even a single output to the 'Logs', and no way to open a terminal inside Alpine.
+
+::: group-tab
+
+### Logs
+
+![](fig/docker-desktop/alpine_logs.png){alt='Logs tab in container from alpine image.'}
+
+### Inspect
+
+![](fig/docker-desktop/alpine_inspect.png){alt='Inspect tab in container from alpine image.'}
+
+### Bind mounts
+
+![](fig/docker-desktop/alpine_bind.png){alt='Bind mounts tab in container from alpine image.'}
+
+### Exec
+
+![](fig/docker-desktop/alpine_exec.png){alt='Exec tab in container from alpine image.'}
+
+### Files
+
+![](fig/docker-desktop/alpine_files.png){alt='Files tab in container from alpine image.'}
+
+### Stats
+
+![](fig/docker-desktop/alpine_stats.png){alt='Stats tab in container from alpine image.'}
+
+:::
 
 Just to be clear though, this Docker image does contain the whole Alpine OS.
 In Docker Desktop, however, there is no way to interact with it.
+This is the case for many (if not most) images.
+To be able to use it (or them), we need to provide some sort of input or command,
+which we cannot provide from Docker Desktop.
 
-Let's try something different.
-There's a program called `cowsay` that lets you print messages as if a cow was saying them.
-Searching for that image shows that there is one by `beatrixxx32` with a reasonable number of downloads.
-![](fig/docker-desktop/48_cowsay.png){alt='Search of cowsay image.'}
-
-So lets pull that image and run it.
-
-<br>
-
-:::::::::::::::: solution
-### Logs tab
-![](fig/docker-desktop/50_cowsay_logs.png){alt='Logs tab in container from cowsay image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Inspect tab
-![](fig/docker-desktop/51_cowsay_inspect.png){alt='Inspect tab in container from cowsay image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Terminal tab
-![](fig/docker-desktop/52_cowsay_term.png){alt='Terminal tab in container from cowsay image.'}
-:::::::::::::::::::::::::
-:::::::::::::::: solution
-### Stats tab
-![](fig/docker-desktop/53_cowsay_stats.png){alt='Stats tab in container from cowsay image.'}
-:::::::::::::::::::::::::
-
-We do get a cow this time, but it is not saying anything.
-But it does not know *what* to say.
-Going back to the cowsay image search, you may notice that in 'Usage' the command line asks for "your message".
-We are not using a command though, we just clicked *run*.
-Maybe we missed something in the optional settings!
-![](fig/docker-desktop/54_cowsay_opt.png){alt='Optional settings for cowsay.'}
-
-No, it does not seem like it.
-No matter what we do, we cannot make the cow say anything from here.
-
-Are the alpine and cowsay images useless? No, definitely not.
-However, they are expecting some sort of input or command, which we cannot provide from Docker Desktop.
-
-This is the case for most images, and so Docker Desktop (as it is now) cannot really be used for much more than as a nice dashboard.
+Therefore, Docker Desktop cannot really be used for much more than being a nice dashboard.
 
 In the next episode, we will use docker from the command line, and all of the advantages it brings will become aparent.
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
-- Docker Desktop is a great dashboard that allows us to understand and visualize the lifecycle of images and containers.
-- Images are snapshots of an environment, easily distributable and ready to be used as *templates* for containers.
-- Containers are executions of the images, often with configuration added on top, and usually meant for single use.
-- Running a container usually implies creating a new copy, so it is important to clean up regularly.
-- Docker Desktop could potentially be all you need to use if you only *consume* images out of the box.
-- However, it is very limited in most cases (even for *consumers*), and rarely allows the user to configure and interact with the containers adequately.
+- **Images** are snapshots of an environment, easily distributable and ready to be used as ***templates*** for containers.
+- **Containers** are ***executions of the images***, often with configuration added on top, and usually ***meant for single use***.
+- Running a container usually implies creating a new copy, so it is important to **clean up regularly**.
+- **Docker Desktop** is a great ***dashboard*** that allows us to understand and visualize the lifecycle of images and containers.
+  It could potentially be all you need to use if you only *consume* images out of the box.
+  However, it is ***very limited*** in most cases (even for *consumers*),
+  and rarely allows the user to configure and interact with the containers adequately.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
