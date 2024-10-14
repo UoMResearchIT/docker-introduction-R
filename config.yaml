@@ -65,7 +65,7 @@ episodes:
 - docker-cli-toolkit.Rmd
 - docker-cli-advanced.Rmd
 - creating-container-images.Rmd
-- advanced-containers.Rmd
+- docker-compose.Rmd
 
 # Information for Learners
 learners:
