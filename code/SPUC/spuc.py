@@ -20,6 +20,17 @@ file_path = f"output/{file_name}"
 count = None
 units = None
 
+# ------------------------------------------------------------------------------
+# Endpoints imported from plugins
+
+print("\n:::: Importing plugins ::::\n")
+plugin_dir = "plugins"
+plugin_registry = []
+if os.path.exists(plugin_dir):
+    for plugin in os.listdir(plugin_dir):
+        if plugin.endswith(".py") and plugin != "__init__.py":
+            __import__(f"{plugin_dir}.{plugin[:-3]}")
+            plugin_registry.append(plugin)
 
 # ------------------------------------------------------------------------------
 # Endpoint for exporting the unicorn sightings if the EXPORT environment variable is set to True
@@ -97,7 +108,7 @@ if __name__ == "__main__":
 
     # Print the initialization message
     print(s.logo())
-    print(s.welcome(unit_long_name, units))
+    print(s.welcome(unit_long_name, units, plugin_registry))
     print(s.base_help())
     if os.environ.get("EXPORT") == "True":
         print(s.export_help())

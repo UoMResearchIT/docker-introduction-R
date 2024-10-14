@@ -91,12 +91,15 @@ def logo():
     return logo
 
 
-def welcome(unit_long_name, units):
+def welcome(unit_long_name, units, plugin_registry):
     message = t.dedent(
         f"""
         Welcome to the Space Purple Unicorn Counter!
 
         :::: Units set to {unit_long_name} [{units}] ::::")
+
+        :::: Plugins loaded ::::
+        {plugin_registry}
         """.rstrip()
     )
     return message

@@ -10,6 +10,7 @@ services:
     volumes:
       - spuc-output:/spuc/output
       - ${PWD}/SPUC/config:/spuc/config
+      - ${PWD}/SPUC/plugins:/spuc/plugins
     environment:
       - EXPORT=True
     networks:
