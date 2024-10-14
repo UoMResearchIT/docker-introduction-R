@@ -301,6 +301,30 @@ That SPUC has an entrypoint of `python /code/spuc.py` making it hard to interact
 ```bash
 $ docker run -it --rm --entrypoint /bin/sh ghcr.io/uomresearchit/spuc:latest
 ```
+
+::::::::::::::::::::::::::::::::::::::: challenge
+Which of these are valid entrypoint and command combinations for the SPUC container? What are the advantages and disadvantages of each?
+
+| | Entrypoint | Command | 
+|-|------------|---------|
+|A| `python /code/spuc.py --units iuhc` | |
+|B| `python /code/spuc.py` | `--units iuhc` | 
+|C| `python` | `/code/spuc.py --units iuhc` |
+|D| | `python /code/spuc.py --units iuhc` |
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::: solution
+These are all valid combinations! The best choice depends on the use case.
+
+A) This combination bakes the command and the parameters into the image. This is useful if the command is always the same and the specified parameters are unlikely to change (although more may be appended).
+
+B) This combination allows the command's arguments to be changd easily while baking in which Python script to run.
+
+C) This combination allows the Python script to be changed easily, which is more likely to be bad than good!
+
+D) This combination allows maximum flexibility, but it requires the user to know the correct command to run.
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::
 
 ## Summary

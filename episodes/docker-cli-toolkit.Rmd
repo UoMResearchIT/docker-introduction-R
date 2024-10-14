@@ -6,41 +6,44 @@ exercises: 99
 
 So! We’ve seen some pretty cool functionality from our Unicorn Counter straight out of the box. But really we need to take more control. 
 
-While useful for learning, most Docker users eventually switch from Docker Desktop to the more powerful command line interface (CLI).
+While Docker Desktop is useful for learning, most Docker users eventually switch to the more powerful command line interface (CLI).
 
-In this section we will build up a toolkit of Docker commands that allow us to perform the same tasks we learned to do in Docker Desktop, but with more control and flexibility. Building into more advanced Docker tasks that are only possible in the command line, in the next sections.
+In this section we will build up a toolkit of Docker commands that allow us to perform the same tasks we learned to do in Docker Desktop, but with more control and flexibility.
 
-::::::::::::::::::::::::::::::::::::::: objectives
-- Learn how to use the Docker command line to perform tasks we learned to do in Docker Desktop
-- Learn the lifecycle of Docker containers
-::::::::::::::::::::::::::::::::::::::::::::::::::
+We will then start to tackle more advanced Docker tasks that are only possible in the command line (in the next section).
 
 :::::::::::::::::::::::::::::::::::::::: questions
-- How do I perform the same tasks in Docker Desktop using the Docker CLI?
-- What actually happens when I run a container?
+- How do I use the Docker CLI to perform the same tasks we learned to do in Docker Desktop?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::: objectives
+- Build our fundamental Docker CLI toolkit
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 # Docker command cheat sheet
 
 Before we dive in, here is a quick cheat sheet of the most common Docker commands.
 
-Don't worry about understanding them yet, we will cover them in detail over the next few sections.
+Don't worry about understanding them yet, we will cover them in detail.
 
-| Command                                | Description                                    |
-|----------------------------------------|------------------------------------------------|
-| `docker pull <image>`                  | Pull an image from a registry                  |
-| `docker image ls`                      | List all images on the system                  |
-| `docker inspect <image>`               | Show detailed information about an image       |
-| `docker run <image>`                   | Run a container from an image                  |
-| `docker ps`                            | List all running containers                    |
-| `docker logs <container>`              | Show the logs of a container                   |
-| `docker exec -it <container> <command>`| Run a command in a running container           |
-| `docker stop <container>`              | Stop a running container                       |
-| `docker start <container>`             | Start a stopped container                      |
-| `docker stats`                         | Show live resource usage of containers         |
-| `docker rm <container>`                | Remove a container                             |
-| `docker image rm <image>`              | Remove an image                                |
-| `docker system prune`                  | Remove all stopped containers and unused images|
+| Command                                 | Description                                       |
+|-----------------------------------------|---------------------------------------------------|
+| `docker pull <image>`                   | Pull an image from a registry                     |
+| `docker image ls`                       | List all images on the system                     |
+| `docker inspect <image>`                | Show detailed information about an image          |
+| `docker run <image>`                    | Run a container from an image                     |
+| `docker run -d <image>`                 | Run a container in the background                 |
+| `docker ps`                             | List all running containers                       |
+| `docker logs <container>`               | Show the logs of a container                      |
+| `docker exec <container> <command>`     | Run a command in a running container              |
+| `docker exec -it <container> <command>` | Interactively run a command in a running container|
+| `docker stop <container>`               | Stop a running container                          |
+| `docker start <container>`              | Start a stopped container                         |
+| `docker stats`                          | Show live resource usage of containers            |
+| `docker rm <container>`                 | Remove a container                                |
+| `docker image rm <image>`               | Remove an image                                   |
+| `docker system prune`                   | Remove all stopped containers and unused images   |
 
 # Building our Docker CLI Toolkit 
 
@@ -56,6 +59,8 @@ Let’s start by pulling the SPUC container that we used before:
 
 ```bash
 $ docker pull ghcr.io/uomresearchit/spuc:latest
+```
+```output
 latest: Pulling from uomresearchit/spuc
 302e3ee49805: Already exists 
 6b08635bc459: Pull complete 
@@ -71,17 +76,28 @@ Status: Downloaded newer image for ghcr.io/uomresearchit/spuc:latest
 ghcr.io/uomresearchit/spuc:latest
 ```
 
-Now we have the image! But what how did that command work? The Docker CLI is a large and complex application but the syntaxt is quite predictable when you understand a few principles.
+Now we have the image! But what how did that command work?
 
-Let's dive into the structure of that command. Here is a diagram which breaks things down:
+Let's learn some fundamentals of how to structure calls to the Docker CLI.
+
+## The structure of a Docker command
+
+The Docker CLI can be intimidating, creating very long commands that take a bit of work to understand. However, when you understand the structure of the commands, it becomes much easier to work with and to be able to see the wood for the trees!
+
+Let's dive into the structure of the command we looked at. Here is a diagram which breaks things down:
 
 ![](fig/docker_cmd.png){alt='A diagram showing the syntactic structure of a Docker command'}
 
-Every Docker command starts with 'docker'. Next, you specify the type of object to act on, followed by the action to perform and the name of the object. You can also include additional arguments and switches as needed.
+* Every Docker command starts with 'docker'
+* Next, you specify the type of object to act on (e.g. image, container)
+* Followed by the action to perform and the name of the object (e.g. run, pull)
+* You can also include additional arguments and switches as needed (e.g. the image name)
 
 The pull command that we ran earlier is a good example of this. We told **Docker** to **pull** the image found at the location **'ghcr.io/uomresearchit/spuc:latest'**.
 
-Now that we have the image, let's check that it is there:
+## Listing Images
+
+Now that we have pulled our image, let's check that it is there:
 
 ```bash
 $ docker image ls
@@ -93,10 +109,15 @@ This command lists (ls is short for list) all the images that we have downloaded
 
 ## Inspecting
 
+So we have the image, but what does it do?
+
+
 It can be hard to guess what an image will do just from its name. To find out more about an image, we can use the inspect command
 
 ```bash
 $ docker inspect ghcr.io/uomresearchit/spuc:latest
+```
+```output
 [
     {
         "Id": "sha256:f03fb04b8bc613f46cc1d1915d2f98dcb6e008ae8e212ae9a3dbfaa68c111476",
@@ -109,28 +130,36 @@ $ docker inspect ghcr.io/uomresearchit/spuc:latest
         "Parent": "",
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2024-10-10T07:09:05.933695321+01:00",
-        "DockerVersion": "",
-        "Author": "",
-        "Config": {
-            "Hostname": "",
-            "Domainname": "",
 [...]
 ```
 
-Tells you a **lot** of details about the image. This can be useful for understanding what the image does and how it is configured but can be overwhelming.
+Tells you a **lot** of details about the image. This can be useful for understanding what the image does and how it is configured but it is also quite overwhelming!
 
-One particularly useful refinement of this command makes use of the `-f` flag to specify the output format. This can be used to extract specific information from the image and we will use it here to figure out exactly what the container will do when it is run.
+Really the most useful information for an image user is what the container will do when it is run. Let's work on getting this information.
+
+One particularly useful refinement of the inspect command makes use of the `-f` flag to specify the output format. This can be used to extract specific information from the image. Try running the following command:
 
 ```bash
 $ docker inspect alpine -f "Entrypoint: {{.Config.Entrypoint}} Command: {{.Config.Cmd}}"
+```
+```output
 Entrypoint: [python /code/spuc.py] Command: [--units iuhc]
 ```
 
-But what do these mean? The entrypoint is the base command for the container, while the command is the parameters for the base command. Together, they form the default command that the container will run when it is started.
+That's more manageable! But what do these mean? To understand this we need to understand a key concept in Docker - the container's default command.
 
-In this case, the entrypoint is `python /code/spuc.py` and the command is `--units iuhc`. This means that when the container is run, it will execute the command `python /code/spuc.py --units iuhc`.
+## Default Command
 
-This is all we need to know to run the container, but we will come back to this later (and in more detail) when we discuss the lifecycle of a container.
+The default command is the command that the container will run when it is started. The default values are specified by the creator of an image but can be overridden when the container is run.
+
+The default command is formed of two parts, the entrypoint and the command, which are concatenated together to form the full command.
+
+* Entrypoint is the base command for the container and is overwritten infrequently.
+* Command is (/are) the parameters for the base command and is overwritten frequently.
+
+In our case, the entrypoint is `python /code/spuc.py` and the command is `--units iuhc`. This means that when the container is run, it will execute the command `python /code/spuc.py --units iuhc`.
+
+This is all we need to know to run the container, but we have a look at how we can override the default command in the next section.
 
 ## Running
 
@@ -138,6 +167,8 @@ Now that we have the image, and we know what it will do, let's run it!
 
 ```bash
 $ docker run ghcr.io/uomresearchit/spuc:latest
+```
+```output
 
             \\
              \\
@@ -178,6 +209,8 @@ Only... it's quite hard to do this without another terminal window. Let's try ru
 ```bash
 [Ctrl+C]
 $ docker run -d ghcr.io/uomresearchit/spuc:latest
+```
+```output
 4d58ddad6ae33226ab30e8d7852b9b2166f214c462dabcecb65ef7a50518b0ec
 ```
 
@@ -185,36 +218,17 @@ But what is happening? We can't see the output of the container anymore! To see 
 
 ```bash
 $ docker ps
+```
+```output
 CONTAINER ID   IMAGE                                              COMMAND                  CREATED         STATUS                  PORTS                                                                                                           NAMES
 4d58ddad6ae3   ghcr.io/uomresearchit/spuc:latest                  "python /code/spuc.p…"   3 minutes ago   Up 3 minutes                                                                                                                            peaceful_archimedes
 ```
 
 This command lists all the containers that are currently running. You can see that the SPUC container is running, and that it has been (randomly) given the name `peaceful_archimedes`.
 
-### Exposing the service
-
-Now that we know the container is running okay, we can try out the commands that it suggests:
-
-```bash
-curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
-curl: (7) Failed to connect to localhost port 8321 after 0 ms: Could not connect to server
-```
-
-Oh no! It looks like the container is not listening on the port that we expected. This is because the container is running in its own isolated environment, and we need to tell Docker to expose the port to the host machine.
-
-This can be done using the `-p` flag, which specifies the port to expose on the host machine and the port to expose on the container. In this case we want to expose port 8321 on the host machine to port 8321 on the container:
-
-```bash
-$ docker run -d -p 8321:8321 ghcr.io/uomresearchit/spuc:latest
-$ curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
-{"message":"Unicorn sighting recorded!"}
-```
-
-Great! The container is now listening on port 8321, and we can interact with it using the `curl` command. But what if we want to see what is happening inside the container?
-
 ### Logs
 
-To see the output of the detached container, we can use the `docker logs` command:
+It would be nice to see the output of the container. We can do this using the `docker logs` command:
 
 ```bash
 $ docker logs peaceful_archimedes
@@ -249,18 +263,53 @@ $ docker logs peaceful_archimedes
 Welcome to the Space Purple Unicorn Counter!
 ::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100' to record a unicorn sighting!
 ::::: Or 'curl localhost:8321/export' to download the unicorn sightings file!
-
-::::: (2024-10-10 16:05:35.263119) Unicorn spotted at moon!! Brightness: 100 iuhc
 ```
 
 Now we can see the output of the container! Including the unicorn sighting that we just recorded.
 
 Notice that we had to use the name of the container, `peaceful_archimedes`, to get the logs. This is because the `docker logs` command requires the name of the **container** not the **image**.
 
+### Exposing the service
+
+Now that we know the container is running okay, we can try out the commands that it suggests:
+
+```bash
+$ curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+```
+```output
+curl: (7) Failed to connect to localhost port 8321 after 0 ms: Could not connect to server
+```
+
+Oh no! It looks like the container is not listening on the port that we expected. This is because the container is running in its own isolated environment, and we need to tell Docker to expose the port to the host machine.
+
+This can be done using the `-p` flag, which specifies the port to expose on the host machine and the port to expose on the container. In this case we want to expose port 8321 on the host machine to port 8321 on the container:
+
+```bash
+$ docker run -d -p 8321:8321 ghcr.io/uomresearchit/spuc:latest
+$ curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+```
+```output
+{"message":"Unicorn sighting recorded!"}
+```
+
+Great! The container is now listening on port 8321, and we can interact with it using the `curl` command. And if we want to see what is happening, we can use the `docker logs` command again:
+
+```bash
+$ docker logs peaceful_archimedes
+```
+```output
+[...]
+::::: (2024-10-10 16:05:35.263119) Unicorn spotted at moon!! Brightness: 100 iuhc
+```
+
+### Setting the name of a container
+
 It can be quite inconvenient to have to find out the name of the container every time we want to see the logs. To make this easier, we can name the container when we run it using the `--name` flag:
 
 ```bash
 $ docker run -d --name spuc_container -p 8321:8321 ghcr.io/uomresearchit/spuc:latest
+```
+```output
 4696d5301a792451f9954ba10cc42604a904fa1a811362733050ba04270c02eb
 docker: Error response from daemon: driver failed programming external connectivity on endpoint spuc_container (67e075648d16fafdf086573169d891bee9b33bec0c1cb5535cf82c715241bb32): Bind for 0.0.0.0:8321 failed: port is already allocated.
 ```
@@ -271,6 +320,8 @@ To fix this, we can stop the container that is running on port 8321 using the `d
 
 ```bash
 $ docker stop peaceful_archimedes
+```
+```output
 peaceful_archimedes
 ```
 
@@ -278,6 +329,8 @@ Right, now we can try running the container again:
 
 ```bash
 $ docker run -d --name spuc_container -p 8321:8321 ghcr.io/uomresearchit/spuc:latest
+```
+```output
 bf9b2abc95a7c7f25dc8c1c4c334fcf4ce9642754ed7f6b5586d82f9e9e45ac7
 ```
 
@@ -285,7 +338,9 @@ And now we can see the logs using the name of the container, and even follow the
 
 ```bash
 $ docker logs -f spuc_container
-[... SPUC OUTPUT ...]
+```
+```output
+[...]
 [Crtl+C]
 ```
 
@@ -295,6 +350,8 @@ But what if we want to run a command inside the container? We can do this using 
 
 ```bash
 $  docker exec spuc_container ls output
+```
+```output
 unicorn_sightings.txt
 ```
 
@@ -306,7 +363,9 @@ Let's try launching an interactive terminal session inside the container, runnin
 
 ```bash
 $ docker exec -it spuc_container /bin/bash
-root@bf9b2abc95a7:/code# cat output/unicorn_sightings.txt 
+root@bf9b2abc95a7:/code# cat output/unicorn_sightings.txt
+```
+```output
 time,brightness,unit
 2024-10-10 16:15:58.284557,100,iuhc
 ```
@@ -320,6 +379,8 @@ Instead you can modify the run command to include the `-it` flag:
 
 ```bash
 $ docker run -it alpine:latest
+```
+```output
 Unable to find image 'alpine:latest' locally
 latest: Pulling from library/alpine
 43c4264eed91: Pull complete 
@@ -337,6 +398,8 @@ It is probably a good idea to stop the container when we are done with it. We ca
 
 ```bash
 $ docker stop spuc_container
+```
+```output
 spuc_container
 ```
 
@@ -344,6 +407,8 @@ But what if we wanted to restart a container that we had stopped? We can do this
 
 ```bash
 $ docker start spuc_container
+```
+```output
 spuc_container
 ```
 
@@ -351,6 +416,8 @@ We could check that the container is running again using the `docker ps` command
 
 ```bash
 $ docker stats
+```
+```output
 CONTAINER ID   NAME                          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
 bf9b2abc95a7   spuc_container               0.01%     23.61MiB / 15.29GiB   0.15%     23.6kB / 589B     5.1MB / 201kB    5
 [Crtl+C]
@@ -362,10 +429,22 @@ The last thing we need to know is how to clean up after ourselves. We can do thi
 
 ```bash
 $ docker stop spuc_container # will take ~10 seconds!
+```
+```output
 spuc_container
+```
+
+```bash
 $ docker rm spuc_container
+```
+```output
 spuc_container
+```
+
+```bash
 $ docker image rm ghcr.io/uomresearchit/spuc:latest
+```
+```output
 Untagged: ghcr.io/uomresearchit/spuc:latest
 Deleted: sha256:a1bc13eca67e7c1e8e1f506f2352e3621ce6c648b0d77ce7cbb095a95da6d5da
 ```
@@ -374,6 +453,8 @@ To do a full clean up, we can also remove all stopped containers and unused imag
 
 ```bash
 $ docker system prune
+```
+```output
 WARNING! This will remove:
   - all stopped containers
   - all networks not used by at least one container
@@ -407,7 +488,7 @@ And if you are thinking "wow, that command is getting pretty long...", you are r
 
 We have now covered the basics of the Docker CLI, building up a powerfull toolkit of commands!
 
-We are now equipped with everything we saw we could do in Docker Desktop, but with the added power of the command line interface. Which we will use for move advanced tasks in the next sections.
+We are now equipped with everything we saw we could do in Docker Desktop, but with the added power of the command line interface. We will use this power for move advanced tasks in the next sections.
 
 ::::::::::::::::::::::::::::::::::::::: keypoints
 - The Docker CLI can perform all the tasks that Docker Desktop can (and more - coming up!)
