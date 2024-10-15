@@ -232,7 +232,6 @@ $ docker run --rm --name spuc_container -p 8321:8321 -v spuc-volume:/code/output
 ## ENV
 
 We can also set environment variables in the `Dockerfile` using the `ENV` instruction.
-
 These can always be overridden when running the container but it is useful to set defaults. And we like the `EXPORT` variable so let's add that to the `Dockerfile`:
 
 ```Dockerfile
