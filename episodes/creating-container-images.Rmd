@@ -301,13 +301,50 @@ $ docker run --rm --name spuc_container -p 8321:8321 -v spuc-volume:/code/output
 
 Much better! A far clearner command, much more customised for our use case!
 
+## Back to reality
+
+In this lession we have focused on modifying an image already containing a service.
+This is a perfectly valid way of using Dockerfiles! But it is not the most common.
+
+While you can base your images on any other public image, it is most common for developers to be creating containers 'from the ground up'.
+
+The most common practice is creating images from images like `ubuntu` or `alpine` and adding your own software and configuration files.
+
+An example of this is how the developers of the SPUC service created their image. The Dockerfile is reproduced below:
+
+```Dockerfile
+FROM python:3.12-slim
+
+WORKDIR /spuc
+
+COPY ./requirements.txt /spuc/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /spuc/requirements.txt
+
+COPY ./*.py /spuc/
+COPY ./config/*.config /spuc/config/
+RUN mkdir /spuc/output
+
+EXPOSE 8321
+
+ENTRYPOINT ["python", "/spuc/spuc.py"]
+CMD ["--units", "iuhc"]
+```
+
+From this we can see the developers:
+
+* started with a `python:3.12-slim` image
+* installed the required packages (from a file) using `pip`
+* copied the source code and configuration files
+* set the default entrypoint andcommand.
+
+This is a very common pattern for creating images and is the most common way to use Dockerfiles but it is important to realise that you can create images from **any** base image and customise them to your heart's content!
+
 ## Summary
 
 In this lesson we have seen how to create our own container images using a `Dockerfile`.
 
 We've added new layers with new packges installed using `RUN`, we've added files using `COPY`, set environment variables using `ENV`, and changed the default command using `ENTRYPOINT` and `CMD`.
-
-Of course, in practice, you will often be creating images from more typical base images like `ubuntu` or `alpine` and adding your own software and configuration files. But it is important to realise that you can create your own images from **any** base image and customise them to your heart's content!
 
 However, we are still encumbered with quite an unwieldy command to run the container. In the next lesson we will see how to make this easier by using `docker-compose`.
 
