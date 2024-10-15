@@ -1,0 +1,658 @@
+---
+title: Using Docker Compose
+teaching: 99
+exercises: 99
+---
+
+::::::::::::::::::::::::::::::::::::::::::::::::::: objectives
+- Learn how to run multiple containers - easily!
+- Clean up our run command for once and for all
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::: questions
+- What is Docker Compose? And why would I use it?
+- How can I translate my `docker run` commands into a `docker-compose.yml` file?
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+On to our final bit of learning from the SPUC DockerHub pages - the SPUC Super Visualiser! The SPUC Super Visualiser is a web-based tool that allows you to visualise the output of the SPUC tool. Handily - it's also available as a Docker container, published on DockerHub under the SPUC organisation.
+
+Now that you have seen several `docker run` commands. You can well imagine how cumbersome running multiple containers can get.
+
+Enter: Docker Compose!
+
+Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application's services. Then, with a single command, you create and start all the services from your configuration.
+
+Let's take a look at Docker Compose and see how it can help us run SPUCSVi.
+
+## Making a Docker Compose file
+
+Docker Compose files can be thought of as YAML formatting formalisations of `docker run` commands.
+
+Let's recall our `docker run` command for the regular SPUC container (rather than the one we made ourselves - we'll get to that in a bit):
+
+```bash
+$ docker run -d --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true ghcr.io/uomresearchit/spuc:latest --units iulu
+```
+
+We can start translate this into a Docker Compose file bit by bit!
+
+The first thing we need to do is create a `docker-compose.yml` file. All `docker-compose.yml` files start with `services:`. This is the root element undre which we define the services we want to run.
+
+```yaml
+services:
+```
+
+Next, let's add the service for the SPUC container. We'll call it `spuc` and we will tell it what `image` to use.
+
+```yaml
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+```
+
+This is actually enough for us to run the container!
+
+But we won't use `docker run` any more. How we use the base command `docker compose` to run the services with the command `up` signalling that we want to bring services up (i.e. start them).
+
+```bash
+$ docker compose up
+```
+```output
+[+] Running 2/0
+ ✔ Network docker-intro-testing_default   Created                                                                         0.0s 
+ ✔ Container docker-intro-testing-spuc-1  Created                                                                         0.0s 
+Attaching to spuc-1
+spuc-1  | 
+spuc-1  | :::: Importing plugins ::::
+spuc-1  | 
+spuc-1  | 
+spuc-1  |             \
+spuc-1  |              \
+spuc-1  |               \\
+spuc-1  |                \\\
+spuc-1  |                 >\/7
+spuc-1  |             _.-(º   \
+spuc-1  |            (=___._/` \            ____  ____  _    _  ____
+spuc-1  |                 )  \ |\          / ___||  _ \| |  | |/ ___|
+spuc-1  |                /   / ||\         \___ \| |_) | |  | | |
+spuc-1  |               /    > /\\\         ___) |  __/| |__| | |___
+spuc-1  |              j    < _\           |____/|_|    \____/ \____|
+spuc-1  |          _.-' :      ``.
+spuc-1  |          \ r=._\        `.       Space Purple Unicorn Counter
+spuc-1  |         <`\\_  \         .`-.
+spuc-1  |          \ r-7  `-. ._  ' .  `\
+spuc-1  |           \`,      `-.`7  7)   )
+spuc-1  |            \/         \|  \'  / `-._
+spuc-1  |                       ||    .'
+spuc-1  |                        \\  (
+spuc-1  |                         >\  >
+spuc-1  |                     ,.-' >.'
+spuc-1  |                    <.'_.''
+spuc-1  |                      <'
+```
+
+So we have our container running! With a couple of interesting bits of output to note:
+
+- A container was created named `spuc-1`
+- A `network` was created for the container - we will dig into what this means later!
+- The tool is running in the foreground, so we can see the output of the tool
+
+We can stop the container by pressing `Ctrl+C` in the terminal.
+
+## Adding more configuration
+
+We did a lot of learning in our previous experiments! Breaking down our run command further, we can see that we have a few more options that we can add to our `docker-compose.yml` file.
+
+We'll provide a quick overview here and then dive into how to add them to our `docker-compose.yml` file.
+
+| Flag | Description |
+|------|-------------|
+| `-d` | Run the container in the background |
+| `--rm` | Remove the container when it stops |
+| `--name spuc_container` | Name the container `spuc_container` |
+| `-p 8321:8321` | Map port 8321 on the host to port 8321 in the container |
+| `-v $PWD/print.config:/code/config/print.config` | Mount the `print.config` file in the current directory to `/code/config/print.config` in the container |
+| `-v spuc-volume:/code/output` | Persis the `/code/output` directory in the container to the `spuc-volume` volume |
+| `-v $PWD/stats.py:/spuc/plugins/stats.py` | Enable the `stats.py` plugin by mounting it to `/spuc/plugins/stats.py` in the container |
+| `-e EXPORT=true` | Set the environment variable `EXPORT` to `true` |
+| `--units iulu` | Set the units to Imperial Unicorn Length Units |
+
+### Running in the background
+
+To run a docker compose stack in the background, we can use the `-d` (for detatch) flag when calling `docker compose up`.
+
+```bash
+$ docker compose up -d
+```
+```output
+[+] Running 1/1
+ ✔ Container docker-intro-testing-spuc-1  Started                                                                         0.2s
+```
+
+Of course, this means we can no longer see the logs! But we can still access them using the `logs` command.
+
+```bash
+$ docker compose logs
+```
+```output
+spuc-1  | 
+spuc-1  | :::: Importing plugins ::::
+spuc-1  | 
+spuc-1  | 
+spuc-1  |             \
+spuc-1  |              \
+spuc-1  |               \\
+spuc-1  |                \\\
+spuc-1  |                 >\/7
+spuc-1  |             _.-(º   \
+spuc-1  |            (=___._/` \            ____  ____  _    _  ____
+spuc-1  |                 )  \ |\          / ___||  _ \| |  | |/ ___|
+spuc-1  |                /   / ||\         \___ \| |_) | |  | | |
+spuc-1  |               /    > /\\\         ___) |  __/| |__| | |___
+spuc-1  |              j    < _\           |____/|_|    \____/ \____|
+spuc-1  |          _.-' :      ``.
+spuc-1  |          \ r=._\        `.       Space Purple Unicorn Counter
+spuc-1  |         <`\\_  \         .`-.
+spuc-1  |          \ r-7  `-. ._  ' .  `\
+spuc-1  |           \`,      `-.`7  7)   )
+spuc-1  |            \/         \|  \'  / `-._
+spuc-1  |                       ||    .'
+spuc-1  |                        \\  (
+spuc-1  |                         >\  >
+spuc-1  |                     ,.-' >.'
+spuc-1  |                    <.'_.''
+spuc-1  |                      <'
+spuc-1  |     
+spuc-1  | 
+spuc-1  | Welcome to the Space Purple Unicorn Counter!
+spuc-1  | 
+spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+spuc-1  | 
+spuc-1  | :::: Plugins loaded ::::
+spuc-1  | []
+spuc-1  | 
+spuc-1  | :: Try recording a unicorn sighting with:
+spuc-1  |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+spuc-1  | 
+spuc-1  | 
+spuc-1  | :::: Importing plugins ::::
+spuc-1  | 
+spuc-1  | 
+spuc-1  |             \
+spuc-1  |              \
+spuc-1  |               \\
+spuc-1  |                \\\
+spuc-1  |                 >\/7
+spuc-1  |             _.-(º   \
+spuc-1  |            (=___._/` \            ____  ____  _    _  ____
+spuc-1  |                 )  \ |\          / ___||  _ \| |  | |/ ___|
+spuc-1  |                /   / ||\         \___ \| |_) | |  | | |
+spuc-1  |               /    > /\\\         ___) |  __/| |__| | |___
+spuc-1  |              j    < _\           |____/|_|    \____/ \____|
+spuc-1  |          _.-' :      ``.
+spuc-1  |          \ r=._\        `.       Space Purple Unicorn Counter
+spuc-1  |         <`\\_  \         .`-.
+spuc-1  |          \ r-7  `-. ._  ' .  `\
+spuc-1  |           \`,      `-.`7  7)   )
+spuc-1  |            \/         \|  \'  / `-._
+spuc-1  |                       ||    .'
+spuc-1  |                        \\  (
+spuc-1  |                         >\  >
+spuc-1  |                     ,.-' >.'
+spuc-1  |                    <.'_.''
+spuc-1  |                      <'
+spuc-1  |     
+spuc-1  | 
+spuc-1  | Welcome to the Space Purple Unicorn Counter!
+spuc-1  | 
+spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+spuc-1  | 
+spuc-1  | :::: Plugins loaded ::::
+spuc-1  | []
+spuc-1  | 
+spuc-1  | :: Try recording a unicorn sighting with:
+spuc-1  |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+spuc-1  |
+```
+
+Now... something a bit funny is happening here... why are we seeing the output twice?
+
+### Removing the container when it stops
+
+This is because we only `stop`ped the container when we pressed `Ctrl+C` and didn't remove it. We can remove the container with the `down` command.
+
+```bash
+$ docker compose down
+```
+```output
+[+] Running 1/1
+ ✔ Container docker-intro-testing-spuc-1  Removed                                                                         10.2s
+ ✔ Network docker-intro-testing_default   Removed                                                                         0.1s    
+```
+
+In practice, you only need to use `down` if you need to remove the container. If you just want to stop it, you can use `Ctrl+C` like we did before.
+
+### Adding configuration 
+
+Now we have got the basics of running a container in the background and removing it when we are done. Let's add some more configuration to our `docker-compose.yml` file. Feel free to `up` the stack between changes to see how they affect the container.
+
+### Naming the container
+
+`spuc-1` is a bit of a boring name for a container. We can name the container using the `container_name` key.
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
++    container_name: spuc_container
+```
+```output
+[+] Running 2/0
+ ✔ Network docker-intro-testing_default  Created                                                                          0.0s 
+ ✔ Container spuc_container              Created                                                                          0.0s
+```
+
+### Exporting a port
+
+Currently, if we attempt to record a sighting of a unicorn, we will get a connection refused error. 
+
+```bash
+$ curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=10
+```
+```output
+curl: (7) Failed to connect to localhost port 8321 after 0 ms: Could not connect to server
+```
+
+This is because we haven't mapped the port from the container to the host. We can do this using the `ports` key using the notation `host_port:container_port`.
+
+It's worth noting the `ports` key is a list, so we can map multiple ports if we need to and that the host and container ports don't have to be the same!
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+    container_name: spuc_container
++    ports:
++      - 8321:8321
+```
+```output
+[+] Running 2/0
+ ✔ Network docker-intro-testing_default  Created                                                                          0.0s 
+ ✔ Container spuc_container              Created                                                                          0.0s
+```
+
+Now we can record a unicorn sighting!
+
+```bash
+$ curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=10
+```
+```output
+{"message":"Unicorn sighting recorded!"}
+```
+
+### Bind mounting a file
+
+As before, we want to make sure that our print configuration is being used by SPUC.
+
+We will use a bind mount for this - mapping a file from the host to the container.
+
+As with the CLI, this is (confusingly) done using the `volumes` key.
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+    container_name: spuc_container
+    ports:
+      - 8321:8321
++    volumes:
++      - $PWD/print.config:/code/config/print.config
+```
+
+Now, if you record some sightings, you should see them formatted according to the configuration in `print.config`.
+
+As before, whether a bind mount or volume is performed is based on whether the path on the left of the colon exists on the host. If it does, it's a bind mount. If it doesn't, it's a volume.
+
+
+### Mounting a volume
+
+We are still missing the volume we used to store our Unicorn sightings persistently. We can add this using the `volumes` key.
+
+This time with just the volume name on the left of the colon and adding a declaration for the volume at the bottom of the file.
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
++      - spuc-volume:/code/output
+
++ volumes:
++   spuc-volume:
+```
+
+Now, if you record some sightings and then stop and start the container, you should see that the sightings are still there!
+
+However, we can now use a cool feature of Docker Compose - the ability to remove volumes when the container is removed.
+
+We can do this using the `-v` flag with the `down` command. Which tells Docker to remove any volumes named in the `volumes` key.
+
+You can cofirm this by running `docker volume ls` before and after running `down`.
+
+```bash
+$ docker volume ls
+$ docker compose down -v
+$ docker volume ls
+```
+
+### Setting an environment variable
+
+Finally, let's set the `EXPORT` environment variable to `true` as we did in our `docker run` command.
+
+This is done using the `environment` key.
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
++    environment:
++      - EXPORT=true
+
+volumes:
+  spuc-volume:
+```
+```output
+[...]
+spuc_container  | :::: Unicorn sightings export activated! ::::
+spuc_container  | :: Try downloading the unicorn sightings record with:
+spuc_container  |     curl localhost:8321/export
+```
+
+We can see that the environment variable has been set by the output of the tool and the export functionality is now available.
+
+## Setting the units
+
+We can also set the units using the `command` key. This is the same as the `--units` flag in the `docker run` command.
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+    environment:
+      - EXPORT=true
++    command: ["--units", "iulu"]
+
+volumes:
+  spuc-volume:
+```
+```output
+[...]
+spuc_container  | :::: Units set to Imperial Unicorn Length Units [iulu] ::::
+```
+
+## Enabling the plugin
+
+We're nearly back to where we were with our `docker run` command! The only thing we are missing is enabling the plugin.
+
+Shouldn't be too bad - we can just mount the plugin file to the correct directory in the container.
+
+```diff
+services:
+  spuc:
+    image: ghcr.io/uomresearchit/spuc:latest
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
+
+volumes:
+  spuc-volume:
+```
+
+```bash
+$ docker compose up
+```
+```output
+Attaching to spuc_container
+spuc_container  | Traceback (most recent call last):
+spuc_container  |   File "/spuc/spuc.py", line 32, in <module>
+spuc_container  |     __import__(f"{plugin_dir}.{plugin[:-3]}")
+spuc_container  |   File "/spuc/plugins/stats.py", line 4, in <module>
+spuc_container  | 
+spuc_container  | :::: Importing plugins ::::
+spuc_container  | 
+spuc_container  |     import pandas as pd
+spuc_container  | ModuleNotFoundError: No module named 'pandas'
+spuc_container exited with code 1
+```
+
+Oh no! We've hit an error! It looks like the `pandas` library isn't installed in the container - which was the whole reason that we made our own container in the first place!
+
+Let's go back to that.
+
+## Building our own SPUC container
+
+But how do you build your own container using Docker Compose?
+
+Just like before we can use our Dockerfile to build the container. We can use the `build` key to tell Docker Compose to build the container using the Dockerfile in the current directory.
+
+This time instead of using the `image` key, we use the `build` key.
+
+```yaml
+services:
+  spuc:
+-    image: ghcr.io/uomresearchit/spuc:latest
++    build:
++      context: .
++      dockerfile: Dockerfile
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
+```
+
+So what is this doing? It is saying to build the container using the Dockerfile in the current directory. The `context` key is the directory in which the Dockerfile is located (a `.` means the current directory). The `dockerfile` key is the name of the Dockerfile.
+
+Now, we have to be a little careful with our up command! If we run up, Docker Compose will default to checking if the image exists and if it does, it will use that image.
+
+This is ok... unless we have made changes to the Dockerfile!
+
+To ensure that the image is built, we can run:
+        
+```bash
+$ docker compose build
+```
+
+Followed by our usual `up` command.
+
+You can also use the `--build` flag with the `up` command to build the image before starting the container.
+
+```bash
+$ docker compose up --build
+```
+
+But this can be wasteful as it will rebuild the image every time you run the up - even if the image hasn't changed.
+
+However you choose to manage this, you should now have a container running with the stats plugin enabled!
+
+```output
+spuc_container  | :::: Plugins loaded ::::
+spuc_container  | ['stats.py']
+```
+
+## Adding SPUCSVi
+
+So far we have only been running the SPUC container. There is an argument to be made that, even running a single service, that Docker Compose is a useful tool.
+
+It brings an ephemeral run command that would need careful documentation to replicate into a single file that can be version controlled and shared. And it is much easier on the eye than a long `docker run` command!
+
+That's great. But where Docker Compose really shines is when you have multiple services that need to be run together.
+
+And we happen to have another service that we need to run - SPUCSVi!
+
+## Adding SPUCSVi to our Docker Compose file
+
+We can add SPUCSVi to our Docker Compose file in the same way that we added SPUC, by adding another service to the `services` key.
+
+The SPUCSVi README helpfully provides a table of configuration options what we can use to configure the service, reproduced here:
+
+| Item | Description | Default |
+|------|-------------|---------|
+| Image Name | The name of the image to use | `ghcr.io/uomresearchit/spucsvi:latest` |
+| Port | The container port to the service runs on | `8322` |
+| SPUC_URL | An environment variable which gives the URL of the SPUC service | `http://spuc:8321` |
+
+We can use this to add SPUCSVi to our Docker Compose file!
+
+But how do we know the correct URL for the SPUC service? This touches on a couple of clever tricks that Docker Compose uses to make running multiple services easier.
+
+First, Docker Compose creates a network for each stack that it starts. This means that, unless overridden, all services in the stack can communicate with each other.
+
+Second, Docker Compose uses the service name as the hostname for the service. This means that we can use the service name as the hostname in the URL!
+
+For our service named `spuc`, the hostname would be `spuc` with the protocol `http` prepended and `port` appended i.e. `http://spuc:8321`.
+
+Knowing this, we are able to add SPUCSVi to our Docker Compose file!
+
+```diff
+services:
+  spuc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
+
++  spucsvi:
++    image: ghcr.io/uomresearchit/spucsvi:latest
++    container_name: spucsvi
++    ports:
++      - "8322:8322"
++    environment:
++      - SPUC_URL=http://spuc:8321
+
+volumes:
+  spuc-volume:
+```
+
+Where we added
+:
+* A service named `spucsvi`
+* The image `ghcr.io/uomresearchit/spucsvi:latest`
+* The container name `spucsvi` (not strictly necessary, but it's nice to have)
+* The port `8322` for the service (mapped to `8322` on the host)
+* The environment variable `SPUC_URL` set to `http://spuc:8321`
+
+Now when we run `docker compose up`, both services will be started!
+
+```bash
+$ docker compose up
+```
+```output
+[+] Running 3/3
+ ✔ Network docker-intro-testing_default  Created                                                                                                                          0.1s 
+ ✔ Container spucsvi                     Created                                                                                                                          0.1s 
+ ✔ Container spuc_container              Created                                                                                                                          0.2s 
+Attaching to spuc_container, spucsvi
+```
+
+And we can now view the SPUCSVi interface by visiting `localhost:8322` in our browser!
+
+A visual treat awaits! And an easier way to record and view our unicorn sightings!
+
+### Networks
+
+We breifly mentioned networks earlier, noting that, by default, Docker Compose creates a network for each stack.
+
+However, by overriding the default network, we can perform some interesting tricks!
+
+### Isolating SPUC
+
+Now that we can record Unicorns using the SPUCSVi interface, we don't need to be able to access the SPUC service directly.
+
+This means we can isolate the SPUC service from the host network. This is a good security practice and helps keep things tidy.
+
+We can do this by removing the `ports` key from the SPUC service.
+
+```diff
+services:
+  spuc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spuc_container
+-    ports:
+-      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
+
+  spucsvi:
+    image: ghcr.io/uomresearchit/spucsvi:latest
+    container_name: spucsvi
+    ports:
+      - "8322:8322"
+    environment:
+      - SPUC_URL=http://spuc:8321
+
+volumes:
+  spuc-volume:
+```
+
+Now, the SPUC service is only accessible from within the Docker network!
+
+This can be taken further to creater networks with very limited purposes. For example in a typical web app you may make it so that th frontend can connect only to backend, but not to the database.
+
+## Summary
+
+In this lesson, we have taken a dive into Docker Compose and seen how it can help us run multiple services together - in addition to making running a single service easier!
+
+We have seen how to translate `docker run` commands into a `docker-compose.yml` file and how to run the services using `docker compose`.
+
+We have also seen how to build a container using Docker Compose and how to run multiple services together.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::: keypoints
+- Docker Compose is a tool for defining and running multi-container Docker stacks
+- Docker Compose files are written in YAML 
+- Docker Compose can build images using a Dockerfile
+- Docker Compose allows containers to communicate with each other 
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

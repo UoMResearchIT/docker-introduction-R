@@ -3,10 +3,14 @@ import requests
 import logging
 import pandas as pd
 from io import StringIO
-
+import os
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
+
+spuc_url = "http://spuc:8321"
+if os.environ.get("SPUC_URL"):
+    spuc_url = os.environ.get("SPUC_URL")
 
 app = Flask(__name__)
 
@@ -14,7 +18,7 @@ app = Flask(__name__)
 @app.route("/")
 def spucsvi():
     # Get data from SPUC
-    response = requests.get("http://spuc:8321/export")
+    response = requests.get(f"{spuc_url}/export")
     data = response.text
 
     if "No unicorn sightings" in data or data == "":
@@ -48,10 +52,12 @@ def put_unicorn():
     location = request.form.get("location")
     brightness = request.form.get("brightness")
     response = requests.put(
-        f"http://spuc:8321/unicorn_spotted?location={location}&brightness={brightness}"
+        f"{spuc_url}/unicorn_spotted?location={location}&brightness={brightness}"
     )
     if response.status_code != 200:
-        raise ValueError(f"Failed to register unicorn sighting. {response.json()["ERROR"]}")
+        raise ValueError(
+            f"Failed to register unicorn sighting. {response.json()["ERROR"]}"
+        )
     return redirect("/")
 
 
