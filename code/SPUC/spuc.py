@@ -107,8 +107,9 @@ if __name__ == "__main__":
 
     # Print the initialization message
     print(s.logo())
-    print(s.welcome(unit_long_name, units, plugin_registry))
+    print(s.welcome(unit_long_name, units))
     print(s.base_help())
+    print(s.plugins(plugin_registry))
     if os.environ.get("EXPORT", "").lower() in ["1", "true", "t", "on", "yes", "y"]:
         print(s.export_help())
     print()
