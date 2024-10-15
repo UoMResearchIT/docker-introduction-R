@@ -2,3 +2,5 @@
 episodes/*html
 site/*
 !site/README.md
+
+.vscode/*
