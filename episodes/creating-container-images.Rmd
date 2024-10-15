@@ -1,368 +1,358 @@
 ---
 title: Creating Your Own Container Images
-teaching: 20
-exercises: 15
+teaching: 99
+exercises: 99
 ---
 
-There are lots of reasons why you might want to create your **own** Docker container image.
+::::::::::::::::::::::::::::::::::::::::::::::::::: objectives
+- Learn how to create your own container images using a `Dockerfile`.
+- Learn about the core instruction set used in a `Dockerfile`.
+- Learn how to build a container image from a `Dockerfile`.
+- Learn how to run a container from a container image.
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::: questions
+- How can I create my own container images?
+- What is a `Dockerfile`?
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::: objectives
+We've been doing well picking things up from the SPUCS README! Let's keep the streak going.
 
-- Explain the purpose of a `Dockerfile` and show some simple examples.
-- Demonstrate how to build a Docker container image from a `Dockerfile`.
-- Compare the steps of creating a container image interactively versus a `Dockerfile`.
-- Create an installation strategy for a container image.
-- Demonstrate how to upload ('push') your container images to the Docker Hub.
-- Describe the significance of the Docker Hub naming scheme.
+There is another cool feature on there that we haven't used yet - the ability to add new Unicorn analysis features using plugins! Let's try that out.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+The README says that we need to add a Python file at `/spuc/plugins/` that defines an endpoint for the new feature.
 
-:::::::::::::::::::::::::::::::::::::::: questions
+It would be very handy to be able to get some basic statistics about our Unicorns. Let's add a new plugin that will return a statstical analysis of the brightness of the Unicorns in the database.
 
-- How can I make my own Docker container images?
-- How do I document the 'recipe' for a Docker container image?
+However you prefer - make a file `stats.py` with the following content:
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+```python
+from __main__ import app
+from __main__ import file_path
 
-- You can't find a container image with all the tools you need on Docker Hub.
-- You want to have a container image to "archive" all the specific software versions you ran for a project.
-- You want to share your workflow with someone else.
+import pandas as pd
 
-## Interactive installation
-
-Before creating a reproducible installation, let's experiment with installing
-software inside a container. Start a container from the `alpine` container image we used before, interactively:
-
-```bash
-$ docker container run -it alpine sh
+@app.route('/stats', methods=['GET'])
+def stats():
+    with open(file_path) as f:
+        df = pd.read_csv(f)
+        stats = df.describe()
+        return stats.to_json()        
 ```
 
-Because this is a basic container, there's a lot of things not installed -- for
-example, `python3`.
+n.b. Don't worry if you're not familiar with Python or Pandas! This code will return some basic statistics about the data in the database.
+
+Now, from our previous lesson we know how to load this file! Let's use a bind mount to load this file into the container. Since we are debugging, we'll leave out the `-d` flag so we can see the output easily.
+
 
 ```bash
-/# python3
+$ docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true ghcr.io/uomresearchit/spuc:latest --units iulu
 ```
-
 ```output
-sh: python3: not found
+Traceback (most recent call last):
+  File "/spuc/spuc.py", line 32, in <module>
+    __import__(f"{plugin_dir}.{plugin[:-3]}")
+  File "/spuc/plugins/stats.py", line 4, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
+
+:::: Importing plugins ::::
 ```
 
-Inside the container, we can run commands to install Python 3. The Alpine version of
-Linux has a installation tool called `apk` that we can use to install Python 3.
+Oh... well what can we do about this? Clearly we need to install the `pandas` package in the container but how do we do that?
+
+We could do this interactively, but we know that won't survive a restart!
+
+Really what we need to do is **change** the image itself, so that it has `pandas` installed by default.
+
+This takes us to one of the most fundamental features of Docker - the ability to create your own container images.
+
+## Creating Docker Images
+
+So how are images made? The answer is with a recipe! Named a `Dockerfile`.
+
+A `Dockerfile` is a text file that contains a list of instructions for producing a Docker container. The instructions are terminal command and build the container image up layer by layer.
+
+We will start at the start, all Dockerfiles start with a `FROM` instruction. This sets the base image for the container. The base image is the starting point for the container, and all subsequent instructions are run on top of this base image.
+
+You can use **any** image as a base image and there are several offical images available on Docker Hub. For example, `ubuntu` for general purpose Linux, `python` for Python development, `alpine` for a lightweight Linux distribution, and many more.
+
+But of course the most natural fit for us right now is to use the SPUC image as a base image. This way we can be sure that our new image will have all the dependencies we need.
+
+Let's create a new file called `Dockerfile` (it **must** be called this!) and add the following content:
+
+```Dockerfile
+FROM ghcr.io/uomresearchit/spuc:latest
+```
+
+This is the simplest possible `Dockerfile` - it just says that our new image will be based on the SPUC image.
+
+But what do we do with it? We need to build the image!
+
+To do this we use the `docker build` command (short for `docker image build`). This command takes a `Dockerfile` and builds a new image from it and we will add a `-t` (tag) flag to give the image a name.
 
 ```bash
-/# apk add --update python3 py3-pip python3-dev
+$ docker build -t spuc-stats ./
 ```
 
-We can test our installation by running a Python command:
+This command will build a new image called `spuc-stats` from the `Dockerfile` in the current directory.
+
+We can now run this image in the same way we run any other image:
 
 ```bash
-/# python3 --version
+$ docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true spuc-stats --units iulu
 ```
-
-Once Python is installed, we can add Python packages using the pip package installer:
-
-```bash
-/# pip install cython
-```
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise: Searching for Help
-
-Can you find instructions for installing R on Alpine Linux? Do they work?
-
-:::::::::::::::  solution
-
-## Solution
-
-A quick search should hopefully show that the way to install R on Alpine Linux is:
-
-```bash
-/# apk add R
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-Once we exit, these changes are not saved to a new container image by default. There is
-a command that will "snapshot" our changes, but building container images this way is
-not easily reproducible. Instead, we're going to take what we've learned from this
-interactive installation and create our container image from a reproducible recipe,
-known as a `Dockerfile`.
-
-If you haven't already, exit out of the interactively running container.
-
-```bash
-/# exit
-```
-
-## Put installation instructions in a `Dockerfile`
-
-A `Dockerfile` is a plain text file with keywords and commands that
-can be used to create a new container image.
-
-From your shell, go to the folder you downloaded at the start of the lesson
-and print out the Dockerfile inside:
-
-```bash
-$ cd ~/Desktop/docker-intro/basic
-$ cat Dockerfile
-```
-
 ```output
-FROM <EXISTING IMAGE>
-RUN <INSTALL CMDS FROM SHELL>
-RUN <INSTALL CMDS FROM SHELL>
-CMD <CMD TO RUN BY DEFAULT>
+Traceback (most recent call last):
+  File "/spuc/spuc.py", line 32, in <module>
+    __import__(f"{plugin_dir}.{plugin[:-3]}")
+  File "/spuc/plugins/stats.py", line 4, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
 ```
 
-Let's break this file down:
+Ok! Back where we were but with some new skills!
 
-- The first line, `FROM`, indicates which container image we're starting with.  It is the "base" container image we are going to start from.
-- The next two lines `RUN`, will indicate installation commands we want to run. These
-  are the same commands that we used interactively above.
-- The last line, `CMD`, indicates the default command we want a
-  container based on this container image to run, if no other command is provided. It is recommended
-  to provide `CMD` in *exec-form* (see the
-  [`CMD` section](https://docs.docker.com/engine/reference/builder/#cmd)
-  of the Dockerfile documentation for more details). It is written as a
-  list which contains the executable to run as its first element,
-  optionally followed by any arguments as subsequent elements. The list
-  is enclosed in square brackets (`[]`) and its elements are
-  double-quoted (`"`) strings which are separated by commas. For
-  example, `CMD ["ls", "-lF", "--color", "/etc"]` would translate
-  to `ls -lF --color /etc`.
+Let's add that dependancy. We do this by adding a `RUN` instruction to the `Dockerfile`. This instruction runs a command in the container and then saves the result as a new layer in the image.
 
-:::::::::::::::::::::::::::::::::::::::::  callout
+In this case we want to install the `pandas` package so we add the following lines to the `Dockerfile`:
 
-## *shell-form* and *exec-form* for CMD
-
-Another way to specify the parameter for the
-[`CMD` instruction](https://docs.docker.com/engine/reference/builder/#cmd)
-is the *shell-form*. Here you type the command as you would call it
-from the command line. Docker then silently runs this command in the
-image's standard shell.  `CMD cat /etc/passwd` is equivalent to `CMD ["/bin/sh", "-c", "cat /etc/passwd"]`. We recommend to prefer the
-more explicit *exec-form* because we will be able to create more
-flexible container image command options and make sure complex commands
-are unambiguous in this format.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise: Take a Guess
-
-Do you have any ideas about what we should use to fill in the sample Dockerfile
-to replicate the installation we did above?
-
-:::::::::::::::  solution
-
-## Solution:
-
-Based on our experience above, edit the `Dockerfile` (in your text editor of choice)
-to look like this:
-
-```
-FROM alpine
-RUN apk add --update python3 py3-pip python3-dev
-RUN pip install cython
-CMD ["python3", "--version"]
+```Dockerfile
+RUN pip install pandas
 ```
 
-:::::::::::::::::::::::::
+This will install the `pandas` package in the container using Python's package manager `pip`.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-The recipe provided by the `Dockerfile` shown in the solution to the preceding exercise will use Alpine Linux as the base container image,
-add Python 3 and the Cython library, and set a default command to request Python 3 to report its version information.
-
-## Create a new Docker image
-
-So far, we only have a text file named `Dockerfile` -- we do not yet have a container image.
-We want Docker to take this `Dockerfile`,
-run the installation commands contained within it, and then save the
-resulting container as a new container image. To do this we will use the
-`docker image build` command.
-
-We have to provide `docker image build` with two pieces of information:
-
-- the location of the `Dockerfile`
-- the name of the new container image. Remember the naming scheme from before? You should name
-  your new image with your Docker Hub username and a name for the container image, like this: `USERNAME/CONTAINER_IMAGE_NAME`.
-
-All together, the build command that you should run on your computer, will have a similar structure to this:
+Now we can build the image again:
 
 ```bash
-$ docker image build -t USERNAME/CONTAINER_IMAGE_NAME .
+$ docker build -t spuc-stats ./
+```
+```output
+[...]
+Installing collected packages: pytz, tzdata, six, numpy, python-dateutil, pandas                                                                
+Successfully installed numpy-2.1.2 pandas-2.2.3 python-dateutil-2.9.0.post0 pytz-2024.2 six-1.16.0 tzdata-2024.2                                
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.  
+ ---> Removed intermediate container 642bfe617ba4
+ ---> 6ec83b86fbd1
+Successfully built 6ec83b86fbd1
+Successfully tagged spuc-stats:latest
 ```
 
-The `-t` option names the container image; the final dot indicates that the `Dockerfile` is in
-our current directory.
+It is worth noting that we can ignore this warning! We are building a container image, not installing software on our host machine.
 
-For example, if my user name was `alice` and I wanted to call my
-container image `alpine-python`, I would use this command:
+Now we can run the image again:
 
 ```bash
-$ docker image build -t alice/alpine-python .
+$ docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=True spuc-stats --units iulu
+```
+```output
+[...]
+Welcome to the Space Purple Unicorn Counter!
+
+:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::")
+
+:::: Plugins loaded ::::
+['stats.py']
+
+:: Try recording a unicorn sighting with:
+    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
 ```
 
-:::::::::::::::::::::::::::::::::::::::::  callout
+And now we can see that the `pandas` package is installed and the plugin is loaded!
 
-## Build Context
-
-Notice that the final input to `docker image build` isn't the Dockerfile, it's a directory!
-In the command above, we've used the current working directory (`.`) as the final input to the `build` command.
-This option provides what is called the *build context* to Docker.
-If there are files being copied into the built container image they're assumed to be in this location.
-Docker expects to see a Dockerfile in the build context also (unless you tell it to look elsewhere).
-
-Even if it won't need all of the files in the build context directory, Docker does
-"load" them before starting to build, which means that it's a good idea to have
-only what you need for the container image in a build context directory, as we've done
-in this example.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise: Review!
-
-1. Think back to earlier. What command can you run to check if your container image was created
-  successfully? (Hint: what command shows the container images on your computer?)
-
-2. We didn't specify a tag for our container image name. What tag did Docker automatically use?
-
-3. What command will run a container based on the container image you've created? What should happen by default
-  if you run such a container? Can you make it do something different, like print
-  "hello world"?
-
-:::::::::::::::  solution
-
-## Solution
-
-1. To see your new image, run `docker image ls`. You should see the name of your new
-  container image under the "REPOSITORY" heading.
-
-2. In the output of `docker image ls`, you can see that Docker has automatically
-  used the `latest` tag for our new container image.
-
-3. We want to use `docker container run` to run a container based on a container image.
-
-The following command should run a container and print out our default message, the version
-of Python:
+Let's try out the new endpoint:
 
 ```bash
-$ docker container run alice/alpine-python
+$ curl localhost:8321/stats
+```
+```output
+{"count":{"count":3.0,"mean":1.0,"std":1.0,"min":0.0,"25%":0.5,"50%":1.0,"75%":1.5,"max":2.0},"brightness":{"count":3.0,"mean":10.0,"std":0.0,"min":10.0,"25%":10.0,"50%":10.0,"75%":10.0,"max":10.0}}
 ```
 
-To run a container based on our container image and print out "Hello world" instead:
+And there we have it! We have created our own container image with a new feature!
+
+But why stop here? We could keep modifing the image to make it more how we would like by default.
+
+## COPY
+
+The first thing to look at is that it is a bit annoying having to bind mount the `stats.py` file every time we run the container. This makes sense for development but we would like to distribute the image with the plugin already installed.
+
+We can add this file to the image itself using the `COPY` instruction.
+
+The `COPY` instruction copies files from the host machine into the container image. It takes two arguments: the source file on the host machine and the destination in the container image.
+
+Let's add the `COPY` instruction to the `Dockerfile`:
+
+```Dockerfile
+FROM ghcr.io/uomresearchit/spuc:latest
+
+RUN pip install pandas
+
+COPY stats.py /spuc/plugins/stats.py
+```
+
+Now we can build the image again:
 
 ```bash
-$ docker container run alice/alpine-python echo "Hello World"
+$ docker build -t spuc-stats ./
 ```
 
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-While it may not look like you have achieved much, you have already effected the combination of a lightweight Linux operating system with your specification to run a given command that can operate reliably on macOS, Microsoft Windows, Linux and on the cloud!
-
-## Boring but important notes about installation
-
-There are a lot of choices when it comes to installing software -- sometimes too many!
-Here are some things to consider when creating your own container image:
-
-- **Start smart**, or, don't install everything from scratch! If you're using Python
-  as your main tool, start with a [Python container image](https://hub.docker.com/_/python). Same with R. We've used Alpine Linux as an example
-  in this lesson, but it's generally not a good container image to start with for initial development and experimentation because it is
-  a less common distribution of Linux; using [Ubuntu](https://hub.docker.com/_/ubuntu), [Debian](https://hub.docker.com/_/debian) and [CentOS](https://hub.docker.com/_/centos) are all
-  good options for scientific software installations. The program you're using might
-  recommend a particular distribution of Linux, and if so, it may be useful to start with a container image for that distribution.
-- **How big?** How much software do you really need to install? When you have a choice,
-  lean towards using smaller starting container images and installing only what's needed for
-  your software, as a bigger container image means longer download times to use.
-- **Know (or Google) your Linux**. Different distributions of Linux often have distinct sets of tools for installing software. The `apk` command we used above is the software package installer for Alpine Linux. The installers for various common Linux distributions are listed below:
-  - Ubuntu: `apt` or `apt-get`
-  - Debian: `deb`
-  - CentOS: `yum`
-    Most common software installations are available to be installed via these tools.
-    A web search for "install X on Y Linux" is usually a good start for common software
-    installation tasks; if something isn't available via the Linux distribution's installation
-    tools, try the options below.
-- **Use what you know**. You've probably used commands like `pip` or `install.packages()`
-  before on your own computer -- these will also work to install things in container images (if the basic scripting
-  language is installed).
-- **README**. Many scientific software tools have a README or installation instructions
-  that lay out how to install software. You want to look for instructions for Linux. If
-  the install instructions include options like those suggested above, try those first.
-
-In general, a good strategy for installing software is:
-
-- Make a list of what you want to install.
-- Look for pre-existing container images.
-- Read through instructions for software you'll need to install.
-- Try installing everything interactively in your base container -- take notes!
-- From your interactive installation, create a `Dockerfile` and then try to build
-  the container image from that.
-
-## Share your new container image on Docker Hub
-
-Container images that you release publicly can be stored on the Docker Hub for free.  If you
-name your container image as described above, with your Docker Hub username, all you need to do
-is run the opposite of `docker image pull` -- `docker image push`.
+And run the image, this time without the bind mount for the `stats.py` file:
 
 ```bash
-$ docker image push alice/alpine-python
+$ docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -e EXPORT=True spuc-stats --units iulu
+```
+```output
+[...]
+:::: Plugins loaded ::::
+['stats.py']
+[...]
 ```
 
-Make sure to substitute the full name of your container image!
+If we check the logs we can see that the plugin is still loaded!
 
-In a web browser, open [https://hub.docker.com](https://hub.docker.com), and on your user page you should now see your container image listed, for anyone to use or build on.
+And again... why stop there? It is annoying having to mount the `print.config` file every time we run the container. We could add this file to the image as well!
 
-:::::::::::::::::::::::::::::::::::::::::  callout
+```Dockerfile
+FROM ghcr.io/uomresearchit/spuc:latest
 
-## Logging In
+RUN pip install pandas
 
-Technically, you have to be logged into Docker on your computer for this to work.
-Usually it happens by default, but if `docker image push` doesn't work for you,
-run `docker login` first, enter your Docker Hub username and password, and then
-try `docker image push` again.
+COPY stats.py /spuc/plugins/stats.py
+COPY print.config /code/config/print.config
+```
 
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## What's in a name? (again)
-
-You don't *have* to name your containers images using the `USERNAME/CONTAINER_IMAGE_NAME:TAG` naming scheme. On your own computer, you can call container images whatever you want, and refer to
-them by the names you choose. It's only when you want to share a container image that it
-needs the correct naming format.
-
-You can rename container images using the `docker image tag` command. For example, imagine someone
-named Alice has been working on a workflow container image and called it `workflow-test`
-on her own computer. She now wants to share it in her `alice` Docker Hub account
-with the name `workflow-complete` and a tag of `v1`. Her `docker image tag` command
-would look like this:
+Rebuilding and running (without the bind mount for `print.config`):
 
 ```bash
-$ docker image tag workflow-test alice/workflow-complete:v1
+$ docker build -t spuc-stats ./
+$ docker run --rm --name spuc_container -p 8321:8321 -v spuc-volume:/code/output -e EXPORT=True spuc-stats --units iulu
 ```
 
-She could then push the re-named container image to Docker Hub,
-using `docker image push alice/workflow-complete:v1`
+## ENV
 
+We can also set environment variables in the `Dockerfile` using the `ENV` instruction.
+These can always be overridden when running the container but it is useful to set defaults. And we like the `EXPORT` variable so let's add that to the `Dockerfile`:
 
+```Dockerfile
+FROM ghcr.io/uomresearchit/spuc:latest
+
+RUN pip install pandas
+
+COPY stats.py /spuc/plugins/stats.py
+COPY print.config /code/config/print.config
+
+ENV EXPORT=True
+```
+
+Rebuilding and running (without the `-e EXPORT=True` flag):
+
+```bash
+$ docker build -t spuc-stats ./
+$ docker run --rm --name spuc_container -p 8321:8321 -v spuc-volume:/code/output spuc-stats --units iulu
+```
+```output
+[...]
+:::: Unicorn sightings export activated! ::::
+:: Try downloading the unicorn sightings record with:
+    curl localhost:8321/export
+```
+
+We can see that the `EXPORT` variable is now set to `True` by default!
+
+## ENTRYPOINT
+
+We're on a bit of a roll here! Let's add one more modification to the image.
+
+Let's change away from those imperial units by default.
+
+We can do this by changing the `ENTRYPOINT` instruction in the `Dockerfile`. So far we have been adding `--units iulu` to the end of the `docker run` which overwrites the `command`.
+
+If we move this to the `ENTRYPOINT` instruction then it will be run every time the container is started. We'll also add a `CMD` instruction with an empty list as the CMD was set in the SPUCS container base and we don't want to set `--units` twice.
+
+```Dockerfile
+FROM ghcr.io/uomresearchit/spuc:latest
+
+RUN pip install pandas
+
+COPY stats.py /spuc/plugins/stats.py
+COPY print.config /code/config/print.config
+
+ENV EXPORT=True
+
+ENTRYPOINT ["python", "/spuc/spuc.py", "--units", "iulu"]
+CMD []
+```
+
+Notice that we use array syntax for the `ENTRYPOINT` instruction. This is because the `ENTRYPOINT` instruction can take a list of arguments and the array syntax ensures that the arguments are passed correctly.
+
+Let's give this a try, dropping the unnecessary `--units iulu` from the `docker run` command:
+
+```bash
+$ docker build -t spuc-stats ./
+$ docker run --rm --name spuc_container -p 8321:8321 -v spuc-volume:/code/output spuc-stats
+```
+```output
+[...]
+:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::")
+[...]
+```
+
+Much better! A far clearner command, much more customised for our use case!
+
+## Back to reality
+
+In this lession we have focused on modifying an image already containing a service.
+This is a perfectly valid way of using Dockerfiles! But it is not the most common.
+
+While you can base your images on any other public image, it is most common for developers to be creating containers 'from the ground up'.
+
+The most common practice is creating images from images like `ubuntu` or `alpine` and adding your own software and configuration files.
+
+An example of this is how the developers of the SPUC service created their image. The Dockerfile is reproduced below:
+
+```Dockerfile
+FROM python:3.12-slim
+
+WORKDIR /spuc
+
+COPY ./requirements.txt /spuc/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /spuc/requirements.txt
+
+COPY ./*.py /spuc/
+COPY ./config/*.config /spuc/config/
+RUN mkdir /spuc/output
+
+EXPOSE 8321
+
+ENTRYPOINT ["python", "/spuc/spuc.py"]
+CMD ["--units", "iuhc"]
+```
+
+From this we can see the developers:
+
+* started with a `python:3.12-slim` image
+* installed the required packages (from a file) using `pip`
+* copied the source code and configuration files
+* set the default entrypoint andcommand.
+
+This is a very common pattern for creating images and is the most common way to use Dockerfiles but it is important to realise that you can create images from **any** base image and customise them to your heart's content!
+
+## Summary
+
+In this lesson we have seen how to create our own container images using a `Dockerfile`.
+
+We've added new layers with new packges installed using `RUN`, we've added files using `COPY`, set environment variables using `ENV`, and changed the default command using `ENTRYPOINT` and `CMD`.
+
+However, we are still encumbered with quite an unwieldy command to run the container. In the next lesson we will see how to make this easier by using `docker-compose`.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
-
-- `Dockerfile`s specify what is within Docker container images.
-- The `docker image build` command is used to build a container image from a `Dockerfile`.
-- You can share your Docker container images through the Docker Hub so that others can create Docker containers from your container images.
-
+- You can create your own container images using a `Dockerfile`.
+- A `Dockerfile` is a text file that contains a list of instructions for producing a Docker container.
+- `FROM`, `RUN`, `COPY`, `ENV`, `ENTRYPOINT`, and `CMD` are some of the most imprtatn instructions that can be used in a `Dockerfile`.
+- The `docker build` command is used to build a container image from a `Dockerfile`.
+- You can run a container from a container image using the `docker run` command.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
