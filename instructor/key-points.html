@@ -576,14 +576,19 @@ behaviour of a container.</li>
 </ul></section><section id="creating-container-images"><h2 class="section-heading"><a href="creating-container-images.html">Creating Your Own Container Images</a></h2>
 <hr class="half-width">
 <ul>
+<li>You can create your own container images using a
+<code>Dockerfile</code>.</li>
+<li>A <code>Dockerfile</code> is a text file that contains a list of
+instructions for producing a Docker container.</li>
 <li>
-<code>Dockerfile</code>s specify what is within Docker container
-images.</li>
-<li>The <code>docker image build</code> command is used to build a
-container image from a <code>Dockerfile</code>.</li>
-<li>You can share your Docker container images through the Docker Hub so
-that others can create Docker containers from your container
-images.</li>
+<code>FROM</code>, <code>RUN</code>, <code>COPY</code>,
+<code>ENV</code>, <code>ENTRYPOINT</code>, and <code>CMD</code> are some
+of the most imprtatn instructions that can be used in a
+<code>Dockerfile</code>.</li>
+<li>The <code>docker build</code> command is used to build a container
+image from a <code>Dockerfile</code>.</li>
+<li>You can run a container from a container image using the
+<code>docker run</code> command.</li>
 </ul></section><section id="advanced-containers"><h2 class="section-heading"><a href="advanced-containers.html">Creating More Complex Container Images</a></h2>
 <hr class="half-width">
 <ul>
@@ -617,7 +622,7 @@ container images by using the <code>COPY</code> instruction in your
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.8" class="external-link">sandpaper (0.16.8)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.6" class="external-link">pegboard (0.7.6)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.4" class="external-link">varnish (1.0.4)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.9" class="external-link">sandpaper (0.16.9)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.6" class="external-link">pegboard (0.7.6)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.4" class="external-link">varnish (1.0.4)</a></p>
 			</div>
 		</footer>
 </div> <!-- / div.container -->
