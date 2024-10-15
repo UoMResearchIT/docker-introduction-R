@@ -117,11 +117,11 @@
   Introduction to Docker
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 64%" class="percentage">
-    64%
+<aside class="col-md-12 lesson-progress"><div style="width: 54%" class="percentage">
+    54%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 64%" aria-valuenow="64" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 54%" aria-valuenow="54" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -214,7 +214,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="docker-hub.html">2. The Docker Hub</a>
+        <a href="docker-desktop.html">2. Docker Desktop</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -223,7 +223,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="docker-desktop.html">3. Docker Desktop</a>
+        <a href="docker-cli-toolkit.html">3. Building our Docker CLI toolkit</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -232,7 +232,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="docker-cli-toolkit.html">4. Building our Docker CLI toolkit</a>
+        <a href="docker-cli-advanced.html">4. Using the full power of the Docker CLI</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -241,7 +241,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="docker-cli-advanced.html">5. Using the full power of the Docker CLI</a>
+        <a href="docker-hub.html">5. The Docker Hub</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -275,7 +275,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="advanced-containers.html">7. Creating More Complex Container Images</a>
+        <a href="docker-compose.html">7. Using Docker Compose</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -322,17 +322,17 @@
         <!-- START: inst/pkgdown/templates/content-instructor.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="../instructor/docker-cli-advanced.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="../instructor/advanced-containers.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="../instructor/docker-hub.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="../instructor/docker-compose.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="../instructor/docker-cli-advanced.html" rel="prev">
+        <a class="chapter-link" href="../instructor/docker-hub.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Using the full power
+          Previous: The Docker Hub
         </a>
-        <a class="chapter-link float-end" href="../instructor/advanced-containers.html" rel="next">
-          Next: Creating More...
+        <a class="chapter-link float-end" href="../instructor/docker-compose.html" rel="next">
+          Next: Using Docker Compose...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -633,10 +633,10 @@ add this file to the image as well!</p>
 </div>
 </section><section><h2 class="section-heading" id="env">ENV<a class="anchor" aria-label="anchor" href="#env"></a></h2>
 <hr class="half-width"><p>We can also set environment variables in the <code>Dockerfile</code>
-using the <code>ENV</code> instruction.</p>
-<p>These can always be overridden when running the container but it is
-useful to set defaults. And we like the <code>EXPORT</code> variable so
-let’s add that to the <code>Dockerfile</code>:</p>
+using the <code>ENV</code> instruction. These can always be overridden
+when running the container but it is useful to set defaults. And we like
+the <code>EXPORT</code> variable so let’s add that to the
+<code>Dockerfile</code>:</p>
 <div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -794,17 +794,17 @@ image from a <code>Dockerfile</code>.</li>
 </div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="../instructor/docker-cli-advanced.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="../instructor/advanced-containers.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="../instructor/docker-hub.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="../instructor/docker-compose.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="../instructor/docker-cli-advanced.html" rel="prev">
+        <a class="chapter-link" href="../instructor/docker-hub.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Using the full power
+          Previous: The Docker Hub
         </a>
-        <a class="chapter-link float-end" href="../instructor/advanced-containers.html" rel="next">
-          Next: Creating More...
+        <a class="chapter-link float-end" href="../instructor/docker-compose.html" rel="next">
+          Next: Using Docker Compose...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>

@@ -218,7 +218,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="docker-hub.html">2. The Docker Hub</a>
+        <a href="docker-desktop.html">2. Docker Desktop</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -227,7 +227,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="docker-desktop.html">3. Docker Desktop</a>
+        <a href="docker-cli-toolkit.html">3. Building our Docker CLI toolkit</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -236,7 +236,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="docker-cli-toolkit.html">4. Building our Docker CLI toolkit</a>
+        <a href="docker-cli-advanced.html">4. Using the full power of the Docker CLI</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -245,7 +245,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="docker-cli-advanced.html">5. Using the full power of the Docker CLI</a>
+        <a href="docker-hub.html">5. The Docker Hub</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -263,7 +263,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="advanced-containers.html">7. Creating More Complex Container Images</a>
+        <a href="docker-compose.html">7. Using Docker Compose</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -408,27 +408,17 @@ me?<br>::::::::::::::::::::::::::::::::::::::::::::::::::
 <span class="visually-hidden">Duration: </span>00h 20m
 </td>
 <td>
- 2. <a href="docker-hub.html">The Docker Hub</a>
-</td>
-<td>
-What is the Docker Hub, and why is it
-useful?<br>::::::::::::::::::::::::::::::::::::::::::::::::::
-</td>
-</tr><tr><td>
-<span class="visually-hidden">Duration: </span>00h 40m
-</td>
-<td>
- 3. <a href="docker-desktop.html">Docker Desktop</a>
+ 2. <a href="docker-desktop.html">Docker Desktop</a>
 </td>
 <td>
 What is Docker Desktop?<br>What can it be used for?<br>Why can’t it
 replace the cli?<br>::::::::::::::::::::::::::::::::::::::::::::::::::
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>01h 00m
+<span class="visually-hidden">Duration: </span>00h 40m
 </td>
 <td>
- 4. <a href="docker-cli-toolkit.html">Building our Docker CLI
+ 3. <a href="docker-cli-toolkit.html">Building our Docker CLI
 toolkit</a>
 </td>
 <td>
@@ -437,16 +427,26 @@ in Docker
 Desktop?<br>::::::::::::::::::::::::::::::::::::::::::::::::::
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>04h 18m
+<span class="visually-hidden">Duration: </span>03h 58m
 </td>
 <td>
- 5. <a href="docker-cli-advanced.html">Using the full power of the
+ 4. <a href="docker-cli-advanced.html">Using the full power of the
 Docker CLI</a>
 </td>
 <td>
 What actually happens when I run a container?<br>How can I control the
 behaviour of containers?<br>How do I get data in and out of
 containers?<br>::::::::::::::::::::::::::::::::::::::::::::::::::
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>07h 16m
+</td>
+<td>
+ 5. <a href="docker-hub.html">The Docker Hub</a>
+</td>
+<td>
+What is the Docker Hub, and why is it
+useful?<br>::::::::::::::::::::::::::::::::::::::::::::::::::
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>07h 36m
@@ -469,14 +469,19 @@ questions<br>How can I create my own container images?<br>What is a
 <span class="visually-hidden">Duration: </span>10h 54m
 </td>
 <td>
- 7. <a href="advanced-containers.html">Creating More Complex Container
-Images</a>
+ 7. <a href="docker-compose.html">Using Docker Compose</a>
 </td>
 <td>
-How can I make more complex container images?
+Learn how to run multiple containers<br>easily!<br>Clean up our run
+command for once and for
+all<br>::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br>:::::::::::::::::::::::::::::::::::::::::::::::::::
+questions<br>What is Docker Compose? And why would I use it?<br>How
+can I translate my <code>docker run</code> commands into a
+<code>docker-compose.yml</code>
+file?<br>::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>11h 54m
+<span class="visually-hidden">Duration: </span>14h 12m
 </td>
 <td>
 Finish
@@ -532,7 +537,7 @@ in finding the correct installation procedures.</p>
   Windows
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Installation of Docker on Microsoft Windows comprises two central
 steps:</p>
@@ -622,7 +627,7 @@ Bash.</p>
   Mac
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Please install docker following these <a href="https://docs.docker.com/desktop/install/mac-install/" class="external-link">instructions</a>.</p>
 </div>
@@ -636,7 +641,7 @@ Bash.</p>
   Linux
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Installation on Linux requires two steps:</p>
 <ul><li>Installation of Docker Engine</li>

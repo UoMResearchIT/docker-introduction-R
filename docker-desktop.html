@@ -117,11 +117,11 @@
   Introduction to Docker
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 6%" class="percentage">
-    6%
+<aside class="col-md-12 lesson-progress"><div style="width: 2%" class="percentage">
+    2%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 6%" aria-valuenow="6" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 2%" aria-valuenow="2" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -211,22 +211,13 @@
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
 
-<div class="accordion accordion-flush" id="accordionFlush3">
-  <div class="accordion-item">
-    <div class="accordion-header" id="flush-heading3">
-        <a href="docker-hub.html">2. The Docker Hub</a>
-    </div><!--/div.accordion-header-->
-
-  </div><!--/div.accordion-item-->
-</div><!--/div.accordion-flush-->
-
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
-        3. Docker Desktop
+        2. Docker Desktop
         </span>
       </button>
     </div><!--/div.accordion-header-->
@@ -246,10 +237,19 @@
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="docker-cli-toolkit.html">3. Building our Docker CLI toolkit</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="docker-cli-toolkit.html">4. Building our Docker CLI toolkit</a>
+        <a href="docker-cli-advanced.html">4. Using the full power of the Docker CLI</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -258,7 +258,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="docker-cli-advanced.html">5. Using the full power of the Docker CLI</a>
+        <a href="docker-hub.html">5. The Docker Hub</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -276,7 +276,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="advanced-containers.html">7. Creating More Complex Container Images</a>
+        <a href="docker-compose.html">7. Using Docker Compose</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -324,14 +324,14 @@
         <!-- START: inst/pkgdown/templates/content-instructor.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="docker-hub.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link" href="introduction.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="docker-cli-toolkit.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="docker-hub.html" rel="prev">
+        <a class="chapter-link" href="introduction.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: The Docker Hub
+          Previous: Introducing
         </a>
         <a class="chapter-link float-end" href="docker-cli-toolkit.html" rel="next">
           Next: Building our Docker...
@@ -461,7 +461,7 @@ to say. They both seem to indicate that we need to <em>run</em> or
   Logs tab
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/11_hello_log.png" alt="Logs tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -474,7 +474,7 @@ to say. They both seem to indicate that we need to <em>run</em> or
   Inspect tab
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/12_hello_inspect.png" alt="Inspect tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -487,7 +487,7 @@ to say. They both seem to indicate that we need to <em>run</em> or
   Terminal tab
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/14_hello_terminal.png" alt="Terminal tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -500,7 +500,7 @@ to say. They both seem to indicate that we need to <em>run</em> or
   Stats tab
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/13_hello_stats.png" alt="Stats tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -545,7 +545,7 @@ termi</p>
   Logs tab
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/18_gettingstarted_log.png" alt="Logs tab in container from getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -558,7 +558,7 @@ termi</p>
   Inspect tab
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/19_gettingstarted_inspect.png" alt="Inspect tab in container from getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -571,7 +571,7 @@ termi</p>
   Terminal tab
   </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/20_gettingstarted_terminal.png" alt="Terminal tab in container from getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -584,7 +584,7 @@ termi</p>
   Stats tab
   </h4>
 </button>
-<div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
+<div id="collapseSolution8" class="accordion-collapse collapse" aria-labelledby="headingSolution8" data-bs-parent="#accordionSolution8">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/21_gettingstarted_stats.png" alt="Stats tab in container from getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -615,7 +615,7 @@ using <code>apk add htop</code>, and we can now use it.</p>
   Installing htop
   </h4>
 </button>
-<div id="collapseSolution9" class="accordion-collapse collapse" data-bs-parent="#accordionSolution9" aria-labelledby="headingSolution9">
+<div id="collapseSolution9" class="accordion-collapse collapse" aria-labelledby="headingSolution9" data-bs-parent="#accordionSolution9">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/24_gettingstarted_htop.png" alt="Terminal, installing htop inside getting-started container." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -628,7 +628,7 @@ using <code>apk add htop</code>, and we can now use it.</p>
   Running htop
   </h4>
 </button>
-<div id="collapseSolution10" class="accordion-collapse collapse" data-bs-parent="#accordionSolution10" aria-labelledby="headingSolution10">
+<div id="collapseSolution10" class="accordion-collapse collapse" aria-labelledby="headingSolution10" data-bs-parent="#accordionSolution10">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/25_gettingstarted_htop2.png" alt="Terminal, running htop inside getting-started container." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -646,7 +646,7 @@ tab on the left will also show the container status as ‘Exited’</p>
   Terminal tab
   </h4>
 </button>
-<div id="collapseSolution11" class="accordion-collapse collapse" data-bs-parent="#accordionSolution11" aria-labelledby="headingSolution11">
+<div id="collapseSolution11" class="accordion-collapse collapse" aria-labelledby="headingSolution11" data-bs-parent="#accordionSolution11">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/26_gettingstarted_exited_t.png" alt="Terminal tab in container from stopped getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -659,7 +659,7 @@ tab on the left will also show the container status as ‘Exited’</p>
   Stats tab
   </h4>
 </button>
-<div id="collapseSolution12" class="accordion-collapse collapse" data-bs-parent="#accordionSolution12" aria-labelledby="headingSolution12">
+<div id="collapseSolution12" class="accordion-collapse collapse" aria-labelledby="headingSolution12" data-bs-parent="#accordionSolution12">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/27_gettingstarted_exited_s.png" alt="Stats tab in container from stopped getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -672,7 +672,7 @@ tab on the left will also show the container status as ‘Exited’</p>
   Container list
   </h4>
 </button>
-<div id="collapseSolution13" class="accordion-collapse collapse" data-bs-parent="#accordionSolution13" aria-labelledby="headingSolution13">
+<div id="collapseSolution13" class="accordion-collapse collapse" aria-labelledby="headingSolution13" data-bs-parent="#accordionSolution13">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/28_gettingstarted_exited_c.png" alt="Container list after stopping getting-started image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -742,7 +742,7 @@ overboard.</p>
   Logs tab
   </h4>
 </button>
-<div id="collapseSolution14" class="accordion-collapse collapse" data-bs-parent="#accordionSolution14" aria-labelledby="headingSolution14">
+<div id="collapseSolution14" class="accordion-collapse collapse" aria-labelledby="headingSolution14" data-bs-parent="#accordionSolution14">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/44_alpine_logs.png" alt="Logs tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -755,7 +755,7 @@ overboard.</p>
   Inspect tab
   </h4>
 </button>
-<div id="collapseSolution15" class="accordion-collapse collapse" data-bs-parent="#accordionSolution15" aria-labelledby="headingSolution15">
+<div id="collapseSolution15" class="accordion-collapse collapse" aria-labelledby="headingSolution15" data-bs-parent="#accordionSolution15">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/45_alpine_i.png" alt="Inspect tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -768,7 +768,7 @@ overboard.</p>
   Terminal tab
   </h4>
 </button>
-<div id="collapseSolution16" class="accordion-collapse collapse" data-bs-parent="#accordionSolution16" aria-labelledby="headingSolution16">
+<div id="collapseSolution16" class="accordion-collapse collapse" aria-labelledby="headingSolution16" data-bs-parent="#accordionSolution16">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/46_alpine_t.png" alt="Terminal tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -781,7 +781,7 @@ overboard.</p>
   Stats tab
   </h4>
 </button>
-<div id="collapseSolution17" class="accordion-collapse collapse" data-bs-parent="#accordionSolution17" aria-labelledby="headingSolution17">
+<div id="collapseSolution17" class="accordion-collapse collapse" aria-labelledby="headingSolution17" data-bs-parent="#accordionSolution17">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/47_alpine_s.png" alt="Stats tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -803,7 +803,7 @@ them. Searching for that image shows that there is one by
   Logs tab
   </h4>
 </button>
-<div id="collapseSolution18" class="accordion-collapse collapse" data-bs-parent="#accordionSolution18" aria-labelledby="headingSolution18">
+<div id="collapseSolution18" class="accordion-collapse collapse" aria-labelledby="headingSolution18" data-bs-parent="#accordionSolution18">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/50_cowsay_logs.png" alt="Logs tab in container from cowsay image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -816,7 +816,7 @@ them. Searching for that image shows that there is one by
   Inspect tab
   </h4>
 </button>
-<div id="collapseSolution19" class="accordion-collapse collapse" data-bs-parent="#accordionSolution19" aria-labelledby="headingSolution19">
+<div id="collapseSolution19" class="accordion-collapse collapse" aria-labelledby="headingSolution19" data-bs-parent="#accordionSolution19">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/51_cowsay_inspect.png" alt="Inspect tab in container from cowsay image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -829,7 +829,7 @@ them. Searching for that image shows that there is one by
   Terminal tab
   </h4>
 </button>
-<div id="collapseSolution20" class="accordion-collapse collapse" data-bs-parent="#accordionSolution20" aria-labelledby="headingSolution20">
+<div id="collapseSolution20" class="accordion-collapse collapse" aria-labelledby="headingSolution20" data-bs-parent="#accordionSolution20">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/52_cowsay_term.png" alt="Terminal tab in container from cowsay image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -842,7 +842,7 @@ them. Searching for that image shows that there is one by
   Stats tab
   </h4>
 </button>
-<div id="collapseSolution21" class="accordion-collapse collapse" data-bs-parent="#accordionSolution21" aria-labelledby="headingSolution21">
+<div id="collapseSolution21" class="accordion-collapse collapse" aria-labelledby="headingSolution21" data-bs-parent="#accordionSolution21">
 <div class="accordion-body">
 <figure><img src="fig/docker-desktop/53_cowsay_stats.png" alt="Stats tab in container from cowsay image." class="figure mx-auto d-block"></figure></div>
 </div>
@@ -887,14 +887,14 @@ interact with the containers adequately.</li>
 </div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="docker-hub.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link" href="introduction.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="docker-cli-toolkit.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="docker-hub.html" rel="prev">
+        <a class="chapter-link" href="introduction.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: The Docker Hub
+          Previous: Introducing
         </a>
         <a class="chapter-link float-end" href="docker-cli-toolkit.html" rel="next">
           Next: Building our Docker...
