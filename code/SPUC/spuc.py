@@ -109,7 +109,7 @@ if __name__ == "__main__":
     print(s.logo())
     print(s.welcome(unit_long_name, units, plugin_registry))
     print(s.base_help())
-    if os.environ.get("EXPORT") == "True":
+    if os.environ.get("EXPORT", "").lower() in ["1", "true", "t", "on", "yes", "y"]:
         print(s.export_help())
     print()
     sys.stdout.flush()
