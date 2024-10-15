@@ -92,14 +92,22 @@ def logo():
 
 
 def welcome(unit_long_name, units, plugin_registry):
+    plugins = ""
+    if plugin_registry:
+        plugins = t.dedent(
+            f"""
+            :: The following plugins were loaded
+                {", ".join(plugin_registry)}
+            """.rstrip()
+        )
+    else:
+        plugins = ":: No plugins detected"
     message = t.dedent(
         f"""
         Welcome to the Space Purple Unicorn Counter!
 
         :::: Units set to {unit_long_name} [{units}] ::::")
-
-        :::: Plugins loaded ::::
-        {plugin_registry}
+        {plugins}
         """.rstrip()
     )
     return message
