@@ -23,7 +23,6 @@ units = None
 # ------------------------------------------------------------------------------
 # Endpoints imported from plugins
 
-print("\n:::: Importing plugins ::::\n")
 plugin_dir = "plugins"
 plugin_registry = []
 if os.path.exists(plugin_dir):
@@ -34,7 +33,8 @@ if os.path.exists(plugin_dir):
 
 # ------------------------------------------------------------------------------
 # Endpoint for exporting the unicorn sightings if the EXPORT environment variable is set to True
-if os.environ.get("EXPORT").lower() == "true":
+if os.environ.get("EXPORT") == "True":
+
     @app.route("/export/", methods=["GET"])
     def chart():
         if not os.path.exists(file_path):
@@ -107,9 +107,10 @@ if __name__ == "__main__":
 
     # Print the initialization message
     print(s.logo())
-    print(s.welcome(unit_long_name, units, plugin_registry))
+    print(s.welcome(unit_long_name, units))
     print(s.base_help())
-    if os.environ.get("EXPORT") == "True":
+    print(s.plugins(plugin_registry))
+    if os.environ.get("EXPORT", "").lower() in ["1", "true", "t", "on", "yes", "y"]:
         print(s.export_help())
     print()
     sys.stdout.flush()

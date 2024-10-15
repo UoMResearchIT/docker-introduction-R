@@ -91,15 +91,12 @@ def logo():
     return logo
 
 
-def welcome(unit_long_name, units, plugin_registry):
+def welcome(unit_long_name, units):
     message = t.dedent(
         f"""
         Welcome to the Space Purple Unicorn Counter!
 
         :::: Units set to {unit_long_name} [{units}] ::::")
-
-        :::: Plugins loaded ::::
-        {plugin_registry}
         """.rstrip()
     )
     return message
@@ -113,6 +110,25 @@ def base_help():
         """.rstrip()
     )
     return help
+
+
+def plugins(plugin_registry):
+    plugins = ""
+    if plugin_registry:
+        plugins = t.dedent(
+            f"""
+            :::: Plugins loaded! ::::
+            :: Available plugins
+                {", ".join(plugin_registry)}
+            """.rstrip()
+        )
+    else:
+        plugins = t.dedent(
+            f"""
+            :: No plugins detected
+            """.rstrip()
+        )
+    return plugins
 
 
 def export_help():
