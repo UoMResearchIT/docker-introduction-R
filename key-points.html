@@ -427,16 +427,146 @@ important to clean up regularly.</li>
 <li>However, it is very limited in most cases (even for
 <em>consumers</em>), and rarely allows the user to configure and
 interact with the containers adequately.</li>
-</ul></section><section id="docker-cli-toolkit"><h2 class="section-heading"><a href="docker-cli-toolkit.html">Building our Docker CLI toolkitDocker command cheat sheet<a class="anchor" aria-label="anchor" href="#docker-command-cheat-sheet"></a>Building our Docker CLI Toolkit<a class="anchor" aria-label="anchor" href="#building-our-docker-cli-toolkit"></a></a></h2>
+</ul></section><section id="docker-cli-toolkit"><h2 class="section-heading"><a href="docker-cli-toolkit.html">Building our Docker CLI toolkit</a></h2>
 <hr class="half-width">
 <ul>
-<li>The Docker CLI can perform all the tasks that Docker Desktop can
-(and more - coming up!)</li>
-<li>The Docker CLI is structured around a base command, a specialising
-command, an action command, and the name of the object to act on</li>
-<li>With a few core commands, and a cheatsheet, we can build a powerful
-toolkit for working with Docker containers</li>
-</ul></section><section id="docker-cli-advanced"><h2 class="section-heading"><a href="docker-cli-advanced.html">Using the full power of the Docker CLIData in containers<a class="anchor" aria-label="anchor" href="#data-in-containers"></a></a></h2>
+<li>All the commands are structured with a main command, a specialising
+command, an action command, and the name of the object to act on.</li>
+<li>Everything we did in Docker Desktop (and more!) can be done in the
+Docker CLI with:</li>
+</ul>
+<table class="table">
+<colgroup>
+<col width="40%">
+<col width="59%">
+</colgroup>
+<thead><tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>Images</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>docker pull &lt;image&gt;</code></td>
+<td>Pull an image from a registry</td>
+</tr>
+<tr class="odd">
+<td><code>docker image ls</code></td>
+<td>List all images on the system</td>
+</tr>
+<tr class="even">
+<td><code>docker inspect &lt;image&gt;</code></td>
+<td>Show detailed information about an image</td>
+</tr>
+<tr class="odd">
+<td><code>docker run &lt;image&gt;</code></td>
+<td>Run a container from an image</td>
+</tr>
+<tr class="even">
+<td><code>docker image rm &lt;image&gt;</code></td>
+<td>Remove an image</td>
+</tr>
+<tr class="odd">
+<td><strong>Containers</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>docker logs &lt;container&gt;</code></td>
+<td>Show the logs of a container</td>
+</tr>
+<tr class="odd">
+<td><code>docker exec &lt;container&gt; &lt;cmd&gt;</code></td>
+<td>Run a command in a running container</td>
+</tr>
+<tr class="even">
+<td><code>docker stop &lt;container&gt;</code></td>
+<td>Stop a running container</td>
+</tr>
+<tr class="odd">
+<td><code>docker start &lt;container&gt;</code></td>
+<td>Start a stopped container</td>
+</tr>
+<tr class="even">
+<td><code>docker rm &lt;container&gt;</code></td>
+<td>Remove a container</td>
+</tr>
+<tr class="odd">
+<td><strong>System</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>docker ps</code></td>
+<td>List all running containers</td>
+</tr>
+<tr class="odd">
+<td><code>docker stats</code></td>
+<td>Show live resource usage of containers</td>
+</tr>
+<tr class="even">
+<td><code>docker system prune</code></td>
+<td>Remove all stopped containers and unused images</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<colgroup>
+<col width="12%">
+<col width="19%">
+<col width="67%">
+</colgroup>
+<thead><tr class="header">
+<th>Flag</th>
+<th>Used on</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>-f</code></td>
+<td><code>inspect</code></td>
+<td>Specify the output format</td>
+</tr>
+<tr class="even">
+<td><code>-f</code></td>
+<td><code>logs</code></td>
+<td>Follow the logs in real time</td>
+</tr>
+<tr class="odd">
+<td><code>-a</code></td>
+<td><code>ps</code></td>
+<td>List all containers, including stopped ones</td>
+</tr>
+<tr class="even">
+<td><code>-it</code></td>
+<td>
+<code>run</code>, <code>exec</code>
+</td>
+<td>Interactively run a command in a running container</td>
+</tr>
+<tr class="odd">
+<td><code>-d</code></td>
+<td><code>run</code></td>
+<td>Run a container in the background</td>
+</tr>
+<tr class="even">
+<td><code>-p</code></td>
+<td><code>run</code></td>
+<td>Expose a port from the container to the host</td>
+</tr>
+<tr class="odd">
+<td><code>--name</code></td>
+<td><code>run</code></td>
+<td>Name a container</td>
+</tr>
+<tr class="even">
+<td><code>--rm</code></td>
+<td><code>run</code></td>
+<td>Remove the container when it is stopped</td>
+</tr>
+</tbody>
+</table></section><section id="docker-cli-advanced"><h2 class="section-heading"><a href="docker-cli-advanced.html">Using the full power of the Docker CLIData in containers<a class="anchor" aria-label="anchor" href="#data-in-containers"></a></a></h2>
 <hr class="half-width">
 <ul>
 <li>Volumes and bind mounts are two ways to allow a container to access
