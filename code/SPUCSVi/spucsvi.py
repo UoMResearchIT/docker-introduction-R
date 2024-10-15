@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 spuc_url = "http://spuc:8321"
 if os.environ.get("SPUC_URL"):
     spuc_url = os.environ.get("SPUC_URL")
-    
+
 app = Flask(__name__)
 
 
@@ -55,7 +55,9 @@ def put_unicorn():
         f"{spuc_url}/unicorn_spotted?location={location}&brightness={brightness}"
     )
     if response.status_code != 200:
-        raise ValueError(f"Failed to register unicorn sighting. {response.json()["ERROR"]}")
+        raise ValueError(
+            f"Failed to register unicorn sighting. {response.json()["ERROR"]}"
+        )
     return redirect("/")
 
 

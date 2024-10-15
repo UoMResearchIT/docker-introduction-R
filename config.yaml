@@ -60,10 +60,10 @@ contact: 'team@carpentries.org'
 # Order of episodes in your lesson
 episodes: 
 - introduction.Rmd
-- docker-hub.Rmd
 - docker-desktop.Rmd
 - docker-cli-toolkit.Rmd
 - docker-cli-advanced.Rmd
+- docker-hub.Rmd
 - creating-container-images.Rmd
 - docker-compose.Rmd
 
