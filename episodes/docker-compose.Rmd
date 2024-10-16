@@ -165,7 +165,7 @@ spuc-1  |
 spuc-1  | 
 spuc-1  | Welcome to the Space Purple Unicorn Counter!
 spuc-1  | 
-spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 spuc-1  | 
 spuc-1  | :::: Plugins loaded ::::
 spuc-1  | []
@@ -204,7 +204,7 @@ spuc-1  |
 spuc-1  | 
 spuc-1  | Welcome to the Space Purple Unicorn Counter!
 spuc-1  | 
-spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 spuc-1  | 
 spuc-1  | :::: Plugins loaded ::::
 spuc-1  | []
