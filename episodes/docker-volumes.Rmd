@@ -108,9 +108,9 @@ docker exec spuc_container cat /spuc/output/unicorn_sightings.txt
 ```
 ```output
 count,time,location,brightness,units
-0,2024-10-16 09:14:17.719447,moon,100,iuhc
-1,2024-10-16 09:14:17.726706,earth,10,iuhc
-2,2024-10-16 09:14:17.732191,mars,400,iuhc
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
 ```
 
 Now, for our test, we will stop the container.
@@ -133,9 +133,9 @@ docker exec spuc_container cat /spuc/output/unicorn_sightings.txt
 ```output
 536a6d2f73061aa94729df3536ee86b60dcd68f4652bfbdc9e4cfa9c6cfda168
 count,time,location,brightness,units
-0,2024-10-16 09:14:17.719447,moon,100,iuhc
-1,2024-10-16 09:14:17.726706,earth,10,iuhc
-2,2024-10-16 09:14:17.732191,mars,400,iuhc
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
 ```
 
 It's worked! The unicorn sightings are still there!
@@ -167,13 +167,13 @@ The directory `spuc/output` likely did not exist in your current working directo
 It is currently empty, as you can see by listing the contents with `ls spuc/output`.
 If we now record a unicorn sighting, we can see the records file in the directory.
 ```bash
-curl -X PUT localhost:8321/unicorn_spotted?location=mars\&brightness=400
+curl -X PUT localhost:8321/unicorn_spotted?location=mercury\&brightness=400
 cat spuc/output/unicorn_sightings.txt
 ```
 ```output
 {message:"Unicorn sighting recorded!"}
 count,time,location,brightness,units
-0,2024-10-16 10:31:22.222542,mars,400,iuhc
+1,2024-10-16 10:31:22.222542,mercury,400,iuhc
 ```
 
 and the file is still there even after stopping the container
@@ -194,7 +194,7 @@ cat spuc/output/unicorn_sightings.txt
 ```output
 3dd079c21845fc36ddc3b20fd525790a1e194c198c4b98337f4ed82bfc7a9755
 count,time,location,brightness,units
-0,2024-10-16 10:31:22.222542,mars,400,iuhc
+1,2024-10-16 10:31:22.222542,mars,400,iuhc
 ```
 
 So we not only managed to persist the data between runs of the container,
@@ -245,13 +245,13 @@ docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/co
 
 Now let's check if this worked. For that, we need to record another sighting and then check the logs.
 ```bash
-curl -X PUT localhost:8321/unicorn_spotted?location=jupyter\&brightness=100
+curl -X PUT localhost:8321/unicorn_spotted?location=jupyter\&brightness=210
 docker logs spuc_container
 ```
 ```output
 {"message":"Unicorn sighting recorded!"}
 [...]
-::::: 2024-10-16 10:53:13.449393 Unicorn number 4 spotted at jupyter! Brightness: 100 iuhc
+::::: 2024-10-16 10:53:13.449393 Unicorn number 4 spotted at jupyter! Brightness: 210 iuhc
 ```
 
 Fantastic! We have now managed to share a file with the container.
@@ -270,7 +270,7 @@ docker logs spuc_container
 ```output
 {"message":"Unicorn sighting recorded!"}
 [...]
-::::: Unicorn number 7 spotted at venus! Brightness: 148 iuhc
+::::: Unicorn number 5 spotted at venus! Brightness: 148 iuhc
 ```
 
 It almost seems too easy!
