@@ -9,11 +9,11 @@ getting set up with all the tools we came across in Docker Desktop,
 we can start to explore the full power of Docker!
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-- Learn how to use files with container using mounts and volumes
-- Learn how to set environment variables and pass parameters to containers
+- Learn how to persist and share data with containers using mounts and volumes
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
+- How can I save my data?
 - How do I get information in and out of containers?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -108,9 +108,9 @@ docker exec spuc_container cat /spuc/output/unicorn_sightings.txt
 ```
 ```output
 count,time,location,brightness,units
-0,2024-10-16 09:14:17.719447,moon,100,iuhc
-1,2024-10-16 09:14:17.726706,earth,10,iuhc
-2,2024-10-16 09:14:17.732191,mars,400,iuhc
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
 ```
 
 Now, for our test, we will stop the container.
@@ -133,9 +133,9 @@ docker exec spuc_container cat /spuc/output/unicorn_sightings.txt
 ```output
 536a6d2f73061aa94729df3536ee86b60dcd68f4652bfbdc9e4cfa9c6cfda168
 count,time,location,brightness,units
-0,2024-10-16 09:14:17.719447,moon,100,iuhc
-1,2024-10-16 09:14:17.726706,earth,10,iuhc
-2,2024-10-16 09:14:17.732191,mars,400,iuhc
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
 ```
 
 It's worked! The unicorn sightings are still there!
@@ -167,13 +167,13 @@ The directory `spuc/output` likely did not exist in your current working directo
 It is currently empty, as you can see by listing the contents with `ls spuc/output`.
 If we now record a unicorn sighting, we can see the records file in the directory.
 ```bash
-curl -X PUT localhost:8321/unicorn_spotted?location=mars\&brightness=400
+curl -X PUT localhost:8321/unicorn_spotted?location=mercury\&brightness=400
 cat spuc/output/unicorn_sightings.txt
 ```
 ```output
 {message:"Unicorn sighting recorded!"}
 count,time,location,brightness,units
-0,2024-10-16 10:31:22.222542,mars,400,iuhc
+1,2024-10-16 10:31:22.222542,mercury,400,iuhc
 ```
 
 and the file is still there even after stopping the container
@@ -194,7 +194,7 @@ cat spuc/output/unicorn_sightings.txt
 ```output
 3dd079c21845fc36ddc3b20fd525790a1e194c198c4b98337f4ed82bfc7a9755
 count,time,location,brightness,units
-0,2024-10-16 10:31:22.222542,mars,400,iuhc
+1,2024-10-16 10:31:22.222542,mars,400,iuhc
 ```
 
 So we not only managed to persist the data between runs of the container,
@@ -245,13 +245,13 @@ docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/co
 
 Now let's check if this worked. For that, we need to record another sighting and then check the logs.
 ```bash
-curl -X PUT localhost:8321/unicorn_spotted?location=jupyter\&brightness=100
+curl -X PUT localhost:8321/unicorn_spotted?location=jupyter\&brightness=210
 docker logs spuc_container
 ```
 ```output
 {"message":"Unicorn sighting recorded!"}
 [...]
-::::: 2024-10-16 10:53:13.449393 Unicorn number 4 spotted at jupyter! Brightness: 100 iuhc
+::::: 2024-10-16 10:53:13.449393 Unicorn number 4 spotted at jupyter! Brightness: 210 iuhc
 ```
 
 Fantastic! We have now managed to share a file with the container.
@@ -270,11 +270,10 @@ docker logs spuc_container
 ```output
 {"message":"Unicorn sighting recorded!"}
 [...]
-::::: Unicorn number 7 spotted at venus! Brightness: 148 iuhc
+::::: Unicorn number 5 spotted at venus! Brightness: 148 iuhc
 ```
 
 It almost seems too easy!
-We now have a print configuration and unicorn sighting record that persists between runs of the container.
 
 **Warning**: We *replaced* the file in the container with the file from the host filesystem.
 We could do the same with a whole directory, but be careful not to overwrite important files in the container!
@@ -325,120 +324,24 @@ E) **Problem:** We forgot to use a path for the file!
 
 :::::::::::::::::::::::::::::::::::::::
 
+We now have a print configuration and unicorn sighting record that persists between runs of the container.
 
-## Setting the environment
-
-One other interesting reading from the SPUC README is the presence of an environment variable, `EXPORT` which can be set to `True` to enable an API endpoint for exporting the unicorn sightings.
-
-This sounds like a useful feature, but how can we set an environment variable in a container?
-
-Thankfully this is quite straightforward, we can use the `-e` flag to set an environment variable in a container.
-
-Modifying our run command again:
-
-```bash
-docker stop spuc_container
-docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest
-docker logs spuc_container
-```
-```output
-[...]
-::::: Initializing SPUC...
-::::: Units set to Imperial Unicorn Hoove Candles [iuhc].
-
-Welcome to the Space Purple Unicorn Counter!
-::::: Try 'curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100' to record a unicorn sighting!
-::::: Or 'curl localhost:8321/export' to download the unicorn sightings file!
-```
-
-And now we can see that the export endpoint is available!
-
-```bash
-curl localhost:8321/export
-```
-```output
-time,brightness,unit
-2024-10-11 14:43:42.060883,100,iuhc
-2024-10-11 14:43:48.064323,400,iuhc
-2024-10-11 14:43:49.972220,10,iuhc
-```
-
-This is great! No need to bind mount or exec to get the data out of the container, we can just use the API endpoint.
-
-Defaulting to network style connections is very common in Docker containers and saves a lot of hassle.
-
-Environment variables are a very common tool for configuring containers. They are used to set things like API keys, database connection strings, and other configuration options.
-
-## Passing parameters
-
-Finally, we must address a very serious shortcoming of the SPUC container. It is recording the brightness of the unicorns in Imperial Unicorn Hoove Candles (iuhc)! This is a very outdated unit and we **must** change it to metric.
-
-Fortunately the SPUC README tells us that we can pass a parameter to the container to set the units to metric. This is done by passing a parameter to the container when it is run, overriding the default command.
-
-```bash
-docker stop spuc_container
-docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest --units iulu
-curl -X PUT localhost:8321/unicorn_spotted?location=earth\&brightness=10
-curl localhost:8321/export/
-```
-```output
-time,brightness,unit
-2024-10-11 14:43:42.060883,100,iuhc
-2024-10-11 14:43:48.064323,400,iuhc
-2024-10-11 14:43:49.972220,10,iuhc
-2024-10-11 15:30:27.823367,10,iulu
-```
-
-::::::::::::::::::::::::::::: callout
-You can also override the entrypoint of a container using the `--entrypoint` flag. This is useful if you want to run a different command in the container, or if you want to run the container interactively.
-
-You may recall:
-
-```bash
-docker inspect spuacv/spuc:latest -f "Entrypoint: {{.Config.Entrypoint}} Command: {{.Config.Cmd}}"
-Entrypoint: [python /spuc/spuc.py] Command: [--units iuhc]
-```
-
-That SPUC has an entrypoint of `python /spuc/spuc.py` making it hard to interact with. We can override this using the `--entrypoint` flag.
-
-```bash
-docker run -it --rm --entrypoint /bin/sh spuacv/spuc:latest
-```
-
-::::::::::::::::::::::::::::::::::::::: challenge
-Which of these are valid entrypoint and command combinations for the SPUC container? What are the advantages and disadvantages of each?
-
-| | Entrypoint | Command |
-|-|------------|---------|
-|A| `python /spuc/spuc.py --units iuhc` | |
-|B| `python /spuc/spuc.py` | `--units iuhc` |
-|C| `python` | `/spuc/spuc.py --units iuhc` |
-|D| | `python /spuc/spuc.py --units iuhc` |
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::: solution
-These are all valid combinations! The best choice depends on the use case.
-
-A) This combination bakes the command and the parameters into the image. This is useful if the command is always the same and the specified parameters are unlikely to change (although more may be appended).
-
-B) This combination allows the command's arguments to be changd easily while baking in which Python script to run.
-
-C) This combination allows the Python script to be changed easily, which is more likely to be bad than good!
-
-D) This combination allows maximum flexibility, but it requires the user to know the correct command to run.
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::
-
-## Summary
-
-In this section, we have learned about volumes and bind mounts, two ways to allow a container to access the host filesystem. We have used these to persist data between runs of a container and to share files with a container.
-
-We have learned how to set environment variables and pass parameters to containers, two ways to configure the behaviour of a container.
-
-SPUC is now running with the correct units and we can export the unicorn sightings using the API endpoint! And we are no longer losing our unicorn sightings between runs of the container.
+It seems like we have everything we need to run the Space Purple Unicorn Counter!
+Or is there anything else we should do?
+Lets have a look at the docs!
 
 ::::::::::::::::::::::::::::::::::::::: keypoints
-- Volumes and bind mounts are two ways to allow a container to access the host filesystem.
-- Environment variables and parameters can be used to configure the behaviour of a container.
+- Volumes and bind mounts help us persist and share data with containers.
+- The syntax for both is very similar, but they have different use cases:
+  - **Volumes** are managed by Docker.
+      They are best for persisting data you do not need to access.
+      ```
+      docker run -v <volume_name>:<path_in_container> image
+      ```
+   - **Bind mounts** are managed by the user.
+      They are best for passing data to the container.
+      ```
+      docker run -v <path_on_host>:<path_in_container> image
+      ```
+- They both overwrite files in the container, and have their own challenges.
 ::::::::::::::::::::::::::::::::::::::::::::::::::

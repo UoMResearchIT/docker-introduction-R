@@ -33,7 +33,7 @@ if os.path.exists(plugin_dir):
 
 # ------------------------------------------------------------------------------
 # Endpoint for exporting the unicorn sightings if the EXPORT environment variable is set to True
-if os.environ.get("EXPORT") == "True":
+if os.environ.get("EXPORT", "").lower() in ["1", "true", "t", "on", "yes", "y"]:
 
     @app.route("/export/", methods=["GET"])
     def chart():
@@ -71,7 +71,7 @@ def unicorn_sighting() -> dict:
     # Write the sighting to a file and print to the console
     with open(file_path, "a") as unicorn_file:
         # Write to file and increase count
-        line = s.write(count, time, location, brightness, units)
+        line = s.write(count + 1, time, location, brightness, units)
         if line:
             count += 1
         unicorn_file.write(line)

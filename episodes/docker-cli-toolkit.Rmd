@@ -216,7 +216,7 @@ docker run spuacv/spuc:latest
 
 Welcome to the Space Purple Unicorn Counter!
 
-:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
 :: Try recording a unicorn sighting with:
     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
@@ -305,7 +305,7 @@ docker logs ecstatic_nightingale
 
 Welcome to the Space Purple Unicorn Counter!
 
-:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
 :: Try recording a unicorn sighting with:
     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
@@ -448,7 +448,7 @@ docker logs -f spuc_container
 
 Welcome to the Space Purple Unicorn Counter!
 
-:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::")
+:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
 :: Try recording a unicorn sighting with:
     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
