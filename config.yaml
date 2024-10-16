@@ -62,9 +62,10 @@ episodes:
 - introduction.Rmd
 - docker-desktop.Rmd
 - docker-cli-toolkit.Rmd
-- docker-cli-advanced.Rmd
+- docker-volumes.Rmd
 - docker-hub.Rmd
-- creating-container-images.Rmd
+- docker-run-configuration.Rmd
+- dockerfiles.Rmd
 - docker-compose.Rmd
 
 # Information for Learners
