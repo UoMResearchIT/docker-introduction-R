@@ -9,11 +9,11 @@ getting set up with all the tools we came across in Docker Desktop,
 we can start to explore the full power of Docker!
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-- Learn how to use files with container using mounts and volumes
-- Learn how to set environment variables and pass parameters to containers
+- Learn how to persist and share data with containers using mounts and volumes
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
+- How can I save my data?
 - How do I get information in and out of containers?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -274,7 +274,6 @@ docker logs spuc_container
 ```
 
 It almost seems too easy!
-We now have a print configuration and unicorn sighting record that persists between runs of the container.
 
 **Warning**: We *replaced* the file in the container with the file from the host filesystem.
 We could do the same with a whole directory, but be careful not to overwrite important files in the container!
@@ -325,15 +324,24 @@ E) **Problem:** We forgot to use a path for the file!
 
 :::::::::::::::::::::::::::::::::::::::
 
-## Summary
+We now have a print configuration and unicorn sighting record that persists between runs of the container.
 
-In this section, we have learned about volumes and bind mounts, two ways to allow a container to access the host filesystem. We have used these to persist data between runs of a container and to share files with a container.
-
-We have learned how to set environment variables and pass parameters to containers, two ways to configure the behaviour of a container.
-
-SPUC is now running with the correct units and we can export the unicorn sightings using the API endpoint! And we are no longer losing our unicorn sightings between runs of the container.
+It seems like we have everything we need to run the Space Purple Unicorn Counter!
+Or is there anything else we should do?
+Lets have a look at the docs!
 
 ::::::::::::::::::::::::::::::::::::::: keypoints
-- Volumes and bind mounts are two ways to allow a container to access the host filesystem.
-- Environment variables and parameters can be used to configure the behaviour of a container.
+- Volumes and bind mounts help us persist and share data with containers.
+- The syntax for both is very similar, but they have different use cases:
+  - **Volumes** are managed by Docker.
+      They are best for persisting data you do not need to access.
+      ```
+      docker run -v <volume_name>:<path_in_container> image
+      ```
+   - **Bind mounts** are managed by the user.
+      They are best for passing data to the container.
+      ```
+      docker run -v <path_on_host>:<path_in_container> image
+      ```
+- They both overwrite files in the container, and have their own challenges.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
