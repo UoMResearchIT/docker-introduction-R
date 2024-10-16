@@ -40,6 +40,15 @@
     <loc>https://uomresearchit.github.io/docker-introduction/docker-hub.html</loc>
   </url>
   <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/docker-run-configuration.html</loc>
+  </url>
+  <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/docker-volumes.html</loc>
+  </url>
+  <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/dockerfiles.html</loc>
+  </url>
+  <url>
     <loc>https://uomresearchit.github.io/docker-introduction/images.html</loc>
   </url>
   <url>
@@ -83,6 +92,15 @@
   </url>
   <url>
     <loc>https://uomresearchit.github.io/docker-introduction/instructor/docker-hub.html</loc>
+  </url>
+  <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/instructor/docker-run-configuration.html</loc>
+  </url>
+  <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/instructor/docker-volumes.html</loc>
+  </url>
+  <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/instructor/dockerfiles.html</loc>
   </url>
   <url>
     <loc>https://uomresearchit.github.io/docker-introduction/instructor/images.html</loc>

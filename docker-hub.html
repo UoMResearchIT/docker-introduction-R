@@ -117,11 +117,11 @@
   Introduction to Docker
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 51%" class="percentage">
-    51%
+<aside class="col-md-12 lesson-progress"><div style="width: 36%" class="percentage">
+    36%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 51%" aria-valuenow="51" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 36%" aria-valuenow="36" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -232,7 +232,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="docker-cli-advanced.html">4. Sharing information with containers</a>
+        <a href="docker-volumes.html">4. Sharing information with containers</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -253,9 +253,6 @@
       <div class="accordion-body">
         <ul><li><a href="#introducing-the-docker-hub">Introducing the Docker Hub</a></li>
 <li><a href="#exploring-an-example-docker-hub-page">Exploring an example Docker Hub page</a></li>
-<li><a href="#container-image-versions-and-owners">Container Image versions and owners</a></li>
-<li><a href="#choosing-container-images-on-docker-hub">Choosing Container Images on Docker Hub</a></li>
-<li><a href="#other-sources-of-container-images">Other sources of Container Images</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -265,7 +262,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="creating-container-images.html">6. Creating Your Own Container Images</a>
+        <a href="docker-run-configuration.html">6. Configuring containers</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -274,7 +271,16 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="docker-compose.html">7. Using Docker Compose</a>
+        <a href="dockerfiles.html">7. Creating Your Own Container Images</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="docker-compose.html">8. Using Docker Compose</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -322,17 +328,17 @@
         <!-- START: inst/pkgdown/templates/content-instructor.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="docker-cli-advanced.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="creating-container-images.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="docker-volumes.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="docker-run-configuration.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="docker-cli-advanced.html" rel="prev">
+        <a class="chapter-link" href="docker-volumes.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Previous: Sharing information
         </a>
-        <a class="chapter-link float-end" href="creating-container-images.html" rel="next">
-          Next: Creating Your Own...
+        <a class="chapter-link float-end" href="docker-run-configuration.html" rel="next">
+          Next: Configuring...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -350,10 +356,9 @@
 
         
 
-<p>One of the reasons why Docker is useful is that there is a lot of
-content (container images) already prepared to be used. Each container
-image represents a complete software installation that you can use and
-access without any extra work!</p>
+<p>So we want to look at the docs for a container image, but we don’t
+want Docker Desktop anymore! Where do the docs live? Actually, they were
+never part of Docker Desktop, they are part of the Docker Hub!</p>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -369,17 +374,15 @@ access without any extra work!</p>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Explore the Docker Hub webpage for a popular Docker container
-image.</li>
-<li>Find the list of tags for a particular Docker container image.</li>
+<ul><li>Explore the Docker Hub webpage.</li>
 <li>Identify the three components of a container image’s
 identifier.</li>
+<li>Access the readme and other metadata of a container image.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<p>A lot of these images are hosted in the Docker Hub.</p>
 <section><h2 class="section-heading" id="introducing-the-docker-hub">Introducing the Docker Hub<a class="anchor" aria-label="anchor" href="#introducing-the-docker-hub"></a></h2>
 <hr class="half-width"><p>The Docker Hub is an online repository of container images, a vast
 number of which are publicly available. A large number of the container
@@ -404,115 +407,86 @@ Internet.</p>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="exploring-an-example-docker-hub-page">Exploring an example Docker Hub page<a class="anchor" aria-label="anchor" href="#exploring-an-example-docker-hub-page"></a></h2>
-<hr class="half-width"><p>As an example of a Docker Hub page, let’s explore the page for the
-official Python language container images. Open your web browser to <a href="https://hub.docker.com" class="external-link">https://hub.docker.com</a></p>
-<figure><img src="fig/docker-hub/landing.png" alt="Dockerhub_landing" class="figure mx-auto d-block"></figure><p>We will need to register for the later stages of this course, so feel
-free to do so now if you are not already.</p>
-<p>In the search bar type “python” and hit enter.</p>
-<figure><img src="fig/docker-hub/search_python.png" alt="Dockerhub_search" class="figure mx-auto d-block"></figure><p>You should see a list of images related to python. We can immediately
-get a feel of the sheer number of container images hosted here. There is
-upwards from 10,000 images related to python alone.</p>
-<p>There is also some useful information that can help us choose the
-image that we want, which we will point out in a moment.</p>
-<p>For now, lets go to the top result, the <a href="https://hub.docker.com/_/python" class="external-link">python</a> container image (which
-is endorsed by the Docker team) to see what is on a typical Docker Hub
-software page.</p>
-<figure><img src="fig/docker-hub/python.png" alt="Dockerhub_python" class="figure mx-auto d-block"></figure><p>The top-left provides information about the name, short description,
-popularity (i.e., more than a billion downloads in the case of this
-container image), and endorsements.</p>
+<hr class="half-width"><p>The reason we are here is to find the documentation for the SPUC
+container image. Lets go ahead and find the image we need for
+registering our unicorn sightings.</p>
+<p>Open your web browser to <a href="https://hub.docker.com" class="external-link">https://hub.docker.com</a></p>
+<figure><img src="fig/docker-hub/landing.png" alt="Dockerhub_landing" class="figure mx-auto d-block"></figure><p>In the search bar type “spuc” and hit enter.</p>
+<figure><img src="fig/docker-hub/search_spuc.png" alt="Dockerhub_search" class="figure mx-auto d-block"></figure><p>You should see a list of images related to spuc and, amongst them,
+the one we were directed to. Lets go ahead and select the <a href="https://hub.docker.com/r/spuacv/spuc" class="external-link">spuacv/spuc</a> container
+image.</p>
+<figure><img src="fig/docker-hub/spuc.png" alt="Dockerhub_spuc" class="figure mx-auto d-block"></figure><p>This is a fairly standard docker repository page. The page is divided
+into several sections:</p>
+<p>The top provides information about the name, endorsements, creator, a
+short description, tags, and popularity (i.e. how many downloads it
+has).</p>
 <p>The top-right provides the command to pull this container image to
 your computer.</p>
-<p>The main body of the page contains many used headings, such as:</p>
-<ul><li>Which tags (i.e., container image versions) are supported.</li>
-<li>Summary information about where to get help, which computer
-architectures are supported, etc.</li>
-<li>A longer description of the container image.</li>
-<li>Examples of how to use the container image.</li>
-<li>The license that applies.</li>
-</ul><p>The “How to use the image” section of most container images’ pages
-will provide examples that are likely to cover your intended use of the
+<p>The main body of the page contains two tabs, one with the overview,
+and another with the tags.</p>
+<p>The overview tab contains the documentation of the container image.
+This is what we wanted!</p>
+<p>Since we are here though, lets also look at the tags tab.</p>
+<p>The tags tab contains the list of versions of the container image. A
+single repository can have many different versions of container images.
+These versions are indicated by “tags”.</p>
+<p>If we select the “Tags” tab, we can see the list of tags for this
 container image.</p>
-</section><section><h2 class="section-heading" id="container-image-versions-and-owners">Container Image versions and owners<a class="anchor" aria-label="anchor" href="#container-image-versions-and-owners"></a></h2>
-<hr class="half-width"><p>A single Docker Hub page can have many different versions of
-container images, based on the version of the software inside. These
-versions are indicated by “tags”. When referring to the specific version
-of a container image by its tag, you use a colon, <code>:</code>, like
-this:</p>
-<pre><code><span><span class="va">CONTAINER_IMAGE_NAME</span><span class="op">:</span><span class="va">TAG</span></span></code></pre>
-<p>If we click the version tag for <code>alpine3.18</code> of this
-image, Docker Hub shows it as <code>python:alpine3.18</code></p>
-<figure><img src="fig/docker-hub/python_alpine318.png" alt="Dockerhub_python" class="figure mx-auto d-block"></figure><p>The default tag (which is used if you don’t specify one) is called
-<code>latest</code>.</p>
-<p>This container image is a “Docker Official Image”, which means that
-the docker team mantains it and guarantees it. However, it’s equally
-common to use container images that have been produced by individual
-owners or organizations. Container images that you create and upload to
-Docker Hub would fall into this category, as would the container images
-maintained by organizations like <a href="https://hub.docker.com/u/continuumio" class="external-link">ContinuumIO</a> (the folks
-who develop the Anaconda Python environment) or community groups like <a href="https://hub.docker.com/u/rocker" class="external-link">rocker</a>, a group that builds
-community R container images.</p>
-<p>In these cases, the “owner”, that is the group- or individual- that
-manage the container image is part of the image name, and it is given in
-the format:</p>
-<pre><code><span><span class="va">OWNER</span><span class="op">/</span><span class="va">CONTAINER_IMAGE_NAME</span><span class="op">:</span><span class="va">TAG</span></span></code></pre>
-<p>as can be seen in these examples</p>
-<p><br></p>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  rocker/tidyverse:latest
-  </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
-<div class="accordion-body">
-<figure><img src="fig/docker-hub/tidyverse.gif" alt="rocker/tidyverse:latest" class="figure mx-auto d-block"></figure></div>
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2">
-  mathworks/matlab:r2022b
-  </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
-<div class="accordion-body">
-<figure><img src="fig/docker-hub/matlab.gif" alt="mathworks/matlab" class="figure mx-auto d-block"></figure></div>
-</div>
-</div>
-</div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3">
-  continuumio/anaconda3:master
-  </h4>
-</button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
-<div class="accordion-body">
-<figure><img src="fig/docker-hub/anaconda.gif" alt="continuumio/anaconda3" class="figure mx-auto d-block"></figure></div>
-</div>
-</div>
-</div>
-<div id="repositories" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="repositories" class="callout-inner">
-<h3 class="callout-title">Repositories</h3>
-<div class="callout-content">
-<p>The technical name for the contents of a Docker Hub page is a
-“repository.” The tag indicates the specific version of the container
-image that you’d like to use from a particular repository. So a slightly
-more accurate version of the above example is:</p>
+<figure><img src="fig/docker-hub/spuc_tags.png" alt="Dockerhub_spuc_tags" class="figure mx-auto d-block"></figure><p>If we click the version tag for <code>latest</code> of this image,
+Docker Hub shows it as <code>spuacv/spuc:latest</code>.</p>
+<p>This name structure is the full identifier of the container image and
+consists of three parts:</p>
 <pre><code><span><span class="va">OWNER</span><span class="op">/</span><span class="va">REPOSITORY</span><span class="op">:</span><span class="va">TAG</span></span></code></pre>
+<p>The <code>REPOSITORY</code> is what we would commonly refer to as the
+name of the container image.</p>
+<p>The <code>latest</code> tag is actually the default, and it is used
+if no tag is specified.</p>
+<p><strong>Note:</strong> The <code>latest</code> tag is not always the
+most recent version of the software. Tags are actually just labels, and
+the <code>latest</code> tag is just a convention.</p>
+<p>You may also have noticed that there are a lot more details about the
+container image in the page.</p>
+<figure><img src="fig/docker-hub/spuc_latest.png" alt="Dockerhub_spuc_latest" class="figure mx-auto d-block"></figure><p>In particular, we can see the image layers, which describe in part
+how the image was created. This is a very useful feature for
+understanding what is in the image and evaluating its security.</p>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Official Images
+  </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
+<p>Some images on Docker Hub are “official images,” which means that
+they are endorsed by the Docker team.</p>
+<p>You can see this, for example, with the Python official image.</p>
+<p>In the search box, type “python” and hit enter.</p>
+<p>You should see a list of images related to python. We can immediately
+get a feel of the sheer number of container images hosted here. There is
+upwards from 10,000 images related to python alone.</p>
+<p>Select the top result, which is the endorsed <a href="https://hub.docker.com/_/python" class="external-link">python</a> container image.</p>
+<p>The “official” badge is shown on the top right of the repository.</p>
+<figure><img src="fig/docker-hub/python.png" alt="Dockerhub_python" class="figure mx-auto d-block"></figure><p>Another thing you may have noticed is that the “owner” of the image
+is not shown. This is only true for official images, so instead of
+<code>OWNER/CONTAINER_IMAGE_NAME:TAG</code>, the name is just
+<code>CONTAINER_IMAGE_NAME:TAG</code>.</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="choosing-container-images-on-docker-hub">Choosing Container Images on Docker Hub<a class="anchor" aria-label="anchor" href="#choosing-container-images-on-docker-hub"></a></h2>
-<hr class="half-width"><p>Note that anyone can create an account on Docker Hub and share
+</div>
+<div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
+  <h3 class="accordion-header" id="headingSpoiler2">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Choosing Container Images on Docker Hub
+  </h3>
+</button>
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div class="accordion-body">
+<p>Note that anyone can create an account on Docker Hub and share
 container images there, so it’s important to exercise caution when
 choosing a container image on Docker Hub. These are some indicators that
 a container image on Docker Hub is consistently maintained, functional
@@ -529,11 +503,23 @@ container image.</li>
 <li>The container image is used by the wider community. The graph on the
 right at the search page can help with this.</li>
 </ul><p>If a container image is never updated, created by a random person,
-and does not have a lot of metadata, it is probably worth skipping over.
-Even if such a container image is secure, it is not reproducible and not
-a dependable way to run research computations.</p>
-</section><section><h2 class="section-heading" id="other-sources-of-container-images">Other sources of Container Images<a class="anchor" aria-label="anchor" href="#other-sources-of-container-images"></a></h2>
-<hr class="half-width"><p>Although many of the containers made for docker are hosted in the
+and does not have a lot of metadata, it is probably worth skipping
+over.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
+  <h3 class="accordion-header" id="headingSpoiler3">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Other sources of Container Images
+  </h3>
+</button>
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div class="accordion-body">
+<p>Although many of the containers made for docker are hosted in the
 Docker Hub, there are other places where these can be distributed,
 including (but not limited to):</p>
 <ul><li>
@@ -552,7 +538,12 @@ from GitLab.</li>
 <li>
 <a href="https://azure.microsoft.com/en-us/products/container-registry" class="external-link">ACR</a>
 from Azuere, Microsoft.</li>
-</ul><div id="keypoints1" class="callout keypoints">
+</ul></div>
+</div>
+</div>
+</div>
+<p>So we found our documentation, lets have a careful read through.</p>
+<div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
@@ -560,14 +551,8 @@ from Azuere, Microsoft.</li>
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul><li>The Docker Hub is an online repository of container images.</li>
-<li>Many Docker Hub container images are public, and may be officially
-endorsed.</li>
-<li>Each Docker Hub page about a container image provides structured
-information and subheadings</li>
-<li>Most Docker Hub pages about container images contain sections that
-provide examples of how to use those container images.</li>
-<li>Many Docker Hub container images have multiple versions, indicated
-by tags.</li>
+<li>The repositories include the container image documentation.</li>
+<li>Container images may have multiple versions, indicated by tags.</li>
 <li>The naming convention for Docker container images is:
 <code>OWNER/CONTAINER_IMAGE_NAME:TAG</code>
 </li>
@@ -576,17 +561,17 @@ by tags.</li>
 </div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="docker-cli-advanced.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="creating-container-images.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="docker-volumes.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="docker-run-configuration.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="docker-cli-advanced.html" rel="prev">
+        <a class="chapter-link" href="docker-volumes.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Previous: Sharing information
         </a>
-        <a class="chapter-link float-end" href="creating-container-images.html" rel="next">
-          Next: Creating Your Own...
+        <a class="chapter-link float-end" href="docker-run-configuration.html" rel="next">
+          Next: Configuring...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>

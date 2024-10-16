@@ -277,7 +277,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="docker-cli-advanced.html">4. Sharing information with containers</a>
+        <a href="docker-volumes.html">4. Sharing information with containers</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -301,7 +301,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="creating-container-images.html">6. Creating Your Own Container Images</a>
+        <a href="docker-run-configuration.html">6. Configuring containers</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -313,7 +313,19 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="docker-compose.html">7. Using Docker Compose</a>
+        <a href="dockerfiles.html">7. Creating Your Own Container Images</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="docker-compose.html">8. Using Docker Compose</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -556,29 +568,54 @@ Docker CLI with:</li>
 <td>Remove the container when it is stopped</td>
 </tr>
 </tbody>
-</table></section><section id="docker-cli-advanced"><h2 class="section-heading"><a href="docker-cli-advanced.html">Sharing information with containers</a></h2>
+</table></section><section id="docker-volumes"><h2 class="section-heading"><a href="docker-volumes.html">Sharing information with containers</a></h2>
 <hr class="half-width">
 <ul>
-<li>Volumes and bind mounts are two ways to allow a container to access
-the host filesystem.</li>
-<li>Environment variables and parameters can be used to configure the
-behaviour of a container.</li>
+<li>Volumes and bind mounts help us persist and share data with
+containers.</li>
+<li>The syntax for both is very similar, but they have different use
+cases:
+<ul>
+<li>
+<strong>Volumes</strong> are managed by Docker. They are best for
+persisting data you do not need to access.
+<code>docker run -v &lt;volume_name&gt;:&lt;path_in_container&gt; image</code>
+</li>
+<li>
+<strong>Bind mounts</strong> are managed by the user. They are best
+for passing data to the container.
+<code>docker run -v &lt;path_on_host&gt;:&lt;path_in_container&gt; image</code>
+</li>
+</ul>
+</li>
+<li>They both overwrite files in the container, and have their own
+challenges.</li>
 </ul></section><section id="docker-hub"><h2 class="section-heading"><a href="docker-hub.html">The Docker Hub</a></h2>
 <hr class="half-width">
 <ul>
 <li>The Docker Hub is an online repository of container images.</li>
-<li>Many Docker Hub container images are public, and may be officially
-endorsed.</li>
-<li>Each Docker Hub page about a container image provides structured
-information and subheadings</li>
-<li>Most Docker Hub pages about container images contain sections that
-provide examples of how to use those container images.</li>
-<li>Many Docker Hub container images have multiple versions, indicated
-by tags.</li>
+<li>The repositories include the container image documentation.</li>
+<li>Container images may have multiple versions, indicated by tags.</li>
 <li>The naming convention for Docker container images is:
 <code>OWNER/CONTAINER_IMAGE_NAME:TAG</code>
 </li>
-</ul></section><section id="creating-container-images"><h2 class="section-heading"><a href="creating-container-images.html">Creating Your Own Container Images</a></h2>
+</ul></section><section id="docker-run-configuration"><h2 class="section-heading"><a href="docker-run-configuration.html">Configuring containers</a></h2>
+<hr class="half-width">
+<ul>
+<li>Environment variables and overriding the command and entrypoint of
+containers are the main ways to configure the behaviour of a container.
+A well structured container will have sensible defaults, but will also
+allow for configuration to be changed easily.</li>
+<li>Environment variables can be configured using the flag
+<code>-e</code>
+</li>
+<li>The command can be used to pass parameters to the container, like
+so:<br><code>docker run &lt;image&gt; &lt;parameters&gt;</code><br>
+This actually <em>overrides</em> the default command of the
+container.</li>
+<li>The entrypoint can also be overridden using the
+<code>--entrypoint</code> flag.</li>
+</ul></section><section id="dockerfiles"><h2 class="section-heading"><a href="dockerfiles.html">Creating Your Own Container Images</a></h2>
 <hr class="half-width">
 <ul>
 <li>You can create your own container images using a
