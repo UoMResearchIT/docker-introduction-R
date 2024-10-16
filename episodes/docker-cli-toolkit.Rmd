@@ -19,7 +19,7 @@ we need to build up our toolkit of Docker commands that allow us to perform the 
 
 To run an image, first we need to download it. You may remember that, in Docker, this is known as *pulling* an image.
 
-Let’s try pulling the SPUC container that we used before:
+Let's try pulling the SPUC container that we used before:
 ```bash
 docker pull spuacv/spuc:latest
 ```
