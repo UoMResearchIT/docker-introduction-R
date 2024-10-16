@@ -71,7 +71,14 @@ Let's dive into the structure of the command we looked at. Here is a diagram whi
 * Followed by the action to perform and the name of the object (e.g. run, pull)
 * You can also include additional arguments and switches as needed (e.g. the image name)
 
-### TODO: Update the diagram to use the pull command instead!
+But wait! We ran `docker pull spaucv/spuc:latest`, and the diagram shows the command as 'image'!
+
+We apologise for the trick but we were actually using a shorthand built into the Docker CLI.
+There are a few of these shortcuts, they are useful but can be confusing.
+In this case, the `pull` command is actually a shorthand for `docker image pull`.
+
+In this lesson, we have decided to use the most common versions of commands, often the shorthand.
+It is important to know that these shorthands exist, but it is also important to know the full command structure.
 
 :::::::::::::::::
 
@@ -168,10 +175,22 @@ The default values are specified by the creator of an image, but can be overridd
 The default command is formed of two parts, the *entrypoint* and the *command*.
 The two are concatenated to form the full command.
 
-### TODO: Add a diagram showing the structure of the default command, putting the bullet points in the image, as you did with the docker command diagram.
+To understand this, let's take a more detailed look at the lifecycle of a container.
 
-* **Entrypoint** is usually the base command for the container. It is not often overwritten.
-* **Command** is commonly the set of parameters for the base command. This is overwritten frequently.
+![](fig/docker_life_0.png)
+
+When run, the container enters a startup state in which:
+
+* The image is downloaded if needed.
+* The container is created from an image.
+* The container is started.
+
+Now the container is running, and the command is executed by concatenating the entrypoint and the command.
+
+* **Entrypoint**: _usually_ the base command for the container. Not often overwritten.
+* **Command**: _usually_ parameters for the base command. Often overwritten.
+
+Finally the container is stopped and removed.
 
 In our case, the entrypoint is `python /spuc/spuc.py` and the command is `--units iuhc`.
 This means that when the container is run, it will execute the command `python /spuc/spuc.py --units iuhc`.
@@ -179,7 +198,23 @@ This means that when the container is run, it will execute the command `python /
 As mentioned, the command is commonly overwritten when the container is run.
 This means we could pass different parameters to the python script when we run the container.
 
-:::::::::::::::::
+::: spoiler
+
+### Further examples of container lifecycle
+
+We will give another couple of examples of how entrypoints and commands are used and affect the container lifecycle in the following image.
+
+![](fig/docker_life_2.png)
+
+In Example 1 we have an entrypoint of `echo` and a command of `hello world`.
+When the container is run, the command will be `echo Hello World!` and the container will print `Hello World!`.
+
+In Example 2 we have an entrypoint of `sleep` and a command of `infinity`.
+When the container is run, the command will be `sleep infinity` and the container will run indefinitely, similar to how services run!
+
+:::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Running
 
@@ -352,7 +387,6 @@ docker ps
 CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS                                       NAMES
 6edf9ebd4046   spuacv/spuc:latest  "python /spuc/spuc.p…"   4 seconds ago   Up 3 seconds   0.0.0.0:8321->8321/tcp, :::8321->8321/tcp   unruffled_noyce
 ```
-### TODO why does it say `:::8321->8321/tcp`?
 
 So we can finally try to register a unicorn sighting:
 ```bash
