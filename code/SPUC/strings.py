@@ -96,7 +96,7 @@ def welcome(unit_long_name, units):
         f"""
         Welcome to the Space Purple Unicorn Counter!
 
-        :::: Units set to {unit_long_name} [{units}] ::::")
+        :::: Units set to {unit_long_name} [{units}] ::::
         """.rstrip()
     )
     return message
