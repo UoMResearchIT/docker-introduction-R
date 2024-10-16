@@ -149,7 +149,7 @@ $ docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/
 [...]
 Welcome to the Space Purple Unicorn Counter!
 
-:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::")
+:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
 
 :::: Plugins loaded ::::
 ['stats.py']
@@ -294,7 +294,7 @@ $ docker run --rm --name spuc_container -p 8321:8321 -v spuc-volume:/code/output
 ```
 ```output
 [...]
-:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::")
+:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
 [...]
 ```
 

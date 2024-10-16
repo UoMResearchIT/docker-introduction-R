@@ -1,0 +1,198 @@
+---
+title: Configuring containers
+teaching: 99
+exercises: 99
+---
+
+Well this is interesting!
+The documentation for the SPUC container tells us that we can set an environment variable to enable an API endpoint for exporting the unicorn sightings.
+It also mentions that we can pass a parameter to change the units of the brightness of the unicorns.
+But how can we do this?
+
+::::::::::::::::::::::::::::::::::::::: objectives
+- Learn how to configure environment variables and parameters in containers
+- Learn how to override the default command and entrypoint of a container
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+- How can I set environment variables in a container?
+- How can I pass parameters to a container?
+- How can I override the default command and entrypoint of a container?
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Setting the environment
+
+We know we have to modify the environment variable `EXPORT` and set it to `True`.
+This should enable an API endpoint for exporting the unicorn sightings.
+
+This sounds like a useful feature, but how can we set an environment variable in a container?
+Thankfully this is quite straightforward, we can use the `-e` flag to set an environment variable in a container.
+
+Lets modifying our run command again:
+
+```bash
+docker stop spuc_container
+docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest
+docker logs spuc_container
+```
+```output
+[...]
+Welcome to the Space Purple Unicorn Counter!
+
+:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
+
+:: No plugins detected
+
+:: Try recording a unicorn sighting with:
+    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+
+:::: Unicorn sightings export activated! ::::
+:: Try downloading the unicorn sightings record with:
+    curl localhost:8321/export
+```
+
+And now we can see that the export endpoint is available!
+Lets try it out!
+```bash
+curl localhost:8321/export
+```
+```output
+count,time,location,brightness,units
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
+4,2024-10-16 10:53:13.449393,jupyter,210,iuhc
+5,2024-10-16 12:53:51.726902,venus,148,iuhc
+```
+### TODO: The curl returns a redirect, because it is a file download... do we want that??
+
+This is great! No need to bind mount or exec to get the data out of the container, we can just use the API endpoint.
+
+Defaulting to network style connections is very common in Docker containers and saves a lot of hassle.
+
+Environment variables are a very common tool for configuring containers.
+They are used to set things like API keys, database connection strings, and other configuration options.
+
+## Passing parameters (overriding the command)
+
+In some other cases, parameters are passed to the container to configure its behaviour.
+This is the case for the brightness units in the SPUC container.
+
+It is actually probably the first change you'd want to do to this particular container.
+It is recording the brightness of the unicorns in *Imperial Unicorn Hoove Candles* (iuhc)!
+This is a very outdated unit and we **must** change it to the much more standard *Intergalactic Unicorn Luminiocity Units* (iulu).
+
+Fortunately the SPUC documentations tells us that we can pass a parameter to the container to set these units right.
+If we look carefully at the entrypoint and command of the container, we can see that the default units are set to `iuhc` there:
+```bash
+docker inspect spuacv/spuc:latest -f "Entrypoint: {{.Config.Entrypoint}}\nCommand: {{.Config.Cmd}}"
+```
+```output
+Entrypoint: [python /spuc/spuc.py]
+Command: [--units iuhc]
+```
+
+What we have to do, then, is to override the *Command* part of the default command.
+This is actually a very common thing to do when running containers.
+It is done by passing a parameter at the end of our `run` command, after the image name:
+```bash
+docker stop spuc_container
+docker rm spuc-volume
+docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest --units iulu
+```
+
+if we now register some unicorn sightings, we should see the brightness in iulu units.
+```bash
+curl -X PUT localhost:8321/unicorn_spotted?location=pluto\&brightness=66
+curl localhost:8321/export/
+```
+```output
+count,time,location,brightness,units
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
+4,2024-10-16 10:53:13.449393,jupyter,210,iuhc
+5,2024-10-16 12:53:51.726902,venus,148,iuhc
+6,2024-10-16 13:14:17.719447,pluto,66,iulu
+```
+
+We can already feel the weight lifting off our shoulders already!
+But we cannot mix iuhcs with iulus, so lets remove the volume and re-register our sightings with the correct units
+```bash
+docker stop spuc_container
+docker rm spuc-volume
+docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest --units iulu
+curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=177
+curl -X PUT localhost:8321/unicorn_spotted?location=earth\&brightness=18
+curl -X PUT localhost:8321/unicorn_spotted?location=mars\&brightness=709
+curl -X PUT localhost:8321/unicorn_spotted?location=jupyter\&brightness=372
+curl -X PUT localhost:8321/unicorn_spotted?location=venus\&brightness=262
+curl -X PUT localhost:8321/unicorn_spotted?location=pluto\&brightness=66
+curl localhost:8321/export/
+```
+```output
+count,time,location,brightness,units
+1,2024-10-16 09:14:17.719447,moon,100,iuhc
+2,2024-10-16 09:14:17.726706,earth,10,iuhc
+3,2024-10-16 09:14:17.732191,mars,400,iuhc
+4,2024-10-16 10:53:13.449393,jupyter,100,iuhc
+5,2024-10-16 12:49:52.512391,jupyter,100,iuhc
+6,2024-10-16 12:50:10.581131,jupyter,100,iuhc
+7,2024-10-16 12:53:51.726902,vennus,148,iuhc
+```
+
+Finally, we have the correct units for the brightness of the unicorns!
+
+## Overriding the entrypoint
+
+We can also override the entrypoint of a container using the `--entrypoint` flag.
+This is useful if you want to run a different command in the container, or if you want to run the container interactively.
+
+SPUC has an entrypoint of `python /spuc/spuc.py` making it hard to interact with.
+We can override this using the `--entrypoint` flag.
+
+```bash
+docker run -it --rm --entrypoint /bin/sh spuacv/spuc:latest
+```
+
+::::::::::::::::::::::::::::::::::::::: challenge
+
+Which of these are valid entrypoint and command combinations for the SPUC container? What are the advantages and disadvantages of each?
+
+|   | Entrypoint                          | Command                             |
+|---|-------------------------------------|-------------------------------------|
+| A | `python /spuc/spuc.py --units iuhc` |                                     |
+| B | `python /spuc/spuc.py`              | `--units iuhc`                      |
+| C | `python`                            | `/spuc/spuc.py --units iuhc`        |
+| D |                                     | `python /spuc/spuc.py --units iuhc` |
+
+:::::::::::::::::::::::: solution
+
+These are all valid combinations! The best choice depends on the use case.
+
+A) This combination bakes the command and the parameters into the image.
+   This is useful if the command is always the same and the specified parameters are unlikely to change (although more may be appended).
+
+B) This combination allows the command's arguments to be changed easily, while baking-in which Python script to run.
+
+C) This combination allows the Python script to be changed easily, which is more likely to be bad than good!
+
+D) This combination allows maximum flexibility, but it requires the user to write the whole command to modify even the parameters.
+
+:::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Thanks to the SPUC documentation, our service is now running with the best units, and we can export the unicorn sightings using the API endpoint!
+
+What else could we do with this container? Lets look at the docs again!
+
+::::::::::::::::::::::::::::::::::::::: keypoints
+- Environment variables and overriding the command and entrypoint of containers are the main ways to configure the behaviour of a container.
+  A well structured container will have sensible defaults, but will also allow for configuration to be changed easily.
+- Environment variables can be configured using the flag `-e`
+- The command can be used to pass parameters to the container, like so:  
+  `docker run <image> <parameters>`  
+  This actually *overrides* the default command of the container.
+- The entrypoint can also be overridden using the `--entrypoint` flag.
+::::::::::::::::::::::::::::::::::::::::::::::::::
