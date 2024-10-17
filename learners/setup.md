@@ -5,55 +5,48 @@ title: Setup
 ### Requirements
 
 - A Linux, Mac or Windows computer
-- More than 5 GB free hard drive space
-- If installing Docker yourself: **root / administrator access**
 
 :::::::::::::::::::::::::::::::::::::::::  callout
-
 ## Warning
-
 Docker uses root / administrator access for basic functionality. If installing Docker yourself, without root / administrator rights, it will not be possible to follow or complete this course.
-
-If your computer has already been set up with Docker, then it may be possible to follow this course, please check locally.
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### Website accounts to create
+### Installation of Docker
 
-Please seek help at the start of the lesson if you have not been able to establish a website account on:
+Installing Docker on different platforms requires different procedures and generally requires root / administrator access for a successful installation. 
 
-- The [Docker Hub](https://hub.docker.com). We will use the Docker Hub to download pre-built container images, and for you to upload and download container images that you create, as explained in the relevant lesson episodes.
+Please follow the instructions for your platform below:
 
-### Software to install
+::: tab
 
-Installing Docker on different platforms requires different procedures and generally requires root / administrator access for a successful installation. Please follow the pointers below for assistance in finding the correct installation procedures.
+### Windows
 
-<br>
-
-:::::::::::::::: solution
-
-## Windows
-
-Installation of Docker on Microsoft Windows comprises two central steps:
+Installation on Windows requires two steps:
 
 - Enabling the Windows Subsystem for Linux
 - Installation of the Docker Desktop package
 
 Microsoft publish a [guide](https://learn.microsoft.com/en-us/windows/wsl/install "WSL install") to installing WSL and Docker provide a [guide](https://docs.docker.com/desktop/install/windows-install/ "Docker Desktop Install ") for installing Docker Desktop.
 
-Further, we provide some instruction here that attempts to unify these two guides.
+We recommend following these guides as they are updated regularly and provide the most current information. (you can also find a summary of the steps below, buyer beware)
+
+::::::::::::::::::::::::::::::::::::::::  callout
+We recommend using WSL not just for the Docker backend, but also for the terminal. This will allow you to use the same commands as in the rest of the course. 
+
+**If you decide to use PowerShell, or other Windows shells, the commands given in the course will not work and you will need to adapt them.**
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+::::: spoiler
+### Summary of installation steps for Windows
 
 1. Confirm that you are running Windows 10, version 2004 or higher (Build 19041 and higher) or Windows 11.
 
 ::::::::::::::::::::::::::::::::::::::::  callout
-
-### Check your Windows version
-
-To check your Windows version and build number, press the Windows logo key + <kbd>R</kbd>, type `winver`, select OK.
+#### Check your Windows version
+To check your Windows version and build number, press the Windows logo key + `R`, type `winver`, select OK.
 You can update to the latest Windows version by selecting "Start" > "Settings" > "Windows Update" > "Check for updates".
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 2. Open PowerShell as Administrator ("Start menu" > "PowerShell" > right-click > "Run as Administrator")
@@ -80,46 +73,13 @@ You can update to the latest Windows version by selecting "Start" > "Settings" >
   7. Under "Enable integration with additional distros" select "Ubuntu"
   8. Close the Docker Desktop window
 
-:::::::::::::::::::::::::::::::::::::::::  callout
+:::::
 
-### Warning: Git Bash
-
-If you are using Git Bash as your terminal on Windows then you should be aware that you may run
-into issues running some of the commands in this lesson as Git Bash will automatically re-write
-any paths you specify at the command line into Windows versions of the paths and this will confuse
-the Docker container you are trying to use. For example, if you enter the command:
-
-```
-docker run alpine cat /etc/os-release
-```
-
-Git Bash will change the `/etc/os-release` path to `C:\etc\os-release\` before passing the command
-to the Docker container and the container will report an error. If you want to use Git Bash then you
-can request that this path translation does not take place by adding an extra `/` to the start of the
-path. i.e. the command would become:
-
-```
-docker run alpine cat //etc/os-release
-```
-
-This should suppress the path translation functionality in Git Bash.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::
-
-:::::::::::::::: solution
-
-## Mac
+### Mac
 
 Please install docker following these [instructions](https://docs.docker.com/desktop/install/mac-install/).
 
-:::::::::::::::::::::::::
-
-:::::::::::::::: solution
-
-## Linux
+### Linux
 
 Installation on Linux requires two steps:
 
@@ -132,8 +92,7 @@ Additionally, a generic installation option is provided using a [convenience scr
 
 Once the Docker Engine has been successfully installed, some [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/) must be taken.
 
-:::::::::::::::::::::::::::::::::::::::::  callout
-
+::::::::::::::::::::::::::::::::::::::::  callout
 ## Warning: Extra action if you install Docker using Snap
 
 [Snap](https://snapcraft.io/) is an app management system for linux - which is popular on
@@ -153,12 +112,9 @@ echo "export TEMPDIR=~/tmp" >> ~/bashrc
 ```
 
 this will configure each new instance of a terminal to run that command at the start of every new terminal instance.
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::
-
+:::
 
 ### Verify Installation
 
