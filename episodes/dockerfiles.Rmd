@@ -31,11 +31,16 @@ from __main__ import app
 from __main__ import file_path
 
 import pandas as pd
+import os
 
-@app.route('/stats', methods=['GET'])
+@app.route("/stats", methods=["GET"])
 def stats():
+    if not os.path.exists(file_path):
+        return {"message": "No unicorn sightings yet!"}
+
     with open(file_path) as f:
         df = pd.read_csv(f)
+        df = df.iloc[:, 1:]
         stats = df.describe()
         return stats.to_json()
 ```
@@ -262,8 +267,7 @@ or exit with `Ctrl+C` and re-run with `-d` first):
 curl localhost:8321/stats
 ```
 ```output
-{"count":{"count":6.0,"mean":3.5,"std":1.8708286934,"min":1.0,"25%":2.25,"50%":3.5,"75%":4.75,"max":6.0},
- "brightness":{"count":6.0,"mean":267.3333333333,"std":251.7599385658,"min":18.0,"25%":93.75,"50%":219.5,"75%":344.5,"max":709.0}}
+{"brightness":{"count":6.0,"mean":267.3333333333,"std":251.7599385658,"min":18.0,"25%":93.75,"50%":219.5,"75%":344.5,"max":709.0}}
 ```
 
 And there we have it! We have created our own container image with a new feature!
