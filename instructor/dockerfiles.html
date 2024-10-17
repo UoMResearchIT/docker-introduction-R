@@ -272,9 +272,8 @@
         <ul><li><a href="#creating-docker-images">Creating Docker Images</a></li>
 <li><a href="#copy">COPY</a></li>
 <li><a href="#env">ENV</a></li>
-<li><a href="#entrypoint">ENTRYPOINT</a></li>
+<li><a href="#entrypoint-and-cmd">ENTRYPOINT and CMD</a></li>
 <li><a href="#back-to-reality">Back to reality</a></li>
-<li><a href="#summary">Summary</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -379,29 +378,30 @@
 <h3 class="card-title">Objectives</h3>
 <ul><li>Learn how to create your own container images using a
 <code>Dockerfile</code>.</li>
-<li>Learn about the core instruction set used in a
+<li>Introduce the core instructions used in a
 <code>Dockerfile</code>.</li>
 <li>Learn how to build a container image from a
 <code>Dockerfile</code>.</li>
-<li>Learn how to run a container from a container image.</li>
+<li>Learn how to run a container from a <em>local</em> container
+image.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<p>We’ve been doing well picking things up from the SPUCS README! Let’s
-keep the streak going.</p>
+<p>The SPUC documentation just keeps on giving, let’s keep the streak
+going!</p>
 <p>There is another cool feature on there that we haven’t used yet - the
-ability to add new Unicorn analysis features using plugins! Let’s try
+ability to add new unicorn analysis features using plugins! Let’s try
 that out.</p>
-<p>The README says that we need to add a Python file at
+<p>The docs says that we need to add a Python file at
 <code>/spuc/plugins/</code> that defines an endpoint for the new
 feature.</p>
 <p>It would be very handy to be able to get some basic statistics about
-our Unicorns. Let’s add a new plugin that will return a statstical
-analysis of the brightness of the Unicorns in the database.</p>
-<p>However you prefer - make a file <code>stats.py</code> with the
-following content:</p>
+our Unicorns. Let’s add a new plugin that will return a statistical
+analysis of the brightness of the unicorns in the database.</p>
+<p>First lets make a file <code>stats.py</code> with the following
+content:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -409,376 +409,640 @@ following content:</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> __main__ <span class="im">import</span> file_path</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/stats'</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>])</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="kw">def</span> stats():</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path) <span class="im">as</span> f:</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>        df <span class="op">=</span> pd.read_csv(f)</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        stats <span class="op">=</span> df.describe()</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>        <span class="cf">return</span> stats.to_json()        </span></code></pre>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"/stats"</span>, methods<span class="op">=</span>[<span class="st">"GET"</span>])</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="kw">def</span> stats():</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(file_path):</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        <span class="cf">return</span> {<span class="st">"message"</span>: <span class="st">"No unicorn sightings yet!"</span>}</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path) <span class="im">as</span> f:</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>        df <span class="op">=</span> pd.read_csv(f)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>        df <span class="op">=</span> df.iloc[:, <span class="dv">1</span>:]</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>        stats <span class="op">=</span> df.describe()</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>        <span class="cf">return</span> stats.to_json()</span></code></pre>
 </div>
-<p>n.b. Don’t worry if you’re not familiar with Python or Pandas! This
-code will return some basic statistics about the data in the
-database.</p>
-<p>Now, from our previous lesson we know how to load this file! Let’s
-use a bind mount to load this file into the container. Since we are
-debugging, we’ll leave out the <code>-d</code> flag so we can see the
-output easily.</p>
+<p>Don’t worry if you’re not familiar with Python or Pandas.
+Understanding this snippet of code is not our aim. The code will return
+some statistics about the data in <code>file_path</code>.</p>
+<p>We already know how to load this file. Let’s use a bind mount to
+share the file with the container. Since we are debugging, we’ll leave
+out the <code>-d</code> flag so we can see the output easily.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/code/config/print.config <span class="at">-v</span> spuc-volume:/code/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true ghcr.io/uomresearchit/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>Traceback (most recent call last):
-  File "/spuc/spuc.py", line 32, in &lt;module&gt;
-    __import__(f"{plugin_dir}.{plugin[:-3]}")
-  File "/spuc/plugins/stats.py", line 4, in &lt;module&gt;
-    import pandas as pd
-ModuleNotFoundError: No module named 'pandas'
-
-:::: Importing plugins ::::</code></pre>
-</div>
-<p>Oh… well what can we do about this? Clearly we need to install the
-<code>pandas</code> package in the container but how do we do that?</p>
-<p>We could do this interactively, but we know that won’t survive a
-restart!</p>
-<p>Really what we need to do is <strong>change</strong> the image
-itself, so that it has <code>pandas</code> installed by default.</p>
-<p>This takes us to one of the most fundamental features of Docker - the
-ability to create your own container images.</p>
-<section><h2 class="section-heading" id="creating-docker-images">Creating Docker Images<a class="anchor" aria-label="anchor" href="#creating-docker-images"></a></h2>
-<hr class="half-width"><p>So how are images made? The answer is with a recipe! Named a
-<code>Dockerfile</code>.</p>
-<p>A <code>Dockerfile</code> is a text file that contains a list of
-instructions for producing a Docker container. The instructions are
-terminal command and build the container image up layer by layer.</p>
-<p>We will start at the start, all Dockerfiles start with a
-<code>FROM</code> instruction. This sets the base image for the
-container. The base image is the starting point for the container, and
-all subsequent instructions are run on top of this base image.</p>
-<p>You can use <strong>any</strong> image as a base image and there are
-several offical images available on Docker Hub. For example,
-<code>ubuntu</code> for general purpose Linux, <code>python</code> for
-Python development, <code>alpine</code> for a lightweight Linux
-distribution, and many more.</p>
-<p>But of course the most natural fit for us right now is to use the
-SPUC image as a base image. This way we can be sure that our new image
-will have all the dependencies we need.</p>
-<p>Let’s create a new file called <code>Dockerfile</code> (it
-<strong>must</strong> be called this!) and add the following
-content:</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/uomresearchit/spuc:latest</span></code></pre>
-</div>
-<p>This is the simplest possible <code>Dockerfile</code> - it just says
-that our new image will be based on the SPUC image.</p>
-<p>But what do we do with it? We need to build the image!</p>
-<p>To do this we use the <code>docker build</code> command (short for
-<code>docker image build</code>). This command takes a
-<code>Dockerfile</code> and builds a new image from it and we will add a
-<code>-t</code> (tag) flag to give the image a name.</p>
-<div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span></code></pre>
-</div>
-<p>This command will build a new image called <code>spuc-stats</code>
-from the <code>Dockerfile</code> in the current directory.</p>
-<p>We can now run this image in the same way we run any other image:</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/code/config/print.config <span class="at">-v</span> spuc-volume:/code/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Traceback (most recent call last):
-  File "/spuc/spuc.py", line 32, in &lt;module&gt;
+  File "/spuc/spuc.py", line 31, in &lt;module&gt;
     __import__(f"{plugin_dir}.{plugin[:-3]}")
   File "/spuc/plugins/stats.py", line 4, in &lt;module&gt;
     import pandas as pd
 ModuleNotFoundError: No module named 'pandas'</code></pre>
 </div>
-<p>Ok! Back where we were but with some new skills!</p>
-<p>Let’s add that dependancy. We do this by adding a <code>RUN</code>
-instruction to the <code>Dockerfile</code>. This instruction runs a
-command in the container and then saves the result as a new layer in the
-image.</p>
-<p>In this case we want to install the <code>pandas</code> package so we
-add the following lines to the <code>Dockerfile</code>:</p>
-<div class="codewrapper sourceCode" id="cb8">
+<p>Oh… well what can we do about this? Clearly we need to install the
+<code>pandas</code> package in the container but how do we do that? We
+could do this interactively, but we know that won’t survive a
+restart!</p>
+<p>Really what we need to do is <strong>change</strong> the image
+itself, so that it has <code>pandas</code> installed by default. This
+takes us to one of the most fundamental features of Docker - the ability
+to create your own container images.</p>
+<section><h2 class="section-heading" id="creating-docker-images">Creating Docker Images<a class="anchor" aria-label="anchor" href="#creating-docker-images"></a></h2>
+<hr class="half-width"><p>So how are images made? With a recipe!</p>
+<p>Images are created from a text file that contains a list of
+instructions, called a <code>Dockerfile</code>. The instructions are
+terminal commands, and build the container image up layer by layer.</p>
+<p>All <em>Dockerfiles</em> start with a <code>FROM</code> instruction.
+This sets the <em>base image</em> for the container. The base image is
+the starting point for the container, and all subsequent instructions
+are run on top of this base image.</p>
+<p>You can use <strong>any</strong> image as a base image. There are
+several <em>official</em> images available on Docker Hub which are very
+commonly used. For example, <code>ubuntu</code> for general purpose
+Linux, <code>python</code> for Python development, <code>alpine</code>
+for a lightweight Linux distribution, and many more.</p>
+<p>But of course, the most natural fit for us right now is to use the
+SPUC image as a base image. This way we can be sure that our new image
+will have all the dependencies we need.</p>
+<p>Let’s create a new file called <code>Dockerfile</code> and add the
+following content:</p>
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span></code></pre>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">FROM</span> spuacv/spuc:latest</span></code></pre>
 </div>
-<p>This will install the <code>pandas</code> package in the container
-using Python’s package manager <code>pip</code>.</p>
-<p>Now we can build the image again:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<p>This is the simplest possible Dockerfile - it just says that our new
+image will be based on the SPUC image.</p>
+<p>But what do we do with it? We need to build the image!</p>
+<p>To do this we use the <code>docker build</code> command (short for
+<code>docker image build</code>). This command takes a Dockerfile and
+builds a new image from it. Just as when saving a file, we also need to
+name the image we are building. We give the image a name with the
+<code>-t</code> (tag) flag:</p>
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats ./</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[...]
-Installing collected packages: pytz, tzdata, six, numpy, python-dateutil, pandas
-Successfully installed numpy-2.1.2 pandas-2.2.3 python-dateutil-2.9.0.post0 pytz-2024.2 six-1.16.0 tzdata-2024.2
-WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
- ---&gt; Removed intermediate container 642bfe617ba4
- ---&gt; 6ec83b86fbd1
-Successfully built 6ec83b86fbd1
-Successfully tagged spuc-stats:latest</code></pre>
+<pre class="output" tabindex="0"><code>[+] Building 0.0s (5/5) FINISHED                                                             docker:default
+ =&gt; [internal] load build definition from Dockerfile                                                   0.0s
+ =&gt; =&gt; transferring dockerfile: 61B                                                                    0.0s
+ =&gt; [internal] load metadata for docker.io/spuacv/spuc:latest                                          0.0s
+ =&gt; [internal] load .dockerignore                                                                      0.0s
+ =&gt; =&gt; transferring context: 2B                                                                        0.0s
+ =&gt; CACHED [1/1] FROM docker.io/spuacv/spuc:latest                                                     0.0s
+ =&gt; exporting to image                                                                                 0.0s
+ =&gt; =&gt; exporting layers                                                                                0.0s
+ =&gt; =&gt; writing image sha256:ccde35b1f9e872bde522e9fe91466ef983f9b579cffc2f457bff97f74206e839           0.0s
+ =&gt; =&gt; naming to docker.io/library/spuc-stats                                                          0.0s</code></pre>
 </div>
-<p>It is worth noting that we can ignore this warning! We are building a
-container image, not installing software on our host machine.</p>
-<p>Now we can run the image again:</p>
-<div class="codewrapper sourceCode" id="cb11">
+<p>Congratulations, you have now built an image! The command built a new
+image called <code>spuc-stats</code> from the <code>Dockerfile</code> in
+the current directory.</p>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Context
+  </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div class="accordion-body">
+<p>By default, the <code>docker build</code> command looks for a file
+called <code>Dockerfile</code> in the path specified by the last
+argument.</p>
+<p>This last argument is called the <em>build context</em>, and it
+<strong>must</strong> be the path to a directory.</p>
+<p>It is very common to see <code>.</code> or <code>./</code> used as
+the build context, both of which refer to the current directory.</p>
+<p>All of the instructions in the <code>Dockerfile</code> are run as if
+we were in the build context directory.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
+  <h3 class="accordion-header" id="headingSpoiler2">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  The Dockerfile name
+  </h3>
+</button>
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div class="accordion-body">
+<p>As mentioned before, by default the <code>docker build</code> command
+looks for a file called <code>Dockerfile</code>.</p>
+<p>However, you can specify a different file name using the
+<code>-f</code> flag. For example, if your Dockerfile is called
+<code>my_recipe</code> you can use:</p>
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/code/config/print.config <span class="at">-v</span> spuc-volume:/code/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=True spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats <span class="at">-f</span> my_recipe ./</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>If you now list the images on your system you should see the new
+image <code>spuc-stats</code> listed:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">docker</span> image ls</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>spuacv/spuc                             latest    ccde35b1f9e8   25 hours ago     137MB
+spuc-stats                              latest    21210c129ca9   5 minutes ago    137MB</code></pre>
+</div>
+<p>We can now run this image in the same way we would run any other
+image:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> spuc-stats</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>
+            \
+             \
+              \\
+               \\\
+                &gt;\/7
+            _.-(º   \
+           (=___._/` \            ____  ____  _    _  ____
+                )  \ |\          / ___||  _ \| |  | |/ ___|
+               /   / ||\         \___ \| |_) | |  | | |
+              /    &gt; /\\\         ___) |  __/| |__| | |___
+             j    &lt; _\           |____/|_|    \____/ \____|
+         _.-' :      ``.
+         \ r=._\        `.       Space Purple Unicorn Counter
+        &lt;`\\_  \         .`-.
+         \ r-7  `-. ._  ' .  `\
+          \`,      `-.`7  7)   )
+           \/         \|  \'  / `-._
+                      ||    .'
+                       \\  (
+                        &gt;\  &gt;
+                    ,.-' &gt;.'
+                   &lt;.'_.''
+                     &lt;'
+
+
+Welcome to the Space Purple Unicorn Counter!
+
+:::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
+
+:: Try recording a unicorn sighting with:
+    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+
+:: No plugins detected</code></pre>
+</div>
+<p>So we have a copy of the SPUC image with a new name, but nothing has
+changed! In fact, we can pass all the same arguments to the
+<code>docker run</code> command as we did before:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Traceback (most recent call last):
+  File "/spuc/spuc.py", line 31, in &lt;module&gt;
+    __import__(f"{plugin_dir}.{plugin[:-3]}")
+  File "/spuc/plugins/stats.py", line 4, in &lt;module&gt;
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'</code></pre>
+</div>
+<p>We are back where we were, but we can now start to make this
+container image our own!</p>
+<p>Let’s first fix that dependency problem. We do this by adding a
+<code>RUN</code> instruction to the <code>Dockerfile</code>. This
+instruction runs a command in the container and then saves the result as
+a new layer in the image. In this case we want to install the
+<code>pandas</code> package so we add the following lines to the
+<code>Dockerfile</code>:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span></code></pre>
+</div>
+<p>This will install the <code>pandas</code> package in the container
+using Python’s package manager <code>pip</code>. Now we can build the
+image again:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[+] Building 11.1s (6/6) FINISHED                                                            docker:default
+ [...]
+ =&gt; CACHED [1/2] FROM docker.io/spuacv/spuc:latest                                                     0.0s
+ =&gt; [2/2] RUN pip install pandas                                                                      10.5s
+ =&gt; exporting to image                                                                                 0.4s
+ =&gt; =&gt; exporting layers                                                                                0.4s
+ =&gt; =&gt; writing image sha256:e548b862a5c4dd91551668e068d4ad46e6a25d3a3dbed335e780a01f954a2c26           0.0s
+ =&gt; =&gt; naming to docker.io/library/spuc-stats                                                          0.0s</code></pre>
+</div>
+<p>You might have noticed a warning about running <code>pip</code> as
+the root user. We are building a container image, not installing
+software on our host machine, so we can ignore this warning.</p>
+<p>Let’s run the image again:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[...]
 Welcome to the Space Purple Unicorn Counter!
+[...]
+:::: Plugins loaded! ::::
+:: Available plugins
+    stats.py
 
-:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
-
-:::: Plugins loaded ::::
-['stats.py']
-
-:: Try recording a unicorn sighting with:
-    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100</code></pre>
+[...]</code></pre>
 </div>
-<p>And now we can see that the <code>pandas</code> package is installed
-and the plugin is loaded!</p>
-<p>Let’s try out the new endpoint:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<p>It worked! We no longer get the error about the missing
+<code>pandas</code> package, and the plugin is loaded!</p>
+<p>Let’s try out the new endpoint (you may want to do this from another
+terminal, or exit with <code>Ctrl+C</code> and re-run with
+<code>-d</code> first):</p>
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> curl localhost:8321/stats</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">curl</span> localhost:8321/stats</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>{"count":{"count":3.0,"mean":1.0,"std":1.0,"min":0.0,"25%":0.5,"50%":1.0,"75%":1.5,"max":2.0},"brightness":{"count":3.0,"mean":10.0,"std":0.0,"min":10.0,"25%":10.0,"50%":10.0,"75%":10.0,"max":10.0}}</code></pre>
+<pre class="output" tabindex="0"><code>{"brightness":{"count":6.0,"mean":267.3333333333,"std":251.7599385658,"min":18.0,"25%":93.75,"50%":219.5,"75%":344.5,"max":709.0}}</code></pre>
 </div>
 <p>And there we have it! We have created our own container image with a
 new feature!</p>
-<p>But why stop here? We could keep modifing the image to make it more
+<p>But why stop here? We could keep modifying the image to make it more
 how we would like by default.</p>
 </section><section><h2 class="section-heading" id="copy">COPY<a class="anchor" aria-label="anchor" href="#copy"></a></h2>
-<hr class="half-width"><p>The first thing to look at is that it is a bit annoying having to
-bind mount the <code>stats.py</code> file every time we run the
-container. This makes sense for development but we would like to
-distribute the image with the plugin already installed.</p>
+<hr class="half-width"><p>It is a bit annoying having to bind mount the <code>stats.py</code>
+file every time we run the container. This makes sense for development,
+because we can potentially modify the script while the container runs,
+but we would like to distribute the image with the plugin already
+installed.</p>
 <p>We can add this file to the image itself using the <code>COPY</code>
-instruction.</p>
-<p>The <code>COPY</code> instruction copies files from the host machine
-into the container image. It takes two arguments: the source file on the
-host machine and the destination in the container image.</p>
-<p>Let’s add the <code>COPY</code> instruction to the
-<code>Dockerfile</code>:</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="kw">COPY</span> stats.py /spuc/plugins/stats.py</span></code></pre>
-</div>
-<p>Now we can build the image again:</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span></code></pre>
-</div>
-<p>And run the image, this time without the bind mount for the
-<code>stats.py</code> file:</p>
-<div class="codewrapper sourceCode" id="cb17">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/code/config/print.config <span class="at">-v</span> spuc-volume:/code/output <span class="at">-e</span> EXPORT=True spuc-stats <span class="at">--units</span> iulu</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[...]
-:::: Plugins loaded ::::
-['stats.py']
-[...]</code></pre>
-</div>
-<p>If we check the logs we can see that the plugin is still loaded!</p>
-<p>And again… why stop there? It is annoying having to mount the
-<code>print.config</code> file every time we run the container. We could
-add this file to the image as well!</p>
-<div class="codewrapper sourceCode" id="cb19">
-<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="kw">COPY</span> stats.py /spuc/plugins/stats.py</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="kw">COPY</span> print.config /code/config/print.config</span></code></pre>
-</div>
-<p>Rebuilding and running (without the bind mount for
-<code>print.config</code>):</p>
-<div class="codewrapper sourceCode" id="cb20">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/code/output <span class="at">-e</span> EXPORT=True spuc-stats <span class="at">--units</span> iulu</span></code></pre>
-</div>
-</section><section><h2 class="section-heading" id="env">ENV<a class="anchor" aria-label="anchor" href="#env"></a></h2>
-<hr class="half-width"><p>We can also set environment variables in the <code>Dockerfile</code>
-using the <code>ENV</code> instruction. These can always be overridden
-when running the container but it is useful to set defaults. And we like
-the <code>EXPORT</code> variable so let’s add that to the
-<code>Dockerfile</code>:</p>
+instruction. This copies files from the host machine into the container
+image. It takes two arguments: the source file on the host machine and
+the destination in the container image.</p>
+<p>Let’s add it to the <code>Dockerfile</code>:</p>
 <div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="kw">COPY</span> stats.py /spuc/plugins/stats.py</span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="kw">COPY</span> print.config /code/config/print.config</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="kw">ENV</span> EXPORT=True</span></code></pre>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="kw">COPY</span> stats.py /spuc/plugins/stats.py</span></code></pre>
 </div>
-<p>Rebuilding and running (without the <code>-e EXPORT=True</code>
-flag):</p>
+<p>Now we can build the image again:</p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/code/output spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats ./</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[...]
+ =&gt; [1/3] FROM docker.io/spuacv/spuc:latest                                                         0.0s
+ =&gt; [internal] load build context                                                                   0.0s
+ =&gt; =&gt; transferring context: 287B                                                                   0.0s
+ =&gt; CACHED [2/3] RUN pip install pandas                                                             0.0s
+ =&gt; [3/3] COPY stats.py /spuc/plugins/stats.py                                                      0.0s
+ =&gt; exporting to image                                                                              0.0s
+ [...]</code></pre>
+</div>
+<div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
+  <h3 class="accordion-header" id="headingSpoiler3">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Layers
+  </h3>
+</button>
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div class="accordion-body">
+<p>You might have now noticed that on every build we are getting
+messages like <code>CACHED [2/3]...</code> above.</p>
+<p>Every instruction* in a Dockerfile creates a new <code>layer</code>
+in the image.</p>
+<p>Each layer is saved with a specific hash. If the set of instructions
+up to that layer remain unchanged, Docker will use the cached layer,
+instead of rebuilding it. This results in a lot of time and space being
+saved!</p>
+<p>In the case above, we had already run the <code>FROM</code> and
+<code>RUN</code> instructions in a previous build. Docker was able to
+use the cached layers for those 2 instructions, and only had to do some
+work for the <code>COPY</code> layer.</p>
+</div>
+</div>
+</div>
+</div>
+<p>And run the image again, but this time without the bind mount for the
+<code>stats.py</code> file:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[...]
+Welcome to the Space Purple Unicorn Counter!
+[...]
+:::: Plugins loaded! ::::
+:: Available plugins
+    stats.py
+[...]</code></pre>
+</div>
+<p>The plugin is still loaded!</p>
+<p>And again… why stop there? We’ve already configured the print how we
+like it, so lets add it to the image as well!</p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="kw">COPY</span> print.config /spuc/config/print.config</span></code></pre>
+</div>
+<p>Now we rebuild and re-run (without the bind mount for
+<code>print.config</code>):</p>
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats ./</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=True spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[...]
+ =&gt; [1/4] FROM docker.io/spuacv/spuc:latest                                                         0.0s
+ =&gt; [internal] load build context                                                                   0.0s
+ =&gt; =&gt; transferring context: 152B                                                                   0.0s
+ =&gt; CACHED [2/4] RUN pip install pandas                                                             0.0s
+ =&gt; CACHED [3/4] COPY stats.py /spuc/plugins/stats.py                                               0.0s
+ =&gt; [4/4] COPY print.config /spuc/config/print.config                                               0.0s
+ =&gt; exporting to image                                                                              0.0s
+[...]
+Welcome to the Space Purple Unicorn Counter!
+[...]</code></pre>
+</div>
+<p>OOh! a unicorn! lets record it!</p>
+<div class="codewrapper sourceCode" id="cb29">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=saturn\&amp;brightness=87</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="op">{</span><span class="st">"message"</span><span class="op">:</span><span class="st">"Unicorn sighting recorded!"</span><span class="op">}</span></span></code></pre>
+</div>
+<p>and the logs confirm copying the print config worked:</p>
+<div class="codewrapper sourceCode" id="cb31">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="ex">docker</span> logs spuc_container</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[...]
+::::: Unicorn number 7 spotted at saturn! Brightness: 87 iulu</code></pre>
+</div>
+<p>The <code>run</code> command is definitely improving! Is there
+anything else we can do to make it even better?</p>
+</section><section><h2 class="section-heading" id="env">ENV<a class="anchor" aria-label="anchor" href="#env"></a></h2>
+<hr class="half-width"><p>We can also set environment variables in the <code>Dockerfile</code>
+using the <code>ENV</code> instruction. These can always be overridden
+when running the container, as we have done ourselves, but it is useful
+to set defaults. We like the <code>EXPORT</code> variable set to
+<code>True</code>, so let’s add that to the <code>Dockerfile</code>:</p>
+<div class="codewrapper sourceCode" id="cb33">
+<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="kw">ENV</span> EXPORT=True</span></code></pre>
+</div>
+<p>Rebuilding and running (without the <code>-e EXPORT=True</code> flag)
+results in:</p>
+<div class="codewrapper sourceCode" id="cb34">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats ./</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[...]
+ =&gt; [1/4] FROM docker.io/spuacv/spuc:latest                                                         0.0s
+ =&gt; [internal] load build context                                                                   0.0s
+ =&gt; =&gt; transferring context: 61B                                                                    0.0s
+ =&gt; CACHED [2/4] RUN pip install pandas                                                             0.0s
+ =&gt; CACHED [3/4] COPY stats.py /spuc/plugins/stats.py                                               0.0s
+ =&gt; CACHED [4/4] COPY print.config /spuc/config/print.config                                        0.0s
+ =&gt; exporting to image                                                                              0.0s
+[...]
+Welcome to the Space Purple Unicorn Counter!
+[...]
 :::: Unicorn sightings export activated! ::::
 :: Try downloading the unicorn sightings record with:
     curl localhost:8321/export</code></pre>
 </div>
-<p>We can see that the <code>EXPORT</code> variable is now set to
-<code>True</code> by default!</p>
-</section><section><h2 class="section-heading" id="entrypoint">ENTRYPOINT<a class="anchor" aria-label="anchor" href="#entrypoint"></a></h2>
-<hr class="half-width"><p>We’re on a bit of a roll here! Let’s add one more modification to the
-image.</p>
-<p>Let’s change away from those imperial units by default.</p>
-<p>We can do this by changing the <code>ENTRYPOINT</code> instruction in
-the <code>Dockerfile</code>. So far we have been adding
-<code>--units iulu</code> to the end of the <code>docker run</code>
-which overwrites the <code>command</code>.</p>
-<p>If we move this to the <code>ENTRYPOINT</code> instruction then it
-will be run every time the container is started. We’ll also add a
-<code>CMD</code> instruction with an empty list as the CMD was set in
-the SPUCS container base and we don’t want to set <code>--units</code>
-twice.</p>
-<div class="codewrapper sourceCode" id="cb24">
+<p>The <code>EXPORT</code> variable is now set to <code>True</code> by
+default!</p>
+<div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
+  <h3 class="accordion-header" id="headingSpoiler4">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Layers - continued
+  </h3>
+</button>
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div class="accordion-body">
+<p>You might have noticed that the <code>ENV</code> instruction did not
+create a new layer in the image.</p>
+<p>This instruction is a bit special, as it only modifies the
+configuration of the image. The environment is set on every instruction
+of the dockerfile, so it is not saved as a separate layer.</p>
+<p>However, environment variables <em>can</em> have an effect on
+instructions bellow it. Because of this, moving the <code>ENV</code>
+instruction will <em>change</em> the layers, and the cache is no longer
+valid.</p>
+<p>We can see this by moving the <code>ENV</code> instruction in our
+<code>Dockerfile</code> before the RUN command:</p>
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="kw">COPY</span> stats.py /spuc/plugins/stats.py</span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="kw">COPY</span> print.config /code/config/print.config</span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="kw">ENV</span> EXPORT=True</span>
-<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">"python"</span>, <span class="st">"/spuc/spuc.py"</span>, <span class="st">"--units"</span>, <span class="st">"iulu"</span>]</span>
-<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="kw">CMD</span> []</span></code></pre>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="kw">FROM</span> spuacv/spuc:latest</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="kw">ENV</span> EXPORT=True</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="kw">COPY</span> stats.py /spuc/plugins/stats.py</span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="kw">COPY</span> print.config /spuc/config/print.config</span></code></pre>
 </div>
-<p>Notice that we use array syntax for the <code>ENTRYPOINT</code>
-instruction. This is because the <code>ENTRYPOINT</code> instruction can
-take a list of arguments and the array syntax ensures that the arguments
-are passed correctly.</p>
-<p>Let’s give this a try, dropping the unnecessary
-<code>--units iulu</code> from the <code>docker run</code> command:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<p>If we now try to build again, we will get this output:</p>
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> spuc-stats ./</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/code/output spuc-stats</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats ./</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[+] Building 10.4s (9/9) FINISHED                                                         docker:default
+ =&gt; [internal] load build definition from Dockerfile                                                0.0s
+ =&gt; =&gt; transferring dockerfile: 187B                                                                0.0s
+ =&gt; [internal] load metadata for docker.io/spuacv/spuc:latest                                       0.0s
+ =&gt; [internal] load .dockerignore                                                                   0.0s
+ =&gt; =&gt; transferring context: 2B                                                                     0.0s
+ =&gt; CACHED [1/4] FROM docker.io/spuacv/spuc:latest                                                  0.0s
+ =&gt; [internal] load build context                                                                   0.0s
+ =&gt; =&gt; transferring context: 61B                                                                    0.0s
+ =&gt; [2/4] RUN pip install pandas                                                                    9.8s
+ =&gt; [3/4] COPY stats.py /spuc/plugins/stats.py                                                      0.0s
+ =&gt; [4/4] COPY print.config /spuc/config/print.config                                               0.0s
+ =&gt; exporting to image                                                                              0.5s
+ =&gt; =&gt; exporting layers                                                                             0.5s
+ =&gt; =&gt; writing image sha256:5a64cc132a7cbbc532b9e97dd17e5fb83239dfe42dae9e6df4d150c503d73691        0.0s
+ =&gt; =&gt; naming to docker.io/library/spuc-stats                                                       0.0s</code></pre>
+</div>
+<p>As you can see, the first layer is cached, but everything after the
+<code>ENV</code> instruction is rebuilt. Our environment variable has
+absolutely no effect on the <code>RUN</code> instruction, but Docker
+does not know that. The only thing that matters is that it
+<em>could</em> have had an effect.</p>
+<p>It is therefore recommended that you put the <code>ENV</code>
+instructions only when they are needed.</p>
+<p>A similar thing happens with the <code>ENTRYPOINT</code> and
+<code>CMD</code> instructions, which we will cover next. Since these are
+not needed at all during the build, they are best placed at the end of
+the <code>Dockerfile</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="entrypoint-and-cmd">ENTRYPOINT and CMD<a class="anchor" aria-label="anchor" href="#entrypoint-and-cmd"></a></h2>
+<hr class="half-width"><p>We’re on a bit of a roll here! Let’s add one more modification to the
+image. Let’s change away from those imperial units by default.</p>
+<p>We can do this by changing the default command in the
+<code>Dockerfile</code>. As you may remember, the default command is
+composed of an <em>entrypoint</em> and a <em>command</em>. We can modify
+either of them in the Dockerfile. Just to make clear wheat the full
+command is directly from our dockerfile, lets write down both:</p>
+<div class="codewrapper sourceCode" id="cb39">
+<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">"python"</span>, <span class="st">"/spuc/spuc.py"</span>]</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"--units"</span>, <span class="st">"iulu"</span>]</span></code></pre>
+</div>
+<p>Notice that we used an array syntax. Both the <code>ENTRYPOINT</code>
+and <code>CMD</code> instructions can take a list of arguments, and the
+array syntax ensures that the arguments are passed correctly.</p>
+<p>Let’s give this a try, dropping the now unnecessary
+<code>--units iulu</code> from the <code>docker run</code> command:</p>
+<div class="codewrapper sourceCode" id="cb40">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> spuc-stats ./</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output spuc-stats</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[...]
+ =&gt; [1/4] FROM docker.io/spuacv/spuc:latest                                                         0.0s
+ =&gt; CACHED [2/4] RUN pip install pandas                                                             0.0s
+ =&gt; CACHED [3/4] COPY stats.py /spuc/plugins/stats.py                                               0.0s
+ =&gt; CACHED [4/4] COPY print.config /spuc/config/print.config                                        0.0s
+ =&gt; exporting to image                                                                              0.0s
+[...]
 :::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
 [...]</code></pre>
 </div>
-<p>Much better! A far clearner command, much more customised for our use
+<p>Much better! A far cleaner command, much more customised for our use
 case!</p>
 </section><section><h2 class="section-heading" id="back-to-reality">Back to reality<a class="anchor" aria-label="anchor" href="#back-to-reality"></a></h2>
-<hr class="half-width"><p>In this lession we have focused on modifying an image already
-containing a service. This is a perfectly valid way of using
-Dockerfiles! But it is not the most common.</p>
+<hr class="half-width"><p>In this lesson we adjusted the SPUC image, which already contains a
+service. This is a perfectly valid way of using Dockerfiles! But it is
+not the most common.</p>
 <p>While you can base your images on any other public image, it is most
 common for developers to be creating containers ‘from the ground
 up’.</p>
 <p>The most common practice is creating images from images like
 <code>ubuntu</code> or <code>alpine</code> and adding your own software
-and configuration files.</p>
-<p>An example of this is how the developers of the SPUC service created
-their image. The Dockerfile is reproduced below:</p>
-<div class="codewrapper sourceCode" id="cb27">
+and configuration files. An example of this is how the developers of the
+SPUC service created their image. The Dockerfile is reproduced
+below:</p>
+<div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="kw">FROM</span> python:3.12-slim</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="kw">WORKDIR</span> /spuc</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="kw">COPY</span> ./requirements.txt /spuc/requirements.txt</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">--no-cache-dir</span> <span class="at">--upgrade</span> <span class="at">-r</span> /spuc/requirements.txt</span>
-<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a><span class="kw">COPY</span> ./*.py /spuc/</span>
-<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a><span class="kw">COPY</span> ./config/*.config /spuc/config/</span>
-<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> /spuc/output</span>
-<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a><span class="kw">EXPOSE</span> 8321</span>
-<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">"python"</span>, <span class="st">"/spuc/spuc.py"</span>]</span>
-<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"--units"</span>, <span class="st">"iuhc"</span>]</span></code></pre>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="kw">FROM</span> python:3.12-slim</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="kw">WORKDIR</span> /spuc</span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a><span class="kw">COPY</span> ./requirements.txt /spuc/requirements.txt</span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">--no-cache-dir</span> <span class="at">--upgrade</span> <span class="at">-r</span> /spuc/requirements.txt</span>
+<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a><span class="kw">COPY</span> ./*.py /spuc/</span>
+<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a><span class="kw">COPY</span> ./config/*.config /spuc/config/</span>
+<span id="cb42-11"><a href="#cb42-11" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> /spuc/output</span>
+<span id="cb42-12"><a href="#cb42-12" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" tabindex="-1"></a><span class="kw">EXPOSE</span> 8321</span>
+<span id="cb42-14"><a href="#cb42-14" tabindex="-1"></a></span>
+<span id="cb42-15"><a href="#cb42-15" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">"python"</span>, <span class="st">"/spuc/spuc.py"</span>]</span>
+<span id="cb42-16"><a href="#cb42-16" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"--units"</span>, <span class="st">"iuhc"</span>]</span></code></pre>
 </div>
 <p>From this we can see the developers:</p>
-<ul><li>started with a <code>python:3.12-slim</code> image</li>
-<li>installed the required packages (from a file) using
-<code>pip</code>
+<ul><li>started <code>FROM</code> a <code>python:3.12-slim</code> image</li>
+<li>Use <code>RUN</code> to install the required packages (from a file)
+using <code>pip</code>
 </li>
-<li>copied the source code and configuration files</li>
-<li>set the default entrypoint andcommand.</li>
-</ul><p>This is a very common pattern for creating images and is the most
-common way to use Dockerfiles but it is important to realise that you
-can create images from <strong>any</strong> base image and customise
-them to your heart’s content!</p>
-</section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
-<hr class="half-width"><p>In this lesson we have seen how to create our own container images
-using a <code>Dockerfile</code>.</p>
-<p>We’ve added new layers with new packges installed using
-<code>RUN</code>, we’ve added files using <code>COPY</code>, set
-environment variables using <code>ENV</code>, and changed the default
-command using <code>ENTRYPOINT</code> and <code>CMD</code>.</p>
-<p>However, we are still encumbered with quite an unwieldy command to
-run the container. In the next lesson we will see how to make this
-easier by using <code>docker-compose</code>.</p>
-<div id="keypoints1" class="callout keypoints">
+<li>
+<code>COPY</code> the source code and configuration files</li>
+<li>set the default <code>ENTRYPOINT</code> and <code>CMD</code>.</li>
+</ul><p>There are also two other instructions in this Dockerfile that we
+haven’t covered yet.</p>
+<ul><li>
+<code>WORKDIR</code> sets the working directory for the container.
+It is used to create a directory and then change into it. You may have
+noticed before that when we exec into the SPUC container we start in the
+<code>/spuc</code> directory. All of the commands after a
+<code>WORKDIR</code> instruction are run from the directory it
+sets.</li>
+<li>
+<code>EXPOSE</code> is used to expose a port from the container to
+the host machine. This is not strictly necessary, but it is a good
+practice to document which ports the service uses.</li>
+</ul><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
@@ -788,16 +1052,19 @@ easier by using <code>docker-compose</code>.</p>
 <ul><li>You can create your own container images using a
 <code>Dockerfile</code>.</li>
 <li>A <code>Dockerfile</code> is a text file that contains a list of
-instructions for producing a Docker container.</li>
+instructions to produce a container image.</li>
+<li>Each instruction in a <code>Dockerfile</code> creates a new
+<code>layer</code> in the image.</li>
 <li>
-<code>FROM</code>, <code>RUN</code>, <code>COPY</code>,
-<code>ENV</code>, <code>ENTRYPOINT</code>, and <code>CMD</code> are some
-of the most imprtatn instructions that can be used in a
+<code>FROM</code>, <code>WORKDIR</code>, <code>RUN</code>,
+<code>COPY</code>, <code>ENV</code>, <code>ENTRYPOINT</code> and
+<code>CMD</code> are some of the most important instructions used in a
 <code>Dockerfile</code>.</li>
-<li>The <code>docker build</code> command is used to build a container
-image from a <code>Dockerfile</code>.</li>
-<li>You can run a container from a container image using the
-<code>docker run</code> command.</li>
+<li>To build a container image from a <code>Dockerfile</code> you use
+the command:<br><code>docker build -t &lt;image_name&gt; &lt;context_path&gt;</code>
+</li>
+<li>You can run a container from a local image just like any other
+image, with docker run.</li>
 </ul></div>
 </div>
 </div>

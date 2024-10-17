@@ -621,16 +621,19 @@ container.</li>
 <li>You can create your own container images using a
 <code>Dockerfile</code>.</li>
 <li>A <code>Dockerfile</code> is a text file that contains a list of
-instructions for producing a Docker container.</li>
+instructions to produce a container image.</li>
+<li>Each instruction in a <code>Dockerfile</code> creates a new
+<code>layer</code> in the image.</li>
 <li>
-<code>FROM</code>, <code>RUN</code>, <code>COPY</code>,
-<code>ENV</code>, <code>ENTRYPOINT</code>, and <code>CMD</code> are some
-of the most imprtatn instructions that can be used in a
+<code>FROM</code>, <code>WORKDIR</code>, <code>RUN</code>,
+<code>COPY</code>, <code>ENV</code>, <code>ENTRYPOINT</code> and
+<code>CMD</code> are some of the most important instructions used in a
 <code>Dockerfile</code>.</li>
-<li>The <code>docker build</code> command is used to build a container
-image from a <code>Dockerfile</code>.</li>
-<li>You can run a container from a container image using the
-<code>docker run</code> command.</li>
+<li>To build a container image from a <code>Dockerfile</code> you use
+the command:<br><code>docker build -t &lt;image_name&gt; &lt;context_path&gt;</code>
+</li>
+<li>You can run a container from a local image just like any other
+image, with docker run.</li>
 </ul></section><section id="docker-compose"><h2 class="section-heading"><a href="docker-compose.html">Using Docker Compose</a></h2>
 <hr class="half-width">
 <ul>
