@@ -55,7 +55,7 @@ This just means Docker detected you already had that image, so it didn't need to
 The structure of the command we just used will be the same for most of the commands we will use in the Docker CLI,
 so it is worth taking a moment to understand it.
 
-::::::::: callout
+::::::::::::::::::::::::::::::::::::::: callout
 
 ## The structure of a Docker command
 
@@ -74,13 +74,13 @@ Let's dive into the structure of the command we looked at. Here is a diagram whi
 But wait! We ran `docker pull spaucv/spuc:latest`, and the diagram shows the command as 'image'!
 
 We apologise for the trick but we were actually using a shorthand built into the Docker CLI.
-There are a few of these shortcuts, they are useful but can be confusing.
-In this case, the `pull` command is actually a shorthand for `docker image pull`.
+There are a few of these shortcuts; they are useful, but can be confusing.
+In this case, `docker pull` is actually a shorthand for `docker image pull`.
 
-In this lesson, we have decided to use the most common versions of commands, often the shorthand.
+In this lesson, we have decided to use the most common versions of commands, which is often the shorthand.
 It is important to know that these shorthands exist, but it is also important to know the full command structure.
 
-:::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Listing Images
 
@@ -165,7 +165,7 @@ Entrypoint: [python /spuc/spuc.py]
 
 Great! So we know what the command and entrypoint are... but what do they mean?
 
-::::::::: callout
+::::::::::::::::::::::::::::::::::::::: callout
 
 ## Default Command
 
@@ -193,12 +193,15 @@ Now the container is running, and the command is executed by concatenating the e
 Finally the container is stopped and removed.
 
 In our case, the entrypoint is `python /spuc/spuc.py` and the command is `--units iuhc`.
-This means that when the container is run, it will execute the command `python /spuc/spuc.py --units iuhc`.
+This means that when the container is run, it will execute the command  
+`python /spuc/spuc.py --units iuhc`.
 
 As mentioned, the command is commonly overwritten when the container is run.
 This means we could pass different parameters to the python script when we run the container.
 
-::: spoiler
+We will cover this topic in more detail later on.
+
+:::::::::::: spoiler
 
 ### Further examples of container lifecycle
 
@@ -212,9 +215,9 @@ When the container is run, the command will be `echo Hello World!` and the conta
 In Example 2 we have an entrypoint of `sleep` and a command of `infinity`.
 When the container is run, the command will be `sleep infinity` and the container will run indefinitely, similar to how services run!
 
-:::::::::::
+::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Running
 
@@ -449,7 +452,7 @@ And now we can see the logs using the name of the container, and even follow the
 docker logs -f spuc_container
 ```
 
-::: spoiler
+:::::::::::: spoiler
 
 ### Logs
 
@@ -489,7 +492,7 @@ Welcome to the Space Purple Unicorn Counter!
 
 ```
 
-:::
+::::::::::::::::::::
 
 This also blocks the terminal, so you will need to use `[Ctrl+C]` to stop following the logs.
 There is an important difference though.
