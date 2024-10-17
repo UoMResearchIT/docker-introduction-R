@@ -12,7 +12,7 @@ Although useful as an introduction, it is unlikely that you will use Docker Desk
 You are much more likely to use the command line interface to interact with Docker, and we will cover this shortly.
 
 It is also important to note that while Docker Desktop is mostly free, some features are offered at a premium.
-Also, it is not fully functional on all operating systems; it can produce conflicts with the docker engine on Linux, for example.
+Additionally, it is not fully functional on all operating systems; it can produce conflicts with the docker engine on Linux, for example.
 
 Therefore, **this episode is meant to be demonstrative, that is, you do not *need* to follow along**.
 
@@ -81,7 +81,7 @@ It is also the place where you can run the images, or delete them.
 However, before we go any further, we want to **inspect** the images.
 
 Clicking on the image will open a window with information on how the image is built, and examine its packages and vulnerabilities.
-We can even if any of the building blocks of the image are vulnerable, and where they come from (Image hierarchy).
+If any of the building blocks of the image are vulnerable, we can see which, and where they come from (Image hierarchy).
 For example, the vulnerabilities in the `spuc` image come from its base image, `python3-slim".
 
 ![](fig/docker-desktop/image_inspecting_spuc.png){alt='Inspecting spuc image.'}
@@ -226,7 +226,7 @@ The `Exec` tab also looks more interesting, we get access to a terminal inside t
 :::
 
 Before trying to do anything in the terminal, let`s look at the container list by clicking on the `Containers` tab on the left.
-You`ll see the green icon of the container indicating that it is still live, and indication of how long it`s been running for.
+You'll see the green icon of the container indicating that it is still live, and indication of how long it's been running for.
 
 ![](fig/docker-desktop/containers_list_spuc_running.png){alt='Containers list, spuc still running.'}
 
@@ -272,12 +272,12 @@ Another curl now should show the changes we made to the `print.config` file.
 At this point, it seems like the container is very much like a virtual machine, and we can do whatever we want with it. 
 However, as we've mentioned before, containers are *meant to be ephimeral*.
 
-If we stop the container, we get a familiar empty tab in `Exec` and `Stats`.q
+If we stop the container, we get a familiar empty tab in `Exec` and `Stats`.
 The `Containers` tab on the left will also show the container status as `Exited`.
 
 Lets go back to the `Images` tab, and run the `spuc` image again.
 Now lets go to the `Exec` tab, and try and edit the `print.config` file again.
-You`ll notice that `nano` is not there anymore.
+You'll notice that `nano` is not there anymore.
 If you look at the contents of the file, for example with `cat config/print.config`, you'll see that the changes we made are gone.
 
 ![](fig/docker-desktop/spuc_second_container_run.png){alt='Exec in fresh spuc container.'}
