@@ -53,7 +53,7 @@ We already know how to load this file.
 Let's use a bind mount to share the file with the container.
 Since we are debugging, we'll leave out the `-d` flag so we can see the output easily.
 ```bash
-docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true ghcr.io/uomresearchit/spuc:latest --units iulu
+docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true spuacv/spuc:latest --units iulu
 ```
 ```output
 Traceback (most recent call last):
