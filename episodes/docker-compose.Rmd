@@ -642,13 +642,148 @@ Now, the SPUC service is only accessible from within the Docker network!
 
 This can be taken further to creater networks with very limited purposes. For example in a typical web app you may make it so that th frontend can connect only to backend, but not to the database.
 
+### Depends on
+
+There is an important problem that we haven't addressed yet - what happens if the SPUCSVi service starts before the SPUC service?
+
+This is a common problem when running multiple services together - services that depend on each other need to start in a specific order.
+
+Docker Compose has a solution to this - the `depends_on` key.
+
+We can use this key to tell Docker Compose that the SPUCSVi service depends on the SPUC service.
+
+```diff
+services:
+  spuc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
+
+  spucsvi:
+    image: ghcr.io/uomresearchit/spucsvi:latest
+    container_name: spucsvi
+    ports:
+      - "8322:8322"
+    environment:
+      - SPUC_URL=http://spuc:8321
++    depends_on:
++      spuc:
+
+volumes:
+  spuc-volume:
+```
+
+Now, when we run `docker compose up`, the SPUC service will start before the SPUCSVi service!
+
+But... there is a catch! The `depends_on` key only ensures that the service is started in the correct order. It doesn't check if the service is ready!
+
+This can be a problem if a service is fast to start but slow to be ready. For example, a database service may start quickly but take a while to be ready to accept connections.
+
+To address this, Docker Compose allows you to define a `healthcheck` for a service. This is a command that is run periodically to check if the service is ready. The command failing (returning a non-zero exit code) means that the service is not ready and will be retried N times at M second intervals.
+
+We can try this out by adding a `healthcheck` to the SPUC service. Since we don't want SPUCSVi to start until the chart of unicorn sightings is ready, we can use the `curl` command to check if the `/export` endpoint is available. We need to add the `--fail` flag to `curl` to ensure that it returns a non-zero exit code if the endpoint is not available.
+
+
+The other change we need to make is to add a `condition` to the `depends_on` key in the SPUCSVi service. This tells Docker Compose to only start the service if the service it depends on is healthy, rather than just started.
+
+```diff
+services:
+  spuc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
++    healthcheck:
++      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]
++      interval: 5s
++      timeout: 10s
++      retries: 3
+
+  spucsvi:
+    image: ghcr.io/uomresearchit/spucsvi:latest
+    container_name: spucsvi
+    ports:
+      - "8322:8322"
+    environment:
+      - SPUC_URL=http://spuc:8321
+    depends_on:
+      spuc:
++       condition: service_healthy
+
+volumes:
+  spuc-volume:
+```
+
+Now, when we run `docker compose up`, the SPUCSVi service will only start when the SPUC service is ready! But this is a little hard to see in action as the SPUC service starts so quickly.
+
+To see this in action, you can add a `sleep` command to the `entrypoint` of the SPUC service to simulate a slow start.
+
+```diff
+services:
+  spuc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spuc_container
+    ports:
+      - 8321:8321
+    volumes:
+      - $PWD/print.config:/code/config/print.config
+      - spuc-volume:/code/output
+      - $PWD/stats.py:/spuc/plugins/stats.py
+    environment:
+      - EXPORT=true
+    command: ["--units", "iulu"]
++    entrypoint: ["sh", "-c", "sleep 10 && python /spuc/spuc.py"]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+
+  spucsvi:
+    image: ghcr.io/uomresearchit/spucsvi:latest
+    container_name: spucsvi
+    ports:
+      - "8322:8322"
+    environment:
+      - SPUC_URL=http://spuc:8321
+    depends_on:
+      spuc:
+       condition: service_healthy
+
+volumes:
+  spuc-volume:
+```
+
+Now, when you run `docker compose up`, you should see the SPUCSVi service start after the SPUC service!
+
 ## Summary
 
 In this lesson, we have taken a dive into Docker Compose and seen how it can help us run multiple services together - in addition to making running a single service easier!
 
 We have seen how to translate `docker run` commands into a `docker-compose.yml` file and how to run the services using `docker compose`.
 
-We have also seen how to build a container using Docker Compose and how to run multiple services together.
+We have also seen how to build a container using Docker Compose and how to coordinate the starting of services using `depends_on` and `healthcheck`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: keypoints
 - Docker Compose is a tool for defining and running multi-container Docker stacks
