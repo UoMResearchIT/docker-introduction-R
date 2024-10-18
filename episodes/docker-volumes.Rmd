@@ -61,7 +61,7 @@ docker volume ls
 local     spuc-volume
 ```
 
-::::: spolier
+::::: spoiler
 
 ### Inspecting the volume
 

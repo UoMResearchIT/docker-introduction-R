@@ -177,7 +177,7 @@ The two are concatenated to form the full command.
 
 To understand this, let's take a more detailed look at the lifecycle of a container.
 
-![](fig/docker_life_0.png)
+![](fig/docker_life_0.png){alt='A diagram representing the lifecycle of a container'}
 
 When run, the container enters a startup state in which:
 
@@ -207,7 +207,7 @@ We will cover this topic in more detail later on.
 
 We will give another couple of examples of how entrypoints and commands are used and affect the container lifecycle in the following image.
 
-![](fig/docker_life_2.png)
+![](fig/docker_life_2.png){alt='Further details and examples of the lifecycle of a container'}
 
 In Example 1 we have an entrypoint of `echo` and a command of `hello world`.
 When the container is run, the command will be `echo Hello World!` and the container will print `Hello World!`.
