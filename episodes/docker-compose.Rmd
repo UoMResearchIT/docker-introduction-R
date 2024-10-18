@@ -30,23 +30,23 @@ Docker Compose files can be thought of as YAML formatting formalisations of `doc
 Let's recall our `docker run` command for the regular SPUC container (rather than the one we made ourselves - we'll get to that in a bit):
 
 ```bash
-$ docker run -d --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true ghcr.io/uomresearchit/spuc:latest --units iulu
+$ docker run -d --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true spuacv/spuc:latest --units iulu
 ```
 
 We can start translate this into a Docker Compose file bit by bit!
 
 The first thing we need to do is create a `docker-compose.yml` file. All `docker-compose.yml` files start with `services:`. This is the root element undre which we define the services we want to run.
 
-```yaml
+```yml
 services:
 ```
 
 Next, let's add the service for the SPUC container. We'll call it `spuc` and we will tell it what `image` to use.
 
-```yaml
+```yml
 services:
-  spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+  spuc:                            # The name of the service
+    image: spuacv/spuc:latest      # The image to use
 ```
 
 This is actually enough for us to run the container!
@@ -110,8 +110,8 @@ We'll provide a quick overview here and then dive into how to add them to our `d
 | `--rm` | Remove the container when it stops |
 | `--name spuc_container` | Name the container `spuc_container` |
 | `-p 8321:8321` | Map port 8321 on the host to port 8321 in the container |
-| `-v $PWD/print.config:/code/config/print.config` | Mount the `print.config` file in the current directory to `/code/config/print.config` in the container |
-| `-v spuc-volume:/code/output` | Persis the `/code/output` directory in the container to the `spuc-volume` volume |
+| `-v $PWD/print.config:/spuc/config/print.config` | Mount the `print.config` file in the current directory to `/spuc/config/print.config` in the container |
+| `-v spuc-volume:/spuc/output` | Persis the `/spuc/output` directory in the container to the `spuc-volume` volume |
 | `-v $PWD/stats.py:/spuc/plugins/stats.py` | Enable the `stats.py` plugin by mounting it to `/spuc/plugins/stats.py` in the container |
 | `-e EXPORT=true` | Set the environment variable `EXPORT` to `true` |
 | `--units iulu` | Set the units to Imperial Unicorn Length Units |
@@ -239,11 +239,11 @@ Now we have got the basics of running a container in the background and removing
 
 `spuc-1` is a bit of a boring name for a container. We can name the container using the `container_name` key.
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
-+    container_name: spuc_container
+    image: spuacv/spuc:latest
+    container_name: spuc_container            # The name of the container
 ```
 ```output
 [+] Running 2/0
@@ -266,13 +266,13 @@ This is because we haven't mapped the port from the container to the host. We ca
 
 It's worth noting the `ports` key is a list, so we can map multiple ports if we need to and that the host and container ports don't have to be the same!
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+    image: spuacv/spuc:latest
     container_name: spuc_container
-+    ports:
-+      - 8321:8321
+    ports:                          # Indicates that we are mapping ports
+      - 8321:8321                   # Maps port 8321 on the host to port 8321 in the container
 ```
 ```output
 [+] Running 2/0
@@ -297,15 +297,15 @@ We will use a bind mount for this - mapping a file from the host to the containe
 
 As with the CLI, this is (confusingly) done using the `volumes` key.
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+    image: spuacv/spuc:latest
     container_name: spuc_container
     ports:
       - 8321:8321
-+    volumes:
-+      - $PWD/print.config:/code/config/print.config
+    volumes:                                          # Indicates that we are mounting volumes
+      - $PWD/print.config:/spuc/config/print.config   # Bind mounts the print.config file
 ```
 
 Now, if you record some sightings, you should see them formatted according to the configuration in `print.config`.
@@ -319,19 +319,19 @@ We are still missing the volume we used to store our Unicorn sightings persisten
 
 This time with just the volume name on the left of the colon and adding a declaration for the volume at the bottom of the file.
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+    image: spuacv/spuc:latest
     container_name: spuc_container
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-+      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output              # Mounts the spuc-volume volume
 
-+ volumes:
-+   spuc-volume:
+volumes:                                      # Starts section for declaring volumes
+  spuc-volume:                                # Declares the spuc-volume volume
 ```
 
 Now, if you record some sightings and then stop and start the container, you should see that the sightings are still there!
@@ -354,18 +354,18 @@ Finally, let's set the `EXPORT` environment variable to `true` as we did in our 
 
 This is done using the `environment` key.
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+    image: spuacv/spuc:latest
     container_name: spuc_container
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
-+    environment:
-+      - EXPORT=true
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
+    environment:                      # Indicates that we are setting environment variables
+      - EXPORT=true                   # Sets the EXPORT environment variable to true
 
 volumes:
   spuc-volume:
@@ -383,19 +383,19 @@ We can see that the environment variable has been set by the output of the tool 
 
 We can also set the units using the `command` key. This is the same as the `--units` flag in the `docker run` command.
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+    image: spuacv/spuc:latest
     container_name: spuc_container
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
     environment:
       - EXPORT=true
-+    command: ["--units", "iulu"]
+    command: ["--units", "iulu"]          # Overrides the default command
 
 volumes:
   spuc-volume:
@@ -411,17 +411,17 @@ We're nearly back to where we were with our `docker run` command! The only thing
 
 Shouldn't be too bad - we can just mount the plugin file to the correct directory in the container.
 
-```diff
+```yml
 services:
   spuc:
-    image: ghcr.io/uomresearchit/spuc:latest
+    image: spuacv/spuc:latest
     container_name: spuc_container
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
-      - $PWD/stats.py:/spuc/plugins/stats.py
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
+      - $PWD/stats.py:/spuc/plugins/stats.py        # Mounts the stats.py plugin
     environment:
       - EXPORT=true
     command: ["--units", "iulu"]
@@ -459,19 +459,19 @@ Just like before we can use our Dockerfile to build the container. We can use th
 
 This time instead of using the `image` key, we use the `build` key.
 
-```yaml
+```yml
 services:
   spuc:
--    image: ghcr.io/uomresearchit/spuc:latest
-+    build:
-+      context: .
-+      dockerfile: Dockerfile
+  # image: spuacv/spuc:latest
+    build:                        # Instead of using the 'image' key, we use the 'build' key
+      context: .                  # Sets the build context (the directory in which the Dockerfile is located)
+      dockerfile: Dockerfile      # Sets the name of the Dockerfile
     container_name: spuc_container
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
       - $PWD/stats.py:/spuc/plugins/stats.py
     environment:
       - EXPORT=true
@@ -525,7 +525,7 @@ The SPUCSVi README helpfully provides a table of configuration options what we c
 
 | Item | Description | Default |
 |------|-------------|---------|
-| Image Name | The name of the image to use | `ghcr.io/uomresearchit/spucsvi:latest` |
+| Image Name | The name of the image to use | `spuacv/spucsvi:latest` |
 | Port | The container port to the service runs on | `8322` |
 | SPUC_URL | An environment variable which gives the URL of the SPUC service | `http://spuc:8321` |
 
@@ -541,7 +541,7 @@ For our service named `spuc`, the hostname would be `spuc` with the protocol `ht
 
 Knowing this, we are able to add SPUCSVi to our Docker Compose file!
 
-```diff
+```yml
 services:
   spuc:
     build:
@@ -551,20 +551,20 @@ services:
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
       - $PWD/stats.py:/spuc/plugins/stats.py
     environment:
       - EXPORT=true
     command: ["--units", "iulu"]
 
-+  spucsvi:
-+    image: ghcr.io/uomresearchit/spucsvi:latest
-+    container_name: spucsvi
-+    ports:
-+      - "8322:8322"
-+    environment:
-+      - SPUC_URL=http://spuc:8321
+  spucsvi:                            # Declare a new service named spucsvi
+    image: spuacv/spucsvi:latest      # Specify the image to use
+    container_name: spucsvi           # Name the container spucsvi
+    ports:                            # 
+      - "8322:8322"                   # Map port 8322 on the host to port 8322 in the container
+    environment:                      # 
+      - SPUC_URL=http://spuc:8321     # Specify the SPUC_URL environment variable
 
 volumes:
   spuc-volume:
@@ -573,7 +573,7 @@ volumes:
 Where we added
 :
 * A service named `spucsvi`
-* The image `ghcr.io/uomresearchit/spucsvi:latest`
+* The image `spuacv/spucsvi:latest`
 * The container name `spucsvi` (not strictly necessary, but it's nice to have)
 * The port `8322` for the service (mapped to `8322` on the host)
 * The environment variable `SPUC_URL` set to `http://spuc:8321`
@@ -609,25 +609,25 @@ This means we can isolate the SPUC service from the host network. This is a good
 
 We can do this by removing the `ports` key from the SPUC service.
 
-```diff
+```yml
 services:
   spuc:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: spuc_container
--    ports:
--      - 8321:8321
+    # ports:                            # We can remove these two lines
+    #   - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
       - $PWD/stats.py:/spuc/plugins/stats.py
     environment:
       - EXPORT=true
     command: ["--units", "iulu"]
 
   spucsvi:
-    image: ghcr.io/uomresearchit/spucsvi:latest
+    image: spuacv/spucsvi:latest
     container_name: spucsvi
     ports:
       - "8322:8322"
@@ -652,7 +652,7 @@ Docker Compose has a solution to this - the `depends_on` key.
 
 We can use this key to tell Docker Compose that the SPUCSVi service depends on the SPUC service.
 
-```diff
+```yml
 services:
   spuc:
     build:
@@ -662,22 +662,22 @@ services:
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
       - $PWD/stats.py:/spuc/plugins/stats.py
     environment:
       - EXPORT=true
     command: ["--units", "iulu"]
 
   spucsvi:
-    image: ghcr.io/uomresearchit/spucsvi:latest
+    image: spuacv/spucsvi:latest
     container_name: spucsvi
     ports:
       - "8322:8322"
     environment:
       - SPUC_URL=http://spuc:8321
-+    depends_on:
-+      spuc:
+    depends_on:                     # Starts section for declaring dependencies
+      spuc:                         # Declares that the spucsvi service depends on the spuc service
 
 volumes:
   spuc-volume:
@@ -696,7 +696,7 @@ We can try this out by adding a `healthcheck` to the SPUC service. Since we don'
 
 The other change we need to make is to add a `condition` to the `depends_on` key in the SPUCSVi service. This tells Docker Compose to only start the service if the service it depends on is healthy, rather than just started.
 
-```diff
+```yml
 services:
   spuc:
     build:
@@ -706,20 +706,20 @@ services:
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
       - $PWD/stats.py:/spuc/plugins/stats.py
     environment:
       - EXPORT=true
     command: ["--units", "iulu"]
-+    healthcheck:
-+      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]
-+      interval: 5s
-+      timeout: 10s
-+      retries: 3
+    healthcheck:                                                  # Starts section for declaring healthchecks
+      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]  # Specifies the healthcheck command
+      interval: 5s                                                # Specifies the interval between healthchecks
+      timeout: 10s                                                # Specifies the timeout for the healthcheck
+      retries: 3                                                  # Specifies the number of retries before failing
 
   spucsvi:
-    image: ghcr.io/uomresearchit/spucsvi:latest
+    image: spuacv/spucsvi:latest
     container_name: spucsvi
     ports:
       - "8322:8322"
@@ -727,7 +727,7 @@ services:
       - SPUC_URL=http://spuc:8321
     depends_on:
       spuc:
-+       condition: service_healthy
+        condition: service_healthy                                # Specifies further conditions for starting the service
 
 volumes:
   spuc-volume:
@@ -737,7 +737,7 @@ Now, when we run `docker compose up`, the SPUCSVi service will only start when t
 
 To see this in action, you can add a `sleep` command to the `entrypoint` of the SPUC service to simulate a slow start.
 
-```diff
+```yml
 services:
   spuc:
     build:
@@ -747,13 +747,13 @@ services:
     ports:
       - 8321:8321
     volumes:
-      - $PWD/print.config:/code/config/print.config
-      - spuc-volume:/code/output
+      - $PWD/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
       - $PWD/stats.py:/spuc/plugins/stats.py
     environment:
       - EXPORT=true
     command: ["--units", "iulu"]
-+    entrypoint: ["sh", "-c", "sleep 10 && python /spuc/spuc.py"]
+    entrypoint: ["sh", "-c", "sleep 10 && python /spuc/spuc.py"]   # Adds a sleep command to the entrypoint to simulate a slow start
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]
       interval: 5s
@@ -761,7 +761,7 @@ services:
       retries: 3
 
   spucsvi:
-    image: ghcr.io/uomresearchit/spucsvi:latest
+    image: spuacv/spucsvi:latest
     container_name: spucsvi
     ports:
       - "8322:8322"
