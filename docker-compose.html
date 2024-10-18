@@ -350,7 +350,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using Docker Compose</h1>
-        <p>Last updated on 2024-10-17 |
+        <p>Last updated on 2024-10-18 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-compose.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1116,6 +1116,158 @@ network!</p>
 purposes. For example in a typical web app you may make it so that th
 frontend can connect only to backend, but not to the database.</p>
 </div>
+<div class="section level3">
+<h3 id="depends-on">Depends on<a class="anchor" aria-label="anchor" href="#depends-on"></a></h3>
+<p>There is an important problem that we haven’t addressed yet - what
+happens if the SPUCSVi service starts before the SPUC service?</p>
+<p>This is a common problem when running multiple services together -
+services that depend on each other need to start in a specific
+order.</p>
+<p>Docker Compose has a solution to this - the <code>depends_on</code>
+key.</p>
+<p>We can use this key to tell Docker Compose that the SPUCSVi service
+depends on the SPUC service.</p>
+<div class="codewrapper sourceCode" id="cb38">
+<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>services:</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  spuc:</span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>    build:</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>      context: .</span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>    container_name: spuc_container</span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a>    ports:</span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>      - 8321:8321</span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a>    volumes:</span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a>    environment:</span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a>      - EXPORT=true</span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
+<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a>  spucsvi:</span>
+<span id="cb38-18"><a href="#cb38-18" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
+<span id="cb38-19"><a href="#cb38-19" tabindex="-1"></a>    container_name: spucsvi</span>
+<span id="cb38-20"><a href="#cb38-20" tabindex="-1"></a>    ports:</span>
+<span id="cb38-21"><a href="#cb38-21" tabindex="-1"></a>      - "8322:8322"</span>
+<span id="cb38-22"><a href="#cb38-22" tabindex="-1"></a>    environment:</span>
+<span id="cb38-23"><a href="#cb38-23" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
+<span id="cb38-24"><a href="#cb38-24" tabindex="-1"></a><span class="va">+    depends_on:</span></span>
+<span id="cb38-25"><a href="#cb38-25" tabindex="-1"></a><span class="va">+      spuc:</span></span>
+<span id="cb38-26"><a href="#cb38-26" tabindex="-1"></a></span>
+<span id="cb38-27"><a href="#cb38-27" tabindex="-1"></a>volumes:</span>
+<span id="cb38-28"><a href="#cb38-28" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+</div>
+<p>Now, when we run <code>docker compose up</code>, the SPUC service
+will start before the SPUCSVi service!</p>
+<p>But… there is a catch! The <code>depends_on</code> key only ensures
+that the service is started in the correct order. It doesn’t check if
+the service is ready!</p>
+<p>This can be a problem if a service is fast to start but slow to be
+ready. For example, a database service may start quickly but take a
+while to be ready to accept connections.</p>
+<p>To address this, Docker Compose allows you to define a
+<code>healthcheck</code> for a service. This is a command that is run
+periodically to check if the service is ready. The command failing
+(returning a non-zero exit code) means that the service is not ready and
+will be retried N times at M second intervals.</p>
+<p>We can try this out by adding a <code>healthcheck</code> to the SPUC
+service. Since we don’t want SPUCSVi to start until the chart of unicorn
+sightings is ready, we can use the <code>curl</code> command to check if
+the <code>/export</code> endpoint is available. We need to add the
+<code>--fail</code> flag to <code>curl</code> to ensure that it returns
+a non-zero exit code if the endpoint is not available.</p>
+<p>The other change we need to make is to add a <code>condition</code>
+to the <code>depends_on</code> key in the SPUCSVi service. This tells
+Docker Compose to only start the service if the service it depends on is
+healthy, rather than just started.</p>
+<div class="codewrapper sourceCode" id="cb39">
+<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>services:</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  spuc:</span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>    build:</span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>      context: .</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
+<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>    container_name: spuc_container</span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a>    ports:</span>
+<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>      - 8321:8321</span>
+<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>    volumes:</span>
+<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
+<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
+<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
+<span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>    environment:</span>
+<span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>      - EXPORT=true</span>
+<span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
+<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="va">+    healthcheck:</span></span>
+<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="va">+      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]</span></span>
+<span id="cb39-18"><a href="#cb39-18" tabindex="-1"></a><span class="va">+      interval: 5s</span></span>
+<span id="cb39-19"><a href="#cb39-19" tabindex="-1"></a><span class="va">+      timeout: 10s</span></span>
+<span id="cb39-20"><a href="#cb39-20" tabindex="-1"></a><span class="va">+      retries: 3</span></span>
+<span id="cb39-21"><a href="#cb39-21" tabindex="-1"></a></span>
+<span id="cb39-22"><a href="#cb39-22" tabindex="-1"></a>  spucsvi:</span>
+<span id="cb39-23"><a href="#cb39-23" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
+<span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a>    container_name: spucsvi</span>
+<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a>    ports:</span>
+<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a>      - "8322:8322"</span>
+<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a>    environment:</span>
+<span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
+<span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a>    depends_on:</span>
+<span id="cb39-30"><a href="#cb39-30" tabindex="-1"></a>      spuc:</span>
+<span id="cb39-31"><a href="#cb39-31" tabindex="-1"></a><span class="va">+       condition: service_healthy</span></span>
+<span id="cb39-32"><a href="#cb39-32" tabindex="-1"></a></span>
+<span id="cb39-33"><a href="#cb39-33" tabindex="-1"></a>volumes:</span>
+<span id="cb39-34"><a href="#cb39-34" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+</div>
+<p>Now, when we run <code>docker compose up</code>, the SPUCSVi service
+will only start when the SPUC service is ready! But this is a little
+hard to see in action as the SPUC service starts so quickly.</p>
+<p>To see this in action, you can add a <code>sleep</code> command to
+the <code>entrypoint</code> of the SPUC service to simulate a slow
+start.</p>
+<div class="codewrapper sourceCode" id="cb40">
+<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>services:</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  spuc:</span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>    build:</span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>      context: .</span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
+<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>    container_name: spuc_container</span>
+<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a>    ports:</span>
+<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a>      - 8321:8321</span>
+<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>    volumes:</span>
+<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
+<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
+<span id="cb40-12"><a href="#cb40-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
+<span id="cb40-13"><a href="#cb40-13" tabindex="-1"></a>    environment:</span>
+<span id="cb40-14"><a href="#cb40-14" tabindex="-1"></a>      - EXPORT=true</span>
+<span id="cb40-15"><a href="#cb40-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
+<span id="cb40-16"><a href="#cb40-16" tabindex="-1"></a><span class="va">+    entrypoint: ["sh", "-c", "sleep 10 &amp;&amp; python /spuc/spuc.py"]</span></span>
+<span id="cb40-17"><a href="#cb40-17" tabindex="-1"></a>    healthcheck:</span>
+<span id="cb40-18"><a href="#cb40-18" tabindex="-1"></a>      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]</span>
+<span id="cb40-19"><a href="#cb40-19" tabindex="-1"></a>      interval: 5s</span>
+<span id="cb40-20"><a href="#cb40-20" tabindex="-1"></a>      timeout: 10s</span>
+<span id="cb40-21"><a href="#cb40-21" tabindex="-1"></a>      retries: 3</span>
+<span id="cb40-22"><a href="#cb40-22" tabindex="-1"></a></span>
+<span id="cb40-23"><a href="#cb40-23" tabindex="-1"></a>  spucsvi:</span>
+<span id="cb40-24"><a href="#cb40-24" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
+<span id="cb40-25"><a href="#cb40-25" tabindex="-1"></a>    container_name: spucsvi</span>
+<span id="cb40-26"><a href="#cb40-26" tabindex="-1"></a>    ports:</span>
+<span id="cb40-27"><a href="#cb40-27" tabindex="-1"></a>      - "8322:8322"</span>
+<span id="cb40-28"><a href="#cb40-28" tabindex="-1"></a>    environment:</span>
+<span id="cb40-29"><a href="#cb40-29" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
+<span id="cb40-30"><a href="#cb40-30" tabindex="-1"></a>    depends_on:</span>
+<span id="cb40-31"><a href="#cb40-31" tabindex="-1"></a>      spuc:</span>
+<span id="cb40-32"><a href="#cb40-32" tabindex="-1"></a>       condition: service_healthy</span>
+<span id="cb40-33"><a href="#cb40-33" tabindex="-1"></a></span>
+<span id="cb40-34"><a href="#cb40-34" tabindex="-1"></a>volumes:</span>
+<span id="cb40-35"><a href="#cb40-35" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+</div>
+<p>Now, when you run <code>docker compose up</code>, you should see the
+SPUCSVi service start after the SPUC service!</p>
+</div>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
 <hr class="half-width"><p>In this lesson, we have taken a dive into Docker Compose and seen how
 it can help us run multiple services together - in addition to making
@@ -1124,7 +1276,8 @@ running a single service easier!</p>
 <code>docker-compose.yml</code> file and how to run the services using
 <code>docker compose</code>.</p>
 <p>We have also seen how to build a container using Docker Compose and
-how to run multiple services together.</p>
+how to coordinate the starting of services using <code>depends_on</code>
+and <code>healthcheck</code>.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -1198,8 +1351,8 @@ Docker stacks</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-compose.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-compose.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-10-17",
-  "datePublished": "2024-10-17"
+  "dateModified": "2024-10-18",
+  "datePublished": "2024-10-18"
 }
 
   </script><script>
