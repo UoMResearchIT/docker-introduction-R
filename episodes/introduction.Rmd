@@ -1,5 +1,5 @@
 ---
-title: Introducing! Docker and the Space Purple Unicorn Association
+title: The adventures of Docker and the Space Purple Unicorn Association
 teaching: 20
 exercises: 0
 ---
@@ -52,6 +52,9 @@ If you learn only one container system, learn Docker! As it has become the Roset
 
 ## The Space Purple Unicorn Association
 
+<div class="columns" style="display: flex; flex-wrap: wrap;">
+<div class="column" style="flex: 3; padding: 10px; box-sizing: border-box; min-width: 300px;">
+
 The Space Purple Unicorn Association is a community effort to count the number of purple unicorns in space.
 
 We are a friendly group of developers, data scientists, and unicorn enthusiasts,
@@ -63,3 +66,11 @@ These tools are distributed via Docker containers and should be easy to use.
 If you'd like to join the effort to preserve this keystone species,
 please help us by running your own Space Purple Unicorn Counting service,
 and encouraging your local community to join in the count!
+
+</div>
+<div class="column" style="flex: 2; padding: 10px; box-sizing: border-box; min-width: 300px;">
+
+![](fig/SPUA/SPUA_logo.png){alt="SPUA logo"}
+
+</div>
+</div>
