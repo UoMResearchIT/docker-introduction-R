@@ -205,7 +205,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. Introducing Containers</a>
+        <a href="introduction.html">1. The adventures of Docker and the Space Purple Unicorn Association</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -435,8 +435,13 @@ using:</p>
 </h3>
 <pre class="output" tabindex="0"><code>local     spuc-volume</code></pre>
 </div>
-<div class="section level3 spolier">
-<h3 id="inspecting-the-volume">Inspecting the volume<a class="anchor" aria-label="anchor" href="#inspecting-the-volume"></a></h3>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Inspecting the volume </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
 <p>We can see more information about the volume using:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -462,6 +467,9 @@ using:</p>
 <code>/var/lib/docker/volumes/spuc-volume/_data</code> on the host
 filesystem. You can visit and edit files there if you have superuser
 permissions (sudo).</p>
+</div>
+</div>
+</div>
 </div>
 <p>But what about the container? Has this actually worked?</p>
 <p>First… what’s that over there?? A unicorn! No… three unicorns! Let’s
@@ -721,7 +729,7 @@ run the following commands?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: upper-alpha"><li><p><strong>Problem:</strong> We provided a volume name, but not a
 path to mount it to. If the volume already existed, this will mount it

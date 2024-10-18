@@ -205,7 +205,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. Introducing Containers</a>
+        <a href="introduction.html">1. The adventures of Docker and the Space Purple Unicorn Association</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -581,7 +581,7 @@ and the <em>command</em>. The two are concatenated to form the full
 command.</p>
 <p>To understand this, let’s take a more detailed look at the lifecycle
 of a container.</p>
-<figure><img src="fig/docker_life_0.png" class="figure mx-auto d-block"></figure><p>When run, the container enters a startup state in which:</p>
+<figure><img src="fig/docker_life_0.png" alt="A diagram representing the lifecycle of a container" class="figure mx-auto d-block"></figure><p>When run, the container enters a startup state in which:</p>
 <ul><li>The image is downloaded if needed.</li>
 <li>The container is created from an image.</li>
 <li>The container is started.</li>
@@ -614,7 +614,7 @@ script when we run the container.</p>
 <p>We will give another couple of examples of how entrypoints and
 commands are used and affect the container lifecycle in the following
 image.</p>
-<figure><img src="fig/docker_life_2.png" class="figure mx-auto d-block"></figure><p>In Example 1 we have an entrypoint of <code>echo</code> and a command
+<figure><img src="fig/docker_life_2.png" alt="Further details and examples of the lifecycle of a container" class="figure mx-auto d-block"></figure><p>In Example 1 we have an entrypoint of <code>echo</code> and a command
 of <code>hello world</code>. When the container is run, the command will
 be <code>echo Hello World!</code> and the container will print
 <code>Hello World!</code>.</p>
