@@ -38,6 +38,43 @@ Please follow the instructions for your platform below:
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: tab
 
+### Linux
+
+Installation on Linux requires two steps:
+
+- Installation of Docker Engine
+- Enabling non-root access
+
+Docker provides a generic installation option using a [convenience script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script).
+
+Once the Docker Engine has been successfully installed, some [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/) must be taken.
+
+If you prefer not to use the convenience script,
+Docker provides a guide to [installing the Docker Engine](https://docs.docker.com/engine/install/),
+with an overview of supported Linux distributions and pointers to relevant installation information.
+
+**Warning: Extra action if you install Docker using Snap**
+
+[Snap](https://snapcraft.io/) is an app management system for linux, popular on Ubuntu and other systems.
+Docker is available via Snap.
+However, if you have installed it using this service you will need to take the following steps to ensure docker will work properly:  
+`mkdir ~/tmp`  
+`export TMPDIR=~/tmp`
+
+These commands will let you use docker in the current terminal instance,
+but you will have to run "export TEMPDIR=~/tmp" in every new terminal you want to use docker in.
+
+An alternative is to append that command at the end of your bashrc file with the following command:  
+`echo "export TEMPDIR=~/tmp" >> ~/bashrc`
+
+This will configure each new instance of a terminal to run that command at the start of every new terminal instance.
+
+
+### Mac
+
+Please install docker following these [instructions](https://docs.docker.com/desktop/install/mac-install/).
+
+
 ### Windows
 
 Installation on Windows requires two steps:
@@ -75,43 +112,6 @@ You can also find a summary of the steps below (buyer beware!).
   From the top menu, choose "Settings" > "Resources" > "WSL Integration"
   Under "Enable integration with additional distros", select "Ubuntu".
   Apply changes and restart.
-
-
-### Mac
-
-Please install docker following these [instructions](https://docs.docker.com/desktop/install/mac-install/).
-
-
-### Linux
-
-Installation on Linux requires two steps:
-
-- Installation of Docker Engine
-- Enabling non-root access
-
-Docker provides a generic installation option using a [convenience script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script).
-
-Once the Docker Engine has been successfully installed, some [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/) must be taken.
-
-If you prefer not to use the convenience script,
-Docker provides a guide to [installing the Docker Engine](https://docs.docker.com/engine/install/),
-with an overview of supported Linux distributions and pointers to relevant installation information.
-
-**Warning: Extra action if you install Docker using Snap**
-
-[Snap](https://snapcraft.io/) is an app management system for linux, popular on Ubuntu and other systems.
-Docker is available via Snap.
-However, if you have installed it using this service you will need to take the following steps to ensure docker will work properly:  
-`mkdir ~/tmp`  
-`export TMPDIR=~/tmp`
-
-These commands will let you use docker in the current terminal instance,
-but you will have to run "export TEMPDIR=~/tmp" in every new terminal you want to use docker in.
-
-An alternative is to append that command at the end of your bashrc file with the following command:  
-`echo "export TEMPDIR=~/tmp" >> ~/bashrc`
-
-This will configure each new instance of a terminal to run that command at the start of every new terminal instance.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
