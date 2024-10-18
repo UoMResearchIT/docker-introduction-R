@@ -14,29 +14,39 @@ exercises: 0
 - How can I join the community effort to count the number of purple unicorns in space?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Introduction to Docker
+## Docker
 
-![](fig/ship.png){alt="- But it works on my machine! - Then we'll ship your machine!"}
+> **Junior Developer**: `"But it works on my machine!"`
+>
+> **Senior Developer**: `"Then we'll ship your machine!"`
+<!-- ![](fig/ship.png){alt="- But it works on my machine! - Then we'll ship your machine!"} -->
 
 Once upon a time this was just a joke, but now it's a reality!
 
-By using containers, Docker lets you bundle your software,
-its dependencies and its environment into a single package,
-essentially allowing you to ship your machine!
+Docker is a tool that allows you to create, deploy, and run applications using containers.
 
-With some caveats, you can run this container on any machine that has Docker installed,
-and it will work the same way as it did on your machine.
+### Why Containers?
 
-Containers make it very easy to use *microservices*.
-These are small, independent programs that work together, and provide similar advantages to using libraries in your code:
-they make your *software stack* more modular, more powerful, and easier to understand.
+There are two major motivations for using containers:
+
+- **Reliable Software**.
+  A container packages all the necessary libraries with their correct versions.
+  It also ensures the environment remains consistent wherever it runs.
+  Finally, it encapsulates the recipe for running the software correctly.  
+  Essentially, containers allow you to ship your machine!
+
+- **Microservices**.
+  Containers make it very easy to use *microservices*.
+  These are small, independent programs that work together, and provide similar advantages to using libraries in your code:
+  they make your *software stack* more modular, more powerful, and easier to understand.
 
 ### Why Docker?
 
 There are other ways to make containers, but Docker is the most popular and probably the most mature.
 
-On some specialised environments (such as HPC), you might use a different container system.
-However, there are usually ways to convert from Docker to the other system (and less likely in the reverse).
+On some specialised environments (such as HPC), you might use a different container system (i.e. Apptainer).
+However, there are usually ways to convert from Docker to the other system.
+The reverse doesn't always hold.
 
 If you learn only one container system, learn Docker! As it has become the Rosetta Stone of containers.
 
@@ -52,4 +62,4 @@ These tools are distributed via Docker containers and should be easy to use.
 
 If you'd like to join the effort to preserve this keystone species,
 please help us by running your own Space Purple Unicorn Counting service,
-and encouraging your local community to join in the count.
+and encouraging your local community to join in the count!
