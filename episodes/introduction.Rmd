@@ -14,50 +14,24 @@ exercises: 0
 - How can I join the community effort to count the number of purple unicorns in space?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# Introduction to Docker
+## Introduction to Docker
 
-Welcome to the first lesson of Introduction to Docker!
-In this lesson, we will teach you the fundamentals of Docker and how you can use it to make better software, faster.
-
-## What is Docker?
-
-Docker is a tool that allows you to make and run containers.
-
-Containers are easiest to explain by its motivation:
-
-> **Junior Developer**: `"It works on my machine!"`
->
-> **Senior Developer**: `"Then we'll ship your machine!"`
+![](fig/ship.png){alt="- But it works on my machine! - Then we'll ship your machine!"}
 
 Once upon a time this was just a joke, but now it's a reality!
 
-By using containers, Docker lets you bundle your software, its dependencies and its environment into a single package.
-Essentially allowing you to ship your machine!
+By using containers, Docker lets you bundle your software,
+its dependencies and its environment into a single package,
+essentially allowing you to ship your machine!
 
-With some caveats, you can run this container on any machine that has Docker installed, and it will work the same way as it did on your machine.
+With some caveats, you can run this container on any machine that has Docker installed,
+and it will work the same way as it did on your machine.
 
-An interesting thing happens when it becomes this easy to distribute services:
-you start to think of your software as a *stack* of services, rather than a single program.
-This is a powerful way to think about software, and it is one of the reasons that Docker has become so popular.
+Containers make it very easy to use *microservices*.
+These are small, independent programs that work together, and provide similar advantages to using libraries in your code:
+they make your *software stack* more modular, more powerful, and easier to understand.
 
-Let's explore these ideas a bit more.
-
-## Why Containers?
-
-There are two major motivations for using Docker containers:
-
-- **Reliable Software**. A container packages all the necessary libraries with their correct versions.
-  It also ensures the environment remains consistent wherever it runs.
-  Finally, it encapsulates the recipe for running the software correctly.
-  All of this enables your software to be deployed anywhere, and to work the same way everywhere.
-- **Microservices**. Containers make it very easy to use microservices.
-  These are small, independent programs that work together, and provide similar advantages to using libraries in your code:
-  they make your *software stack* more modular, more powerful, and easier to understand.
-
-In short, containers can help us overcome some of the problems that have plagued software development for years,
-and they can help us build better software, faster.
-
-## Why Docker?
+### Why Docker?
 
 There are other ways to make containers, but Docker is the most popular and probably the most mature.
 
@@ -66,7 +40,7 @@ However, there are usually ways to convert from Docker to the other system (and 
 
 If you learn only one container system, learn Docker! As it has become the Rosetta Stone of containers.
 
-# The Space Purple Unicorn Association
+## The Space Purple Unicorn Association
 
 The Space Purple Unicorn Association is a community effort to count the number of purple unicorns in space.
 
