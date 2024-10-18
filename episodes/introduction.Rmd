@@ -23,7 +23,7 @@ In this lesson, we will teach you the fundamentals of Docker and how you can use
 
 Docker is a tool that allows you to make and run containers.
 
-Containers are easiest to expain by its motivation, indeed by an old programming joke!
+Containers are easiest to explain by its motivation:
 
 > **Junior Developer**: `"It works on my machine!"`
 >
@@ -31,11 +31,14 @@ Containers are easiest to expain by its motivation, indeed by an old programming
 
 Once upon a time this was just a joke, but now it's a reality!
 
-By using conainers, Docker lets you bundle your software, its dependencies and its environment into a single package. Essentially allowing you to ship your machine!
+By using containers, Docker lets you bundle your software, its dependencies and its environment into a single package.
+Essentially allowing you to ship your machine!
 
 With some caveats, you can run this container on any machine that has Docker installed, and it will work the same way as it did on your machine.
 
-An interesting thing happens when it becomes this easy to distrubte services: you start to think of your software as a _stack_ of services, rather than a single program. This is a powerful way to think about software, and it is one of the reasons that Docker has become so popular.
+An interesting thing happens when it becomes this easy to distribute services:
+you start to think of your software as a *stack* of services, rather than a single program.
+This is a powerful way to think about software, and it is one of the reasons that Docker has become so popular.
 
 Let's explore these ideas a bit more.
 
@@ -43,46 +46,41 @@ Let's explore these ideas a bit more.
 
 There are two major motivations for using Docker containers:
 
-* Building more reliable software, that can be deployed anywhere
-* Making it easy to use microservices (small, independent programs that work together)
+* Building more reliable software, that can be deployed anywhere.
+* Making it easy to use microservices (small, independent programs that work together).
 
 ### Reliable Software
 
-If you have been developing softare for a while, you have probably come across at least some of the following phraes...
+If you have been developing software for a while, you have probably come across at least some of the following phrases:
 
-> "Oh you just need to..."
+- ***"Oh you just need to..."***  
+  Do a very complicated set of steps to get the software to work?!  
+  Not with Docker - the recipe is built into the container!
+- ***"It works on my machine!"***  
+  Something was different between their machine and yours, and you can't figure out what.
+  With Docker, you can be sure that the libraries are all present and have the same versions.
+- ***"Sorry, can't reproduce that bug"***  
+  The software works differently on different machines, and you can't figure out why.
+  With Docker, you can be sure that the software is running in the same environment.
+- ***"Ok so in production you need to..."***  
+  It is frustrating when development and production processes are different.
+  With Docker, you can be sure that the software will work the same way in both cases.
 
-Do a very complicated set of steps to get the software to work!
-Not with Docker - the recipie is built into the container!
-
-> "It works on my machine!"
-
-Something was different between their machine and yours, and you can't figure out what.
-With Docker, you can be sure that the libraries are all present and have the same versions.
-
-> "Sorry, can't reproduce that bug"
-
-The software works differently on different machines, and you can't figure out why.
-With Docker, you can be sure that the software is running in the same environment.
-
-> "Ok so *in production* you need to..."
-
-It is frustrating when development and production processes are different.
-With Docker, you can be sure that the software will work the same way in both cases.
-
-In short, Docker let's us overcome some of the probelems that have plagued software development for years!
+In short, Docker can help us overcome some of the problems that have plagued software development for years!
 
 ### Microservices
 
 Although something of a jargon term, microservices are a powerful and fun way to build software.
 
-In the same way that using libraries makes your code more modular, more powerful, and easier to understand, using microservices makes your software _stack_ do more cool things, more easily.
+In the same way that using libraries makes your code more modular, more powerful, and easier to understand,
+using microservices makes your *software stack* do more interesting things, more easily.
 
 ## Alternatives to Docker
 
 There are other ways to make containers, but Docker is the most popular and probably the most mature.
 
-On some specialised environments (such as HPC), you might use a different container system, but there are usually ways to convert from Docker to the other system.
+On some specialised environments (such as HPC), you might use a different container system.
+However, there are usually ways to convert from Docker to the other system (and less likely in the reverse).
 
 If you learn only one container system, learn Docker! As it has become the Rosetta Stone of containers.
 
@@ -90,16 +88,12 @@ If you learn only one container system, learn Docker! As it has become the Roset
 
 The Space Purple Unicorn Association is a community effort to count the number of purple unicorns in space.
 
-We are a friendly group of developers, data scientists, and unicorn enthusiasts who are passionate about surveying and conserving the purple unicorn population.
+We are a friendly group of developers, data scientists, and unicorn enthusiasts,
+who are passionate about surveying and conserving the purple unicorn population.
 
-To help you join the effort, we have created a set of tools and resources to help your community count the number of purple unicorns in space. These tools are distributed via Docker containers and should be easy to use.
+To help you join the effort, we have created a set of tools and resources to help your community count the number of purple unicorns in space.
+These tools are distributed via Docker containers and should be easy to use.
 
-If you'd like to join the effort to preserve this keystone species, please help us by running your own Space Purple Unicorn Counting service and encouraging your local community to join in the count.
-
-# Summary
-
-In this lesson, we introduced Docker and the Space Purple Unicorn Association.
-
-Let's set about learning how we can use the SPUA tools to count the number of purple unicorns in space! And learning how to use Docker along the way.
-
-
+If you'd like to join the effort to preserve this keystone species,
+please help us by running your own Space Purple Unicorn Counting service,
+and encouraging your local community to join in the count.
