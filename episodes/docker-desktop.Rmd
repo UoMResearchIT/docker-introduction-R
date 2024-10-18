@@ -120,7 +120,7 @@ Docker will generate a random name for it, which is what we see here.
 Exploring the `Inspect` tab will show us some information, but for now we are more interested in what the `Terminal` and `Stats` tabs have to say.
 They both seem to indicate that we need to *run* or *start* the container.
 
-::: group-tab
+::: tab
 
 ### Logs
 
@@ -197,7 +197,7 @@ and instead of an option to start the container, we now get the option to stop i
 The `Logs` tab is not too different, but the `Stats` tab already shows more information.
 The `Exec` tab also looks more interesting, we get access to a terminal inside the running container.
 
-::: group-tab
+::: tab
 
 ### Logs
 
@@ -384,7 +384,7 @@ Go to the images list, and click on run.
 Nothing seems to have happened at all!
 Not even a single output to the `Logs`, and no way to open a terminal inside Alpine.
 
-::: group-tab
+::: tab
 
 ### Logs
 
