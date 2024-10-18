@@ -303,7 +303,7 @@ Fortunately the SPUC README tells us that we can pass a parameter to the contain
 $ docker stop spuc_container
 $ docker run -d --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/code/config/print.config -v spuc-volume:/code/output -e EXPORT=true ghcr.io/uomresearchit/spuc:latest --units iulu
 $ curl -X PUT localhost:8321/unicorn_spotted?location=earth\&brightness=10
-$ curl localhost:8321/export/
+$ curl localhost:8321/export
 ```
 ```output
 time,brightness,unit

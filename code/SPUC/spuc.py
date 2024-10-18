@@ -35,7 +35,7 @@ if os.path.exists(plugin_dir):
 # Endpoint for exporting the unicorn sightings if the EXPORT environment variable is set to True
 if os.environ.get("EXPORT") == "True":
 
-    @app.route("/export/", methods=["GET"])
+    @app.route("/export", methods=["GET"])
     def chart():
         if not os.path.exists(file_path):
             return {"message": "No unicorn sightings yet!"}

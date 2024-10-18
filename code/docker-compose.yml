@@ -28,7 +28,8 @@ services:
       - ${PWD}/SPUCSVi /spucsvi/
     networks:
       - spuc-net
-
+    depends_on:
+      - spuc
 volumes:
   spuc-output:
     name: spuc-output
