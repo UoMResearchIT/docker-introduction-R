@@ -36,7 +36,7 @@ You should be familiar with the use of:
 Installing Docker on different platforms requires different procedures.
 Please follow the instructions for your platform below:
 
-::::::::::::::::::::::::::::::::::::::::::::::::::: group-tab
+::::::::::::::::::::::::::::::::::::::::::::::::::: tab
 
 ### Windows
 
@@ -56,40 +56,31 @@ This will allow you to use the same commands in this course.
 
 You can also find a summary of the steps below (buyer beware!).
 
-:::::::::::::::::::::::::::::::::::::::: spoiler
+- Open PowerShell as Administrator ("Start menu" > "PowerShell" > right-click > "Run as Administrator")
+  and paste the following commands followed by <kbd>Enter</kbd> to install WSL 2:  
+  `wsl --update`  
+  `wsl --install --distribution Ubuntu`  
+  To ensure that `Ubuntu` is the default subsystem instead of `docker-desktop-*`, you may need to use:  
+  `wsl --set-default Ubuntu`  
+  If you had previously installed WSL1 in Windows 10, upgrade to WSL2 with:  
+  `wsl --set-version Ubuntu 2`
+- Reboot your computer.
+  Ubuntu will set itself up after the reboot.
+  Wait for Ubuntu to ask for a UNIX username and password.
+  After you provide that information and the command prompt appears.
+  The Ubuntu window can be closed.
+- Then continue to [download Docker Desktop](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe) and run the installer.
+  Make sure to select the option to use WSL2 as the backend.
+- Reboot your computer again, and then run Docker Desktop.
+  From the top menu, choose "Settings" > "Resources" > "WSL Integration"
+  Under "Enable integration with additional distros", select "Ubuntu".
+  Apply changes and restart.
 
-#### Summary of installation steps for Windows
-
-1. Open PowerShell as Administrator ("Start menu" > "PowerShell" > right-click > "Run as Administrator")
-   and paste the following commands followed by <kbd>Enter</kbd> to install WSL 2:  
-   `wsl --update`  
-   `wsl --install --distribution Ubuntu`
-
-   To ensure that `Ubuntu` is the default subsystem instead of `docker-desktop-*`, you may need to use:  
-   `wsl --set-default Ubuntu`
-
-   If you had previously installed WSL1 in Windows 10, upgrade to WSL2 with:  
-   `wsl --set-version Ubuntu 2`
-
-2. Reboot your computer.
-   Ubuntu will set itself up after the reboot.
-   Wait for Ubuntu to ask for a UNIX username and password.
-   After you provide that information and the command prompt appears.
-   The Ubuntu window can be closed.
-
-3. Then continue to [download Docker Desktop](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe) and run the installer.
-   Make sure to select the option to use WSL2 as the backend.
-
-4. Reboot your computer again, and then run Docker Desktop.
-   From the top menu, choose "Settings" > "Resources" > "WSL Integration"
-   Under "Enable integration with additional distros", select "Ubuntu".
-   Apply changes and restart.
-
-::::::::::::::::::::::::::::::::::::::::::::::::
 
 ### Mac
 
 Please install docker following these [instructions](https://docs.docker.com/desktop/install/mac-install/).
+
 
 ### Linux
 
@@ -106,9 +97,7 @@ If you prefer not to use the convenience script,
 Docker provides a guide to [installing the Docker Engine](https://docs.docker.com/engine/install/),
 with an overview of supported Linux distributions and pointers to relevant installation information.
 
-:::::::::::::::::::::::::::::::::::::::: spoiler
-
-## Warning: Extra action if you install Docker using Snap
+**Warning: Extra action if you install Docker using Snap**
 
 [Snap](https://snapcraft.io/) is an app management system for linux, popular on Ubuntu and other systems.
 Docker is available via Snap.
@@ -124,9 +113,9 @@ An alternative is to append that command at the end of your bashrc file with the
 
 This will configure each new instance of a terminal to run that command at the start of every new terminal instance.
 
-::::::::::::::::::::::::::::::::::::::::::::::::
-
 :::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 ### Verify the installation
 
