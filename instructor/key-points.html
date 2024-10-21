@@ -619,10 +619,27 @@ image, with docker run.</li>
 <hr class="half-width">
 <ul>
 <li>Docker Compose is a tool for defining and running multi-container
-Docker stacks</li>
-<li>Docker Compose files are written in YAML</li>
-<li>Docker Compose can build images using a Dockerfile</li>
-<li>Docker Compose allows containers to communicate with each other</li>
+stacks in a YAML file. They can also serve as a way of structuring and
+documenting <code>docker run</code> commands for single containers.</li>
+<li>Instructions are saved in a <code>docker-compose.yml</code> file,
+where services, networks, and volumes are defined.</li>
+<li>Each <code>service</code> is a separate container, and it can be
+fully configured from within the file.</li>
+<li>Bind mounts and <code>volumes</code> can be declared for each
+service, and they can be shared between containers too.</li>
+<li>You can define <code>networks</code>, which can be used to connect
+or isolate containers from each other.</li>
+<li>All the services, volumes and networks are started together using
+the <code>docker compose up</code> command.</li>
+<li>They can be stopped using the <code>docker compose down</code>
+command.</li>
+<li>Container images can be built as the services are spun up by using
+the <code>--build</code> flag.</li>
+<li>The order in which services start can be controlled using the
+<code>depends_on</code> key.</li>
+<li>A <code>healthcheck</code> can be defined to verify the status of a
+service. These are commands run from within the container to make sure
+it is <em>ready</em>.</li>
 </ul></section>
 </div>
     </main>
@@ -671,8 +688,8 @@ Docker stacks</li>
   "url": "https://uomresearchit.github.io/docker-introduction/instructor/key-points.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/instructor/key-points.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-10-18",
-  "datePublished": "2024-10-18"
+  "dateModified": "2024-10-21",
+  "datePublished": "2024-10-21"
 }
 
   </script><script>

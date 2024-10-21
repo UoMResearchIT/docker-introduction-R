@@ -278,14 +278,10 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#making-a-docker-compose-file">Making a Docker Compose file</a></li>
-<li><a href="#adding-more-configuration">Adding more configuration</a></li>
-<li><a href="#setting-the-units">Setting the units</a></li>
-<li><a href="#enabling-the-plugin">Enabling the plugin</a></li>
-<li><a href="#building-our-own-spuc-container">Building our own SPUC container</a></li>
-<li><a href="#adding-spucsvi">Adding SPUCSVi</a></li>
-<li><a href="#adding-spucsvi-to-our-docker-compose-file">Adding SPUCSVi to our Docker Compose file</a></li>
-<li><a href="#summary">Summary</a></li>
+        <ul><li><a href="#running-a-container">Running a container</a></li>
+<li><a href="#configuring-the-container">Configuring the container</a></li>
+<li><a href="#building-containers-in-docker-compose">Building containers in Docker Compose</a></li>
+<li><a href="#connecting-multiple-services">Connecting multiple services</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -350,7 +346,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using Docker Compose</h1>
-        <p>Last updated on 2024-10-18 |
+        <p>Last updated on 2024-10-21 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-compose.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -369,9 +365,11 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>What is Docker Compose? And why would I use it?</li>
+<ul><li>What is Docker Compose?</li>
+<li>Why and when would I use it?</li>
 <li>How can I translate my <code>docker run</code> commands into a
 <code>docker-compose.yml</code> file?</li>
+<li>How can I make containers communicate with each other?</li>
 </ul></div>
 </div>
 </div>
@@ -379,80 +377,72 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Learn how to run multiple containers - easily!</li>
-<li>Clean up our run command for once and for all</li>
+<ul><li>Learn how to run multiple containers together.</li>
+<li>Clean up our run command for once and for all.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<p>On to our final bit of learning from the SPUC DockerHub pages - the
-SPUC Super Visualiser! The SPUC Super Visualiser is a web-based tool
-that allows you to visualise the output of the SPUC tool. Handily - it’s
-also available as a Docker container, published on DockerHub under the
-SPUC organisation.</p>
-<p>Now that you have seen several <code>docker run</code> commands. You
-can well imagine how cumbersome running multiple containers can get.</p>
+<p>We’ve manage to come a long way in making the SPUC container work
+better for us, but it still lacks a little something. If we want to open
+this service to our local community, we can hardly expect them to hit
+the API with a curl command!</p>
+<p>Luckily, the SPUA released the SPUC Super Visualiser (SPUCSVi)! The
+SPUCSVi is a web-based tool that allows you to register unicorn
+sightings, and also see the record of unicorn sightings. Handily, the
+SPUA also made it available as a Docker container.</p>
+<p>Now that you have seen several <code>docker run</code> commands, you
+can well imagine how cumbersome running multiple containers can get.
+Even more so if we want the different containers to play well with each
+other.</p>
 <p>Enter: Docker Compose!</p>
 <p>Docker Compose is a tool for defining and running multi-container
-Docker applications. With Compose, you use a YAML file to configure your
+applications. With Compose, you use a YAML file to configure your
 application’s services. Then, with a single command, you create and
 start all the services from your configuration.</p>
 <p>Let’s take a look at Docker Compose and see how it can help us run
-SPUCSVi.</p>
-<section><h2 class="section-heading" id="making-a-docker-compose-file">Making a Docker Compose file<a class="anchor" aria-label="anchor" href="#making-a-docker-compose-file"></a></h2>
-<hr class="half-width"><p>Docker Compose files can be thought of as YAML formatting
-formalisations of <code>docker run</code> commands.</p>
-<p>Let’s recall our <code>docker run</code> command for the regular SPUC
-container (rather than the one we made ourselves - we’ll get to that in
-a bit):</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/code/config/print.config <span class="at">-v</span> spuc-volume:/code/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true ghcr.io/uomresearchit/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
-</div>
-<p>We can start translate this into a Docker Compose file bit by
-bit!</p>
+SPUC and SPUCSVi.</p>
+<section><h2 class="section-heading" id="running-a-container">Running a container<a class="anchor" aria-label="anchor" href="#running-a-container"></a></h2>
+<hr class="half-width"><p>As an initial step, we will learn how to run a container using Docker
+Compose.</p>
 <p>The first thing we need to do is create a
 <code>docker-compose.yml</code> file. All
 <code>docker-compose.yml</code> files start with <code>services:</code>.
-This is the root element undre which we define the services we want to
+This is the root element under which we define the services we want to
 run.</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span></code></pre>
 </div>
 <p>Next, let’s add the service for the SPUC container. We’ll call it
 <code>spuc</code> and we will tell it what <code>image</code> to
 use.</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ghcr.io/uomresearchit/spuc:latest</span></span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span><span class="co">                            # The name of the service</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span><span class="co">      # The image to use</span></span></code></pre>
 </div>
-<p>This is actually enough for us to run the container!</p>
-<p>But we won’t use <code>docker run</code> any more. How we use the
-base command <code>docker compose</code> to run the services with the
-command <code>up</code> signalling that we want to bring services up
-(i.e. start them).</p>
-<div class="codewrapper sourceCode" id="cb4">
+<p>This is actually enough for us to run the container! But we won’t use
+<code>docker run</code> any more.</p>
+<p>Instead, we will use the base command <code>docker compose</code>. To
+run the services, we add the command <code>up</code>, signalling that we
+want to bring services up (i.e. start them).</p>
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> docker compose up</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">docker</span> compose up</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[+] Running 2/0
- ✔ Network docker-intro-testing_default   Created                                                                         0.0s
- ✔ Container docker-intro-testing-spuc-1  Created                                                                         0.0s
+ ✔ Network docker_intro_default   Created                           0.1s
+ ✔ Container docker_intro-spuc-1  Created                           0.0s
 Attaching to spuc-1
-spuc-1  |
-spuc-1  | :::: Importing plugins ::::
-spuc-1  |
 spuc-1  |
 spuc-1  |             \
 spuc-1  |              \
@@ -476,25 +466,43 @@ spuc-1  |                        \\  (
 spuc-1  |                         &gt;\  &gt;
 spuc-1  |                     ,.-' &gt;.'
 spuc-1  |                    &lt;.'_.''
-spuc-1  |                      &lt;'</code></pre>
+spuc-1  |                      &lt;'
+spuc-1  |
+spuc-1  |
+spuc-1  | Welcome to the Space Purple Unicorn Counter!
+spuc-1  |
+spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
+spuc-1  |
+spuc-1  | :: Try recording a unicorn sighting with:
+spuc-1  |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+spuc-1  |
+spuc-1  | :: No plugins detected
+spuc-1  |</code></pre>
 </div>
 <p>So we have our container running! With a couple of interesting bits
-of output to note:</p>
-<ul><li>A container was created named <code>spuc-1</code>
-</li>
-<li>A <code>network</code> was created for the container - we will dig
-into what this means later!</li>
-<li>The tool is running in the foreground, so we can see the output of
-the tool</li>
-</ul><p>We can stop the container by pressing <code>Ctrl+C</code> in the
+of output to note: - A container was created named <code>spuc-1</code> -
+A <code>network</code> was created for the container - we will dig into
+what this means later! - The tool is running in the foreground, so we
+can see the output of the tool</p>
+<p>We can stop the container by pressing <code>[Ctrl+C]</code> in the
 terminal.</p>
-</section><section><h2 class="section-heading" id="adding-more-configuration">Adding more configuration<a class="anchor" aria-label="anchor" href="#adding-more-configuration"></a></h2>
-<hr class="half-width"><p>We did a lot of learning in our previous experiments! Breaking down
-our run command further, we can see that we have a few more options that
-we can add to our <code>docker-compose.yml</code> file.</p>
-<p>We’ll provide a quick overview here and then dive into how to add
-them to our <code>docker-compose.yml</code> file.</p>
-<table class="table"><colgroup><col width="31%"><col width="68%"></colgroup><thead><tr class="header"><th>Flag</th>
+</section><section><h2 class="section-heading" id="configuring-the-container">Configuring the container<a class="anchor" aria-label="anchor" href="#configuring-the-container"></a></h2>
+<hr class="half-width"><p>We have managed to run our container, but we are still a way off from
+reproducing our last <code>run</code> command. It’s ok, we need to add
+more configuration to our Docker Compose file.</p>
+<p>Let’s recall our <code>docker run</code> command for the regular SPUC
+container (rather than the one we made ourselves - we’ll get to that in
+a bit):</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
+</div>
+<p>There are a lot of flags here! Each of these flags has a
+corresponding key in Docker Compose. Lets order all the elements we want
+in a table, so we can see what we need to add to our
+<code>docker-compose.yml</code> file.</p>
+<table class="table"><colgroup><col width="45%"><col width="54%"></colgroup><thead><tr class="header"><th>Flag</th>
 <th>Description</th>
 </tr></thead><tbody><tr class="odd"><td><code>-d</code></td>
 <td>Run the container in the background</td>
@@ -505,25 +513,26 @@ them to our <code>docker-compose.yml</code> file.</p>
 </td>
 </tr><tr class="even"><td><code>-p 8321:8321</code></td>
 <td>Map port 8321 on the host to port 8321 in the container</td>
-</tr><tr class="odd"><td><code>-v $PWD/print.config:/code/config/print.config</code></td>
-<td>Mount the <code>print.config</code> file in the current directory to
-<code>/code/config/print.config</code> in the container</td>
-</tr><tr class="even"><td><code>-v spuc-volume:/code/output</code></td>
-<td>Persis the <code>/code/output</code> directory in the container to
-the <code>spuc-volume</code> volume</td>
-</tr><tr class="odd"><td><code>-v $PWD/stats.py:/spuc/plugins/stats.py</code></td>
-<td>Enable the <code>stats.py</code> plugin by mounting it to
-<code>/spuc/plugins/stats.py</code> in the container</td>
+</tr><tr class="odd"><td><code>-v ./print.config:/spuc/config/print.config</code></td>
+<td>Bind mount the <code>./print.config</code> file into the
+container</td>
+</tr><tr class="even"><td><code>-v spuc-volume:/spuc/output</code></td>
+<td>Persist the <code>/spuc/output</code> directory in a volume</td>
+</tr><tr class="odd"><td><code>-v ./stats.py:/spuc/plugins/stats.py</code></td>
+<td>Bind mount the <code>./stats.py</code> plugin into the
+container</td>
 </tr><tr class="even"><td><code>-e EXPORT=true</code></td>
 <td>Set the environment variable <code>EXPORT</code> to
 <code>true</code>
 </td>
 </tr><tr class="odd"><td><code>--units iulu</code></td>
 <td>Set the units to Imperial Unicorn Length Units</td>
-</tr></tbody></table><div class="section level3">
+</tr></tbody></table><p>We can now start translate this into a Docker Compose file bit by
+bit!</p>
+<div class="section level3">
 <h3 id="running-in-the-background">Running in the background<a class="anchor" aria-label="anchor" href="#running-in-the-background"></a></h3>
 <p>To run a docker compose stack in the background, we can use the
-<code>-d</code> (for detatch) flag when calling
+<code>-d</code> (for detach) flag when calling
 <code>docker compose up</code>.</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -534,20 +543,52 @@ the <code>spuc-volume</code> volume</td>
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[+] Running 1/1
- ✔ Container docker-intro-testing-spuc-1  Started                                                                         0.2s</code></pre>
+ ✔ Container docker-intro-testing-spuc-1  Started                           0.2s</code></pre>
 </div>
 <p>Of course, this means we can no longer see the logs! But we can still
 access them using the <code>logs</code> command.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">$</span> docker compose logs</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">docker</span> compose logs</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>spuc-1  |
-spuc-1  | :::: Importing plugins ::::
+spuc-1  |             \
+spuc-1  |              \
+spuc-1  |               \\
+spuc-1  |                \\\
+spuc-1  |                 &gt;\/7
+spuc-1  |             _.-(º   \
+spuc-1  |            (=___._/` \            ____  ____  _    _  ____
+spuc-1  |                 )  \ |\          / ___||  _ \| |  | |/ ___|
+spuc-1  |                /   / ||\         \___ \| |_) | |  | | |
+spuc-1  |               /    &gt; /\\\         ___) |  __/| |__| | |___
+spuc-1  |              j    &lt; _\           |____/|_|    \____/ \____|
+spuc-1  |          _.-' :      ``.
+spuc-1  |          \ r=._\        `.       Space Purple Unicorn Counter
+spuc-1  |         &lt;`\\_  \         .`-.
+spuc-1  |          \ r-7  `-. ._  ' .  `\
+spuc-1  |           \`,      `-.`7  7)   )
+spuc-1  |            \/         \|  \'  / `-._
+spuc-1  |                       ||    .'
+spuc-1  |                        \\  (
+spuc-1  |                         &gt;\  &gt;
+spuc-1  |                     ,.-' &gt;.'
+spuc-1  |                    &lt;.'_.''
+spuc-1  |                      &lt;'
+spuc-1  |
+spuc-1  |
+spuc-1  | Welcome to the Space Purple Unicorn Counter!
+spuc-1  |
+spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
+spuc-1  |
+spuc-1  | :: Try recording a unicorn sighting with:
+spuc-1  |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+spuc-1  |
+spuc-1  | :: No plugins detected
 spuc-1  |
 spuc-1  |
 spuc-1  |             \
@@ -579,111 +620,97 @@ spuc-1  | Welcome to the Space Purple Unicorn Counter!
 spuc-1  |
 spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 spuc-1  |
-spuc-1  | :::: Plugins loaded ::::
-spuc-1  | []
-spuc-1  |
 spuc-1  | :: Try recording a unicorn sighting with:
 spuc-1  |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
 spuc-1  |
-spuc-1  |
-spuc-1  | :::: Importing plugins ::::
-spuc-1  |
-spuc-1  |
-spuc-1  |             \
-spuc-1  |              \
-spuc-1  |               \\
-spuc-1  |                \\\
-spuc-1  |                 &gt;\/7
-spuc-1  |             _.-(º   \
-spuc-1  |            (=___._/` \            ____  ____  _    _  ____
-spuc-1  |                 )  \ |\          / ___||  _ \| |  | |/ ___|
-spuc-1  |                /   / ||\         \___ \| |_) | |  | | |
-spuc-1  |               /    &gt; /\\\         ___) |  __/| |__| | |___
-spuc-1  |              j    &lt; _\           |____/|_|    \____/ \____|
-spuc-1  |          _.-' :      ``.
-spuc-1  |          \ r=._\        `.       Space Purple Unicorn Counter
-spuc-1  |         &lt;`\\_  \         .`-.
-spuc-1  |          \ r-7  `-. ._  ' .  `\
-spuc-1  |           \`,      `-.`7  7)   )
-spuc-1  |            \/         \|  \'  / `-._
-spuc-1  |                       ||    .'
-spuc-1  |                        \\  (
-spuc-1  |                         &gt;\  &gt;
-spuc-1  |                     ,.-' &gt;.'
-spuc-1  |                    &lt;.'_.''
-spuc-1  |                      &lt;'
-spuc-1  |
-spuc-1  |
-spuc-1  | Welcome to the Space Purple Unicorn Counter!
-spuc-1  |
-spuc-1  | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
-spuc-1  |
-spuc-1  | :::: Plugins loaded ::::
-spuc-1  | []
-spuc-1  |
-spuc-1  | :: Try recording a unicorn sighting with:
-spuc-1  |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+spuc-1  | :: No plugins detected
 spuc-1  |</code></pre>
 </div>
 <p>Now… something a bit funny is happening here… why are we seeing the
 output twice?</p>
+<p>We’ve actually started the same container twice! We only
+<code>stop</code>ped the container when we pressed
+<code>[Ctrl+C]</code>, and didn’t remove it.</p>
 </div>
 <div class="section level3">
 <h3 id="removing-the-container-when-it-stops">Removing the container when it stops<a class="anchor" aria-label="anchor" href="#removing-the-container-when-it-stops"></a></h3>
-<p>This is because we only <code>stop</code>ped the container when we
-pressed <code>Ctrl+C</code> and didn’t remove it. We can remove the
-container with the <code>down</code> command.</p>
+<p>We can stop and remove the container with the <code>down</code>
+command.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">$</span> docker compose down</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">docker</span> compose down</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[+] Running 1/1
- ✔ Container docker-intro-testing-spuc-1  Removed                                                                         10.2s
- ✔ Network docker-intro-testing_default   Removed                                                                         0.1s    </code></pre>
+<pre class="output" tabindex="0"><code>[+] Running 2/2
+ ✔ Container docker_intro-spuc-1  Removed                           10.1s
+ ✔ Network docker_intro_default   Removed                            0.2s</code></pre>
 </div>
-<p>In practice, you only need to use <code>down</code> if you need to
-remove the container. If you just want to stop it, you can use
-<code>Ctrl+C</code> like we did before.</p>
-</div>
-<div class="section level3">
-<h3 id="adding-configuration">Adding configuration<a class="anchor" aria-label="anchor" href="#adding-configuration"></a></h3>
-<p>Now we have got the basics of running a container in the background
-and removing it when we are done. Let’s add some more configuration to
-our <code>docker-compose.yml</code> file. Feel free to <code>up</code>
-the stack between changes to see how they affect the container.</p>
+<p>In practice, you only <em>need</em> to use <code>down</code> if you
+<em>need</em> to remove the container. If you just want to stop it, you
+can use <code>[Ctrl+C]</code> like we did before.</p>
 </div>
 <div class="section level3">
 <h3 id="naming-the-container">Naming the container<a class="anchor" aria-label="anchor" href="#naming-the-container"></a></h3>
-<p><code>spuc-1</code> is a bit of a boring name for a container. We can
-name the container using the <code>container_name</code> key.</p>
+<p>The next item in our list is the name of the container. We can name
+the container using the <code>container_name</code> key.</p>
 <div class="codewrapper sourceCode" id="cb12">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>services:</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="va">+    container_name: spuc_container</span></span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span><span class="co">            # The name of the container</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[+] Running 2/0
- ✔ Network docker-intro-testing_default  Created                                                                          0.0s
- ✔ Container spuc_container              Created                                                                          0.0s</code></pre>
+ ✔ Network docker-intro-testing_default  Created                           0.0s
+ ✔ Container spuc_container              Created                           0.0s</code></pre>
+</div>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Updating the compose file
+  </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
+<p>You do not necessarily need to <code>down</code> your containers to
+update the configuration, Docker Compose can be <em>smart</em> like
+that.</p>
+<p>You can update the <code>docker-compose.yml</code> file in your text
+editor and then run <code>docker compose up -d</code> to see the changes
+take effect.</p>
+<p><strong>Warning</strong>: This is not always foolproof! Some changes
+will require a rebuild of the container. It is also worth noting that
+Docker Compose does not <em>save</em> the status with which you started
+your services. When you do a <code>down</code>, it will look at the
+<em>current</em> file, and stop the services as described in that
+file.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="exporting-a-port">Exporting a port<a class="anchor" aria-label="anchor" href="#exporting-a-port"></a></h3>
 <p>Currently, if we attempt to record a sighting of a unicorn, we will
 get a connection refused error.</p>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=moon\&amp;brightness=10</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=asteroid\&amp;brightness=242</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -694,30 +721,35 @@ get a connection refused error.</p>
 host. We can do this using the <code>ports</code> key using the notation
 <code>host_port:container_port</code>.</p>
 <p>It’s worth noting the <code>ports</code> key is a list, so we can map
-multiple ports if we need to and that the host and container ports don’t
-have to be the same!</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+multiple ports if we need to, and that the host and container ports
+don’t have to be the same!</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>services:</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="va">+    ports:</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="va">+      - 8321:8321</span></span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span><span class="co">                          # Starts the list of ports to map</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span><span class="co">                   # Maps port 8321 on the host to port 8321 in the container</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[+] Running 2/0
- ✔ Network docker-intro-testing_default  Created                                                                          0.0s
- ✔ Container spuc_container              Created                                                                          0.0s</code></pre>
+ ✔ Network docker-intro-testing_default  Created                           0.0s
+ ✔ Container spuc_container              Created                           0.0s</code></pre>
 </div>
 <p>Now we can record a unicorn sighting!</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=moon\&amp;brightness=10</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=asteroid\&amp;brightness=242</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -726,53 +758,105 @@ have to be the same!</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="bind-mounting-a-file">Bind mounting a file<a class="anchor" aria-label="anchor" href="#bind-mounting-a-file"></a></h3>
+<h3 id="bind-mounts">Bind mounts<a class="anchor" aria-label="anchor" href="#bind-mounts"></a></h3>
 <p>As before, we want to make sure that our print configuration is being
-used by SPUC.</p>
-<p>We will use a bind mount for this - mapping a file from the host to
-the container.</p>
+used by SPUC. We will use a bind mount for this - mapping a file from
+the host to the container.</p>
 <p>As with the CLI, this is (confusingly) done using the
 <code>volumes</code> key.</p>
-<div class="codewrapper sourceCode" id="cb20">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>services:</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>    ports:</span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="va">+    volumes:</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="va">+      - $PWD/print.config:/code/config/print.config</span></span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span><span class="co">                                        # Starts the list of volumes/bind mounts</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span><span class="co">    # Bind mounts the print.config file</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[+] Running 2/2
+ ✔ Network docker_intro_default  Created                           0.1s
+ ✔ Container spuc_container      Started                           0.2s</code></pre>
 </div>
 <p>Now, if you record some sightings, you should see them formatted
 according to the configuration in <code>print.config</code>.</p>
 <p>As before, whether a bind mount or volume is performed is based on
-whether the path on the left of the colon exists on the host. If it
-does, it’s a bind mount. If it doesn’t, it’s a volume.</p>
+whether the argument on the left of the colon is a <em>name</em> or a
+<em>path</em>. If it is a <em>path</em> (i.e. starts with <code>/</code>
+or <code>./</code>), it generates a bind mount. Otherwise, it generates
+a volume.</p>
 </div>
 <div class="section level3">
-<h3 id="mounting-a-volume">Mounting a volume<a class="anchor" aria-label="anchor" href="#mounting-a-volume"></a></h3>
-<p>We are still missing the volume we used to store our Unicorn
-sightings persistently. We can add this using the <code>volumes</code>
-key.</p>
-<p>This time with just the volume name on the left of the colon and
-adding a declaration for the volume at the bottom of the file.</p>
-<div class="codewrapper sourceCode" id="cb21">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 id="volumes">Volumes<a class="anchor" aria-label="anchor" href="#volumes"></a></h3>
+<p>Let’s add a volume to persist the unicorn sightings between runs of
+the container.</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>services:</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>    ports:</span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>    volumes:</span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="va">+      - spuc-volume:/code/output</span></span>
-<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="va">+ volumes:</span></span>
-<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="va">+   spuc-volume:</span></span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span><span class="co">                  # Mounts the volume named spuc-volume</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>service "spuc" refers to undefined volume spuc-volume: invalid compose project</code></pre>
+</div>
+<p>Oops! We forgot to declare the volume! Although we added the
+instruction to use the volume, we didn’t tell Docker Compose that we
+needed that volume.</p>
+<p>We can do this by adding a <code>volumes</code> key to the file. The
+volumes are separate from <em>services</em>, so they are declared at the
+same level. To declare a named volume, we specify its name and end with
+a <code>:</code>. We will do this at the end of the file.</p>
+<div class="codewrapper sourceCode" id="cb28">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span><span class="co">              # Mounts the volume named spuc-volume</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span><span class="co">                                      # Starts section for declaring volumes</span></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span><span class="co">                                # Declares a volume named spuc-volume</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb29">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[+] Running 2/2
+ ✔ Volume "docker_intro_spuc-volume"  Created                            0.0s
+ ✔ Container spuc_container           Started                           10.3s</code></pre>
 </div>
 <p>Now, if you record some sightings and then stop and start the
 container, you should see that the sightings are still there!</p>
@@ -781,218 +865,301 @@ ability to remove volumes when the container is removed.</p>
 <p>We can do this using the <code>-v</code> flag with the
 <code>down</code> command. Which tells Docker to remove any volumes
 named in the <code>volumes</code> key.</p>
-<p>You can cofirm this by running <code>docker volume ls</code> before
+<p>You can confirm this by running <code>docker volume ls</code> before
 and after running <code>down</code>.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="ex">$</span> docker volume ls</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="ex">$</span> docker compose down <span class="at">-v</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="ex">$</span> docker volume ls</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="ex">$</span> docker volume ls</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="ex">$</span> docker compose down <span class="at">-v</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="ex">$</span> docker volume ls</span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="setting-an-environment-variable">Setting an environment variable<a class="anchor" aria-label="anchor" href="#setting-an-environment-variable"></a></h3>
-<p>Finally, let’s set the <code>EXPORT</code> environment variable to
-<code>true</code> as we did in our <code>docker run</code> command.</p>
-<p>This is done using the <code>environment</code> key.</p>
-<div class="codewrapper sourceCode" id="cb23">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<p>Next, we need to set the <code>EXPORT</code> environment variable to
+<code>true</code>. This is done using the <code>environment</code>
+key.</p>
+<div class="codewrapper sourceCode" id="cb32">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>services:</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    ports:</span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>    volumes:</span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="va">+    environment:</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="va">+      - EXPORT=true</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a>volumes:</span>
-<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span><span class="co">                      # Starts list of environment variables to set</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span><span class="co">                   # Sets the EXPORT environment variable to true</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb33">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="ex">docker</span> compose logs</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[...]
+spuc_container  |
 spuc_container  | :::: Unicorn sightings export activated! ::::
 spuc_container  | :: Try downloading the unicorn sightings record with:
-spuc_container  |     curl localhost:8321/export</code></pre>
+spuc_container  |     curl localhost:8321/export
+spuc_container  |</code></pre>
 </div>
 <p>We can see that the environment variable has been set by the output
 of the tool and the export functionality is now available.</p>
 </div>
-</section><section><h2 class="section-heading" id="setting-the-units">Setting the units<a class="anchor" aria-label="anchor" href="#setting-the-units"></a></h2>
-<hr class="half-width"><p>We can also set the units using the <code>command</code> key. This is
-the same as the <code>--units</code> flag in the <code>docker run</code>
-command.</p>
-<div class="codewrapper sourceCode" id="cb25">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="section level3">
+<h3 id="overriding-the-default-command">Overriding the default command<a class="anchor" aria-label="anchor" href="#overriding-the-default-command"></a></h3>
+<p>Finally, lets set the units by overriding the command, as we did
+before. For this, we use the <code>command</code> key.</p>
+<div class="codewrapper sourceCode" id="cb35">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>services:</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    ports:</span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>    volumes:</span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>    environment:</span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="va">+    command: ["--units", "iulu"]</span></span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a></span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>volumes:</span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span><span class="co">          # Overrides the default command</span></span>
+<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb36">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="ex">docker</span> compose logs</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[...]
-spuc_container  | :::: Units set to Imperial Unicorn Length Units [iulu] ::::</code></pre>
+spuc_container  |
+spuc_container  | :::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
+spuc_container  |
+[...]</code></pre>
 </div>
-</section><section><h2 class="section-heading" id="enabling-the-plugin">Enabling the plugin<a class="anchor" aria-label="anchor" href="#enabling-the-plugin"></a></h2>
-<hr class="half-width"><p>We’re nearly back to where we were with our <code>docker run</code>
+</div>
+<div class="section level3">
+<h3 id="enabling-the-plugin">Enabling the plugin<a class="anchor" aria-label="anchor" href="#enabling-the-plugin"></a></h3>
+<p>We’re nearly back to where we were with our <code>docker run</code>
 command! The only thing we are missing is enabling the plugin.</p>
-<p>Shouldn’t be too bad - we can just mount the plugin file to the
-correct directory in the container.</p>
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<p>We used a bind mount before to put the plugin file in the container,
+so lets try again:</p>
+<div class="codewrapper sourceCode" id="cb38">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>services:</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spuc:latest</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    ports:</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>    volumes:</span>
-<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
-<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>    environment:</span>
-<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
-<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a>volumes:</span>
-<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spuc:latest</span></span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span><span class="co">        # Mounts the stats.py plugin</span></span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="ex">$</span> docker compose up</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>Attaching to spuc_container
-spuc_container  | Traceback (most recent call last):
-spuc_container  |   File "/spuc/spuc.py", line 32, in &lt;module&gt;
+<pre class="output" tabindex="0"><code>[+] Running 1/1
+ ✔ Container spuc_container  Started                            10.3s</code></pre>
+</div>
+<p>Seems to have worked, lets look at the logs to see if the plugin was
+loaded.</p>
+<div class="codewrapper sourceCode" id="cb41">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="ex">docker</span> compose logs</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>spuc_container  | Traceback (most recent call last):
+spuc_container  |   File "/spuc/spuc.py", line 31, in &lt;module&gt;
 spuc_container  |     __import__(f"{plugin_dir}.{plugin[:-3]}")
 spuc_container  |   File "/spuc/plugins/stats.py", line 4, in &lt;module&gt;
-spuc_container  |
-spuc_container  | :::: Importing plugins ::::
-spuc_container  |
 spuc_container  |     import pandas as pd
-spuc_container  | ModuleNotFoundError: No module named 'pandas'
-spuc_container exited with code 1</code></pre>
+spuc_container  | ModuleNotFoundError: No module named 'pandas'</code></pre>
 </div>
-<p>Oh no! We’ve hit an error! It looks like the <code>pandas</code>
-library isn’t installed in the container - which was the whole reason
-that we made our own container in the first place!</p>
+<p>Oh no! We’ve hit an error! The <code>pandas</code> library isn’t
+installed in the container - which was the whole reason that we made our
+own container in the first place!</p>
 <p>Let’s go back to that.</p>
-</section><section><h2 class="section-heading" id="building-our-own-spuc-container">Building our own SPUC container<a class="anchor" aria-label="anchor" href="#building-our-own-spuc-container"></a></h2>
-<hr class="half-width"><p>But how do you build your own container using Docker Compose?</p>
-<p>Just like before we can use our Dockerfile to build the container. We
-can use the <code>build</code> key to tell Docker Compose to build the
-container using the Dockerfile in the current directory.</p>
-<p>This time instead of using the <code>image</code> key, we use the
-<code>build</code> key.</p>
-<div class="codewrapper sourceCode" id="cb30">
-<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="kw">-</span><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ghcr.io/uomresearchit/spuc:latest</span></span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="fu">+    build</span><span class="kw">:</span></span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="fu">+      context</span><span class="kw">:</span><span class="at"> .</span></span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="fu">+      dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> $PWD/print.config:/code/config/print.config</span></span>
-<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/code/output</span></span>
-<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> $PWD/stats.py:/spuc/plugins/stats.py</span></span>
-<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
-<span id="cb30-15"><a href="#cb30-15" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
-<span id="cb30-16"><a href="#cb30-16" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span></code></pre>
 </div>
-<p>So what is this doing? It is saying to build the container using the
-Dockerfile in the current directory. The <code>context</code> key is the
-directory in which the Dockerfile is located (a <code>.</code> means the
-current directory). The <code>dockerfile</code> key is the name of the
-Dockerfile.</p>
+</section><section><h2 class="section-heading" id="building-containers-in-docker-compose">Building containers in Docker Compose<a class="anchor" aria-label="anchor" href="#building-containers-in-docker-compose"></a></h2>
+<hr class="half-width"><p>We could use the tag we used when we built the container to use that
+image. However, this would mean that if we want to adjust our locally
+built container, we would have to rebuild it separately.</p>
+<p>Instead, we can use the <code>build</code> key to tell Docker Compose
+to build the container if needed.</p>
+<p>To do that, we use the <code>build</code> key instead of the
+<code>image</code> key:</p>
+<div class="codewrapper sourceCode" id="cb43">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="co">  # image: spuacv/spuc:latest</span></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span><span class="co">                        # Instead of using the 'image' key, we use the 'build' key</span></span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span><span class="co">                  # Sets the build context (the directory in which the Dockerfile is located)</span></span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span><span class="co">      # Sets the name of the Dockerfile</span></span>
+<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb43-12"><a href="#cb43-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb43-13"><a href="#cb43-13" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb43-14"><a href="#cb43-14" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb43-15"><a href="#cb43-15" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb43-16"><a href="#cb43-16" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span></code></pre>
+</div>
+<p>This tells docker compose to look for the Dockerfile in the current
+directory. If needed, it will then build the container and tag it with
+the current directory and service names.</p>
 <p>Now, we have to be a little careful with our up command! If we run
-up, Docker Compose will default to checking if the image exists and if
-it does, it will use that image.</p>
-<p>This is ok… unless we have made changes to the Dockerfile!</p>
-<p>To ensure that the image is built, we can run:</p>
-<div class="codewrapper sourceCode" id="cb31">
+<code>up</code>, Docker Compose will default to checking if the image
+exists and if it does, it will use that image. This is ok… unless we
+have made changes to the Dockerfile!</p>
+<p>To ensure that the image is built, we can run
+<code>docker compose build</code>. This will build (all) the image(s)
+specified inside our <code>docker-compose.yml</code>. After building, we
+use the usual <code>up</code> command.</p>
+<p>Alternatively, we can add the <code>--build</code> flag to the
+<code>up</code> command, which results in Docker building the image
+right before starting the container. This will rebuild the image every
+time you run it, but use cached layers if they exist.</p>
+<p>Let’s start our services using that flag, and verify that the plugin
+is loaded.</p>
+<div class="codewrapper sourceCode" id="cb44">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="ex">$</span> docker compose build</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">--build</span> <span class="at">-d</span></span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="ex">docker</span> compose logs</span></code></pre>
 </div>
-<p>Followed by our usual <code>up</code> command.</p>
-<p>You can also use the <code>--build</code> flag with the
-<code>up</code> command to build the image before starting the
-container.</p>
-<div class="codewrapper sourceCode" id="cb32">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="ex">$</span> docker compose up <span class="at">--build</span></span></code></pre>
-</div>
-<p>But this can be wasteful as it will rebuild the image every time you
-run the up - even if the image hasn’t changed.</p>
-<p>However you choose to manage this, you should now have a container
-running with the stats plugin enabled!</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>spuc_container  | :::: Plugins loaded ::::
-spuc_container  | ['stats.py']</code></pre>
+<pre class="output" tabindex="0"><code>[+] Building 9.2s (10/10) FINISHED                                                        docker:default
+ =&gt; [spuc internal] load build definition from Dockerfile                                           0.0s
+ =&gt; =&gt; transferring dockerfile: 250B                                                                0.0s
+ =&gt; [spuc internal] load metadata for docker.io/spuacv/spuc:latest                                  0.0s
+ =&gt; [spuc internal] load .dockerignore                                                              0.0s
+ =&gt; =&gt; transferring context: 2B                                                                     0.0s
+ =&gt; [spuc 1/4] FROM docker.io/spuacv/spuc:latest                                                    0.1s
+ =&gt; [spuc internal] load build context                                                              0.0s
+ =&gt; =&gt; transferring context: 546B                                                                   0.0s
+ =&gt; [spuc 2/4] RUN pip install pandas                                                               8.5s
+ =&gt; [spuc 3/4] COPY stats.py /spuc/plugins/stats.py                                                 0.0s
+ =&gt; [spuc 4/4] COPY print.config /spuc/config/print.config                                          0.0s
+ =&gt; [spuc] exporting to image                                                                       0.5s
+ =&gt; =&gt; exporting layers                                                                             0.5s
+ =&gt; =&gt; writing image sha256:b17d7f75ac398b083476cc3fda502875b1d1355b59ad2bdc9d0526f202be9c05        0.0s
+ =&gt; =&gt; naming to docker.io/library/docker_intro-spuc                                                0.0s
+ =&gt; [spuc] resolving provenance for metadata file                                                   0.0s
+[+] Running 1/1
+ ✔ Container spuc_container  Started                                                                0.3s
+[...]
+spuc_container  |
+spuc_container  | :::: Plugins loaded! ::::
+spuc_container  | :: Available plugins
+spuc_container  |     stats.py
+spuc_container  |
+[...]</code></pre>
 </div>
-</section><section><h2 class="section-heading" id="adding-spucsvi">Adding SPUCSVi<a class="anchor" aria-label="anchor" href="#adding-spucsvi"></a></h2>
-<hr class="half-width"><p>So far we have only been running the SPUC container. There is an
-argument to be made that, even running a single service, that Docker
-Compose is a useful tool.</p>
-<p>It brings an ephemeral run command that would need careful
-documentation to replicate into a single file that can be version
-controlled and shared. And it is much easier on the eye than a long
-<code>docker run</code> command!</p>
-<p>That’s great. But where Docker Compose really shines is when you have
-multiple services that need to be run together.</p>
-<p>And we happen to have another service that we need to run -
-SPUCSVi!</p>
-</section><section><h2 class="section-heading" id="adding-spucsvi-to-our-docker-compose-file">Adding SPUCSVi to our Docker Compose file<a class="anchor" aria-label="anchor" href="#adding-spucsvi-to-our-docker-compose-file"></a></h2>
-<hr class="half-width"><p>We can add SPUCSVi to our Docker Compose file in the same way that we
+<p>You should now have a container running with the stats plugin
+enabled!</p>
+<div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
+  <h3 class="accordion-header" id="headingSpoiler2">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Simpler Dockerfile
+  </h3>
+</button>
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div class="accordion-body">
+<p>You may have noticed that we ended up <em>duplicating</em> most of
+the configuration from the Dockerfile within the
+<code>docker-compose.yml</code> file.</p>
+<p>In reality, if we are using Docker Compose we do not need to bake in
+all of the configuration inside the Dockerfile. The only thing that was
+different was the <code>pip install pandas</code> command. Therefore,
+our dockerfile could be as simple as this:</p>
+<div class="codewrapper sourceCode" id="cb46">
+<h3 class="code-label">DOCKERFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode dockerfile" tabindex="0"><code class="sourceCode dockerfile"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="kw">FROM</span> spuacv/spuc:latest</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install pandas</span></code></pre>
+</div>
+<p>Alternatively, we could simplify our <code>docker-compose.yml</code>
+file by removing the duplicated configuration. However, this would make
+the <code>docker-compose.yml</code> file less self-contained and more
+dependent on the Dockerfile. It is usually a better idea to keep the
+configuration in the <code>docker-compose.yml</code> file, as it makes
+it easier to understand and maintain.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="connecting-multiple-services">Connecting multiple services<a class="anchor" aria-label="anchor" href="#connecting-multiple-services"></a></h2>
+<hr class="half-width"><p>We have now managed to replicate our <code>docker run</code> command
+in a more readable and maintainable way.</p>
+<p>There is an argument to be made that, even for running a single
+service, Docker Compose is a useful tool. It brings an ephemeral run
+command, that would need careful documentation to replicate, into a
+single file that can be version controlled and shared. It is also much
+easier on the eye than a long <code>docker run</code> command!</p>
+<p>Where Docker Compose really shines, though, is when you have multiple
+services that need to be run together. And we happen to have another
+service that we need to run - SPUCSVi!</p>
+<div class="section level3">
+<h3 id="adding-spucsvi-to-our-docker-compose-file">Adding SPUCSVi to our Docker Compose file<a class="anchor" aria-label="anchor" href="#adding-spucsvi-to-our-docker-compose-file"></a></h3>
+<p>We can add SPUCSVi to our Docker Compose file in the same way that we
 added SPUC, by adding another service to the <code>services</code>
 key.</p>
-<p>The SPUCSVi README helpfully provides a table of configuration
+<p>The SPUCSVi documentation helpfully provides a table of configuration
 options what we can use to configure the service, reproduced here:</p>
-<table class="table"><colgroup><col width="21%"><col width="46%"><col width="32%"></colgroup><thead><tr class="header"><th>Item</th>
+<table class="table"><colgroup><col width="11%"><col width="59%"><col width="28%"></colgroup><thead><tr class="header"><th>Item</th>
 <th>Description</th>
 <th>Default</th>
 </tr></thead><tbody><tr class="odd"><td>Image Name</td>
 <td>The name of the image to use</td>
-<td><code>ghcr.io/uomresearchit/spucsvi:latest</code></td>
+<td><code>spuacv/spucsvi:latest</code></td>
 </tr><tr class="even"><td>Port</td>
-<td>The container port to the service runs on</td>
+<td>The container port the service runs on</td>
 <td><code>8322</code></td>
 </tr><tr class="odd"><td>SPUC_URL</td>
-<td>An environment variable which gives the URL of the SPUC service</td>
+<td>An environment variable to set the URL of the SPUC service</td>
 <td><code>http://spuc:8321</code></td>
 </tr></tbody></table><p>We can use this to add SPUCSVi to our Docker Compose file!</p>
 <p>But how do we know the correct URL for the SPUC service? This touches
@@ -1003,118 +1170,170 @@ starts. This means that, unless overridden, all services in the stack
 can communicate with each other.</p>
 <p>Second, Docker Compose uses the service name as the hostname for the
 service. This means that we can use the service name as the hostname in
-the URL!</p>
-<p>For our service named <code>spuc</code>, the hostname would be
+the URL! For our service named <code>spuc</code>, the hostname would be
 <code>spuc</code> with the protocol <code>http</code> prepended and
 <code>port</code> appended i.e. <code>http://spuc:8321</code>.</p>
 <p>Knowing this, we are able to add SPUCSVi to our Docker Compose
 file!</p>
-<div class="codewrapper sourceCode" id="cb34">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb47">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>services:</span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>    build:</span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>      context: .</span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
-<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>    ports:</span>
-<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>    volumes:</span>
-<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
-<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>    environment:</span>
-<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
-<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a></span>
-<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a><span class="va">+  spucsvi:</span></span>
-<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a><span class="va">+    image: ghcr.io/uomresearchit/spucsvi:latest</span></span>
-<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a><span class="va">+    container_name: spucsvi</span></span>
-<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="va">+    ports:</span></span>
-<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a><span class="va">+      - "8322:8322"</span></span>
-<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a><span class="va">+    environment:</span></span>
-<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a><span class="va">+      - SPUC_URL=http://spuc:8321</span></span>
-<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a></span>
-<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a>volumes:</span>
-<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb47-8"><a href="#cb47-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> 8321:8321</span></span>
+<span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb47-10"><a href="#cb47-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb47-11"><a href="#cb47-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb47-12"><a href="#cb47-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb47-13"><a href="#cb47-13" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb47-14"><a href="#cb47-14" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb47-15"><a href="#cb47-15" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb47-16"><a href="#cb47-16" tabindex="-1"></a></span>
+<span id="cb47-17"><a href="#cb47-17" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span><span class="co">                            # Declare a new service named spucsvi</span></span>
+<span id="cb47-18"><a href="#cb47-18" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span><span class="co">      # Specify the image to use</span></span>
+<span id="cb47-19"><a href="#cb47-19" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi_container</span><span class="co"> # Name the container spucsvi</span></span>
+<span id="cb47-20"><a href="#cb47-20" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span><span class="co">                            # </span></span>
+<span id="cb47-21"><a href="#cb47-21" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span><span class="co">                   # Map port 8322 on the host to port 8322 in the container</span></span>
+<span id="cb47-22"><a href="#cb47-22" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span><span class="co">                      # </span></span>
+<span id="cb47-23"><a href="#cb47-23" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span><span class="co">     # Specify the SPUC_URL environment variable</span></span>
+<span id="cb47-24"><a href="#cb47-24" tabindex="-1"></a></span>
+<span id="cb47-25"><a href="#cb47-25" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb47-26"><a href="#cb47-26" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
 </div>
-<p>Where we added : * A service named <code>spucsvi</code> * The image
-<code>ghcr.io/uomresearchit/spucsvi:latest</code> * The container name
-<code>spucsvi</code> (not strictly necessary, but it’s nice to have) *
-The port <code>8322</code> for the service (mapped to <code>8322</code>
-on the host) * The environment variable <code>SPUC_URL</code> set to
-<code>http://spuc:8321</code></p>
-<p>Now when we run <code>docker compose up</code>, both services will be
-started!</p>
-<div class="codewrapper sourceCode" id="cb35">
+<p>Now both services will be started at the same time!</p>
+<div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="ex">$</span> docker compose up</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[+] Running 3/3
- ✔ Network docker-intro-testing_default  Created                                                                                                                          0.1s
- ✔ Container spucsvi                     Created                                                                                                                          0.1s
- ✔ Container spuc_container              Created                                                                                                                          0.2s
-Attaching to spuc_container, spucsvi</code></pre>
+ ✔ Network docker_intro_default  Created                                                            0.1s
+ ✔ Container spuc_container      Started                                                            0.2s
+ ✔ Container spucsvi_container   Started                                                            0.2s</code></pre>
 </div>
-<p>And we can now view the SPUCSVi interface by visiting
-<code>localhost:8322</code> in our browser!</p>
+<p>As the documentation said, we can now view the SPUCSVi interface by
+visiting <code>localhost:8322</code> in our browser.</p>
 <p>A visual treat awaits! And an easier way to record and view our
-unicorn sightings!</p>
+unicorn sightings.</p>
+</div>
 <div class="section level3">
 <h3 id="networks">Networks<a class="anchor" aria-label="anchor" href="#networks"></a></h3>
-<p>We breifly mentioned networks earlier, noting that, by default,
+<p>We briefly mentioned networks earlier, noting that, by default,
 Docker Compose creates a network for each stack.</p>
 <p>However, by overriding the default network, we can perform some
-interesting tricks!</p>
-</div>
-<div class="section level3">
-<h3 id="isolating-spuc">Isolating SPUC<a class="anchor" aria-label="anchor" href="#isolating-spuc"></a></h3>
+interesting tricks.</p>
 <p>Now that we can record Unicorns using the SPUCSVi interface, we don’t
 need to be able to access the SPUC service directly.</p>
 <p>This means we can isolate the SPUC service from the host network.
 This is a good security practice and helps keep things tidy.</p>
-<p>We can do this by removing the <code>ports</code> key from the SPUC
-service.</p>
-<div class="codewrapper sourceCode" id="cb37">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<p>To do this we need to stop exposing the ports for SPUC, by removing
+the <code>ports</code> key from the SPUC service:</p>
+<div class="codewrapper sourceCode" id="cb50">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>services:</span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>    build:</span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>      context: .</span>
-<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="st">-    ports:</span></span>
-<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="st">-      - 8321:8321</span></span>
-<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a>    volumes:</span>
-<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
-<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a>    environment:</span>
-<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
-<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a></span>
-<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a>  spucsvi:</span>
-<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
-<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a>    container_name: spucsvi</span>
-<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a>    ports:</span>
-<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a>      - "8322:8322"</span>
-<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a>    environment:</span>
-<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
-<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a></span>
-<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a>volumes:</span>
-<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb50-4"><a href="#cb50-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb50-5"><a href="#cb50-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb50-6"><a href="#cb50-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb50-7"><a href="#cb50-7" tabindex="-1"></a><span class="co">    # ports:                            # We can remove these two lines</span></span>
+<span id="cb50-8"><a href="#cb50-8" tabindex="-1"></a><span class="co">    #   - 8321:8321</span></span>
+<span id="cb50-9"><a href="#cb50-9" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb50-10"><a href="#cb50-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb50-11"><a href="#cb50-11" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb50-12"><a href="#cb50-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb50-13"><a href="#cb50-13" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb50-14"><a href="#cb50-14" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb50-15"><a href="#cb50-15" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb50-16"><a href="#cb50-16" tabindex="-1"></a></span>
+<span id="cb50-17"><a href="#cb50-17" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span></span>
+<span id="cb50-18"><a href="#cb50-18" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span></span>
+<span id="cb50-19"><a href="#cb50-19" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi</span></span>
+<span id="cb50-20"><a href="#cb50-20" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb50-21"><a href="#cb50-21" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span></span>
+<span id="cb50-22"><a href="#cb50-22" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb50-23"><a href="#cb50-23" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span></span>
+<span id="cb50-24"><a href="#cb50-24" tabindex="-1"></a></span>
+<span id="cb50-25"><a href="#cb50-25" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb50-26"><a href="#cb50-26" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
 </div>
 <p>Now, the SPUC service is only accessible from within the Docker
-network!</p>
-<p>This can be taken further to creater networks with very limited
-purposes. For example in a typical web app you may make it so that th
+network! Try doing a curl to register a sighting and you wont be able
+to. However, you can still register sightings through the SPUCSVi
+interface.</p>
+<p>This can be taken further to create networks with very limited
+purposes. For example in a typical web app you may make it so that the
 frontend can connect only to backend, but not to the database.</p>
+<div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
+  <h3 class="accordion-header" id="headingSpoiler3">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Network names
+  </h3>
+</button>
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div class="accordion-body">
+<p>You may have noticed that the network that Docker Compose created for
+our stack is named <code>docker_intro_default</code>. This is because
+Docker Compose uses the name of the directory that the
+<code>docker-compose.yml</code> file is in as the name of the
+network.</p>
+<p>If you want to specify the name of the network, you can use the
+<code>networks</code> key in the <code>docker-compose.yml</code> file.
+You also need to specify the network name for each service that you want
+to connect to the network.</p>
+<p>For example, to specify the network name as
+<code>spuc_network</code>, you would add the following to the file:</p>
+<div class="codewrapper sourceCode" id="cb51">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb51-7"><a href="#cb51-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb51-8"><a href="#cb51-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb51-9"><a href="#cb51-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb51-10"><a href="#cb51-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb51-11"><a href="#cb51-11" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb51-12"><a href="#cb51-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb51-13"><a href="#cb51-13" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb51-14"><a href="#cb51-14" tabindex="-1"></a><span class="at">    </span><span class="fu">networks</span><span class="kw">:</span><span class="co">                         # Starts list of networks to connect this service to</span></span>
+<span id="cb51-15"><a href="#cb51-15" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc_network</span><span class="co">                  # Connects to the spuc_network network</span></span>
+<span id="cb51-16"><a href="#cb51-16" tabindex="-1"></a></span>
+<span id="cb51-17"><a href="#cb51-17" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span></span>
+<span id="cb51-18"><a href="#cb51-18" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span></span>
+<span id="cb51-19"><a href="#cb51-19" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi</span></span>
+<span id="cb51-20"><a href="#cb51-20" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb51-21"><a href="#cb51-21" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span></span>
+<span id="cb51-22"><a href="#cb51-22" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb51-23"><a href="#cb51-23" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span></span>
+<span id="cb51-24"><a href="#cb51-24" tabindex="-1"></a><span class="at">    </span><span class="fu">networks</span><span class="kw">:</span><span class="co">                         # Starts list of networks to connect this service to</span></span>
+<span id="cb51-25"><a href="#cb51-25" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc_network</span><span class="co">                  # Connects to the spuc_network network</span></span>
+<span id="cb51-26"><a href="#cb51-26" tabindex="-1"></a></span>
+<span id="cb51-27"><a href="#cb51-27" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb51-28"><a href="#cb51-28" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span>
+<span id="cb51-29"><a href="#cb51-29" tabindex="-1"></a></span>
+<span id="cb51-30"><a href="#cb51-30" tabindex="-1"></a><span class="fu">networks</span><span class="kw">:</span><span class="co">                             # Starts section for declaring networks</span></span>
+<span id="cb51-31"><a href="#cb51-31" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc_network</span><span class="kw">:</span><span class="co">                       # Declares a network for spuc</span></span>
+<span id="cb51-32"><a href="#cb51-32" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> spuc_network</span><span class="co">                # Specifies the name of the network</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="depends-on">Depends on<a class="anchor" aria-label="anchor" href="#depends-on"></a></h3>
@@ -1127,157 +1346,240 @@ order.</p>
 key.</p>
 <p>We can use this key to tell Docker Compose that the SPUCSVi service
 depends on the SPUC service.</p>
-<div class="codewrapper sourceCode" id="cb38">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb52">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>services:</span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>    build:</span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>      context: .</span>
-<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
-<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a>    ports:</span>
-<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a>    volumes:</span>
-<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
-<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a>    environment:</span>
-<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
-<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a></span>
-<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a>  spucsvi:</span>
-<span id="cb38-18"><a href="#cb38-18" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
-<span id="cb38-19"><a href="#cb38-19" tabindex="-1"></a>    container_name: spucsvi</span>
-<span id="cb38-20"><a href="#cb38-20" tabindex="-1"></a>    ports:</span>
-<span id="cb38-21"><a href="#cb38-21" tabindex="-1"></a>      - "8322:8322"</span>
-<span id="cb38-22"><a href="#cb38-22" tabindex="-1"></a>    environment:</span>
-<span id="cb38-23"><a href="#cb38-23" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
-<span id="cb38-24"><a href="#cb38-24" tabindex="-1"></a><span class="va">+    depends_on:</span></span>
-<span id="cb38-25"><a href="#cb38-25" tabindex="-1"></a><span class="va">+      spuc:</span></span>
-<span id="cb38-26"><a href="#cb38-26" tabindex="-1"></a></span>
-<span id="cb38-27"><a href="#cb38-27" tabindex="-1"></a>volumes:</span>
-<span id="cb38-28"><a href="#cb38-28" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb52-6"><a href="#cb52-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb52-7"><a href="#cb52-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb52-8"><a href="#cb52-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb52-9"><a href="#cb52-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb52-10"><a href="#cb52-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb52-11"><a href="#cb52-11" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb52-12"><a href="#cb52-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb52-13"><a href="#cb52-13" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb52-14"><a href="#cb52-14" tabindex="-1"></a></span>
+<span id="cb52-15"><a href="#cb52-15" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span></span>
+<span id="cb52-16"><a href="#cb52-16" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span></span>
+<span id="cb52-17"><a href="#cb52-17" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi</span></span>
+<span id="cb52-18"><a href="#cb52-18" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb52-19"><a href="#cb52-19" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span></span>
+<span id="cb52-20"><a href="#cb52-20" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb52-21"><a href="#cb52-21" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span></span>
+<span id="cb52-22"><a href="#cb52-22" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span><span class="co">                     # Starts section for declaring dependencies</span></span>
+<span id="cb52-23"><a href="#cb52-23" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc</span><span class="co">                        # Declares that the spucsvi service depends on the spuc service</span></span>
+<span id="cb52-24"><a href="#cb52-24" tabindex="-1"></a></span>
+<span id="cb52-25"><a href="#cb52-25" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb52-26"><a href="#cb52-26" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
 </div>
-<p>Now, when we run <code>docker compose up</code>, the SPUC service
-will start before the SPUCSVi service!</p>
-<p>But… there is a catch! The <code>depends_on</code> key only ensures
+<p>Now, when we run <code>docker compose up</code>, the SPUCSVi service
+will wait until SPUC has started before it starts.</p>
+<p>But there is a catch! The <code>depends_on</code> key only ensures
 that the service is started in the correct order. It doesn’t check if
-the service is ready!</p>
+the service is <em>ready</em>!</p>
 <p>This can be a problem if a service is fast to start but slow to be
-ready. For example, a database service may start quickly but take a
+ready. For example, a database service may start quickly, but take a
 while to be ready to accept connections.</p>
 <p>To address this, Docker Compose allows you to define a
 <code>healthcheck</code> for a service. This is a command that is run
-periodically to check if the service is ready. The command failing
-(returning a non-zero exit code) means that the service is not ready and
-will be retried N times at M second intervals.</p>
+periodically (from inside the container) to check if the service is
+<em>ready</em>. The command failing (returning a non-zero exit code)
+means that the service is not ready.</p>
 <p>We can try this out by adding a <code>healthcheck</code> to the SPUC
-service. Since we don’t want SPUCSVi to start until the chart of unicorn
-sightings is ready, we can use the <code>curl</code> command to check if
-the <code>/export</code> endpoint is available. We need to add the
-<code>--fail</code> flag to <code>curl</code> to ensure that it returns
-a non-zero exit code if the endpoint is not available.</p>
+service. Since we don’t want SPUCSVi to start until the record of
+unicorn sightings is ready, we can use the <code>curl</code> command to
+check if the <code>/export</code> endpoint is available. We need to add
+the <code>--fail</code> flag to <code>curl</code> to ensure that it
+returns a non-zero exit code if the endpoint is not available.</p>
 <p>The other change we need to make is to add a <code>condition</code>
 to the <code>depends_on</code> key in the SPUCSVi service. This tells
 Docker Compose to only start the service if the service it depends on is
-healthy, rather than just started.</p>
-<div class="codewrapper sourceCode" id="cb39">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<em>healthy</em>, rather than just <em>started</em>.</p>
+<div class="codewrapper sourceCode" id="cb53">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>services:</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>    build:</span>
-<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>      context: .</span>
-<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
-<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a>    ports:</span>
-<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>    volumes:</span>
-<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
-<span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>    environment:</span>
-<span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
-<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="va">+    healthcheck:</span></span>
-<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="va">+      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]</span></span>
-<span id="cb39-18"><a href="#cb39-18" tabindex="-1"></a><span class="va">+      interval: 5s</span></span>
-<span id="cb39-19"><a href="#cb39-19" tabindex="-1"></a><span class="va">+      timeout: 10s</span></span>
-<span id="cb39-20"><a href="#cb39-20" tabindex="-1"></a><span class="va">+      retries: 3</span></span>
-<span id="cb39-21"><a href="#cb39-21" tabindex="-1"></a></span>
-<span id="cb39-22"><a href="#cb39-22" tabindex="-1"></a>  spucsvi:</span>
-<span id="cb39-23"><a href="#cb39-23" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
-<span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a>    container_name: spucsvi</span>
-<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a>    ports:</span>
-<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a>      - "8322:8322"</span>
-<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a>    environment:</span>
-<span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
-<span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a>    depends_on:</span>
-<span id="cb39-30"><a href="#cb39-30" tabindex="-1"></a>      spuc:</span>
-<span id="cb39-31"><a href="#cb39-31" tabindex="-1"></a><span class="va">+       condition: service_healthy</span></span>
-<span id="cb39-32"><a href="#cb39-32" tabindex="-1"></a></span>
-<span id="cb39-33"><a href="#cb39-33" tabindex="-1"></a>volumes:</span>
-<span id="cb39-34"><a href="#cb39-34" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb53-11"><a href="#cb53-11" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb53-12"><a href="#cb53-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb53-13"><a href="#cb53-13" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb53-14"><a href="#cb53-14" tabindex="-1"></a><span class="at">    </span><span class="fu">healthcheck</span><span class="kw">:</span><span class="co">                                                  # Starts section for declaring healthchecks</span></span>
+<span id="cb53-15"><a href="#cb53-15" tabindex="-1"></a><span class="at">      </span><span class="fu">test</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CMD"</span><span class="kw">,</span><span class="at"> </span><span class="st">"curl"</span><span class="kw">,</span><span class="at"> </span><span class="st">"--fail"</span><span class="kw">,</span><span class="at"> </span><span class="st">"http://spuc:8321/export"</span><span class="kw">]</span><span class="co">  # Specifies the healthcheck command (ran from inside the container)</span></span>
+<span id="cb53-16"><a href="#cb53-16" tabindex="-1"></a><span class="at">      </span><span class="fu">interval</span><span class="kw">:</span><span class="at"> 3s</span><span class="co">                                                # Specifies the interval between healthchecks</span></span>
+<span id="cb53-17"><a href="#cb53-17" tabindex="-1"></a><span class="at">      </span><span class="fu">timeout</span><span class="kw">:</span><span class="at"> 2s</span><span class="co">                                                 # Specifies the timeout for the healthcheck</span></span>
+<span id="cb53-18"><a href="#cb53-18" tabindex="-1"></a><span class="at">      </span><span class="fu">retries</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span><span class="co">                                                  # Specifies the number of retries before failing completely</span></span>
+<span id="cb53-19"><a href="#cb53-19" tabindex="-1"></a></span>
+<span id="cb53-20"><a href="#cb53-20" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span></span>
+<span id="cb53-21"><a href="#cb53-21" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span></span>
+<span id="cb53-22"><a href="#cb53-22" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi</span></span>
+<span id="cb53-23"><a href="#cb53-23" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb53-24"><a href="#cb53-24" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span></span>
+<span id="cb53-25"><a href="#cb53-25" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb53-26"><a href="#cb53-26" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span></span>
+<span id="cb53-27"><a href="#cb53-27" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb53-28"><a href="#cb53-28" tabindex="-1"></a><span class="at">      </span><span class="fu">spuc</span><span class="kw">:</span><span class="co">                                                       # This changed from a list (- spuc) to a mapping (spuc:)</span></span>
+<span id="cb53-29"><a href="#cb53-29" tabindex="-1"></a><span class="at">        </span><span class="fu">condition</span><span class="kw">:</span><span class="at"> service_healthy</span><span class="co">                                # Specifies further conditions for starting the service</span></span>
+<span id="cb53-30"><a href="#cb53-30" tabindex="-1"></a></span>
+<span id="cb53-31"><a href="#cb53-31" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb53-32"><a href="#cb53-32" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
 </div>
 <p>Now, when we run <code>docker compose up</code>, the SPUCSVi service
-will only start when the SPUC service is ready! But this is a little
-hard to see in action as the SPUC service starts so quickly.</p>
-<p>To see this in action, you can add a <code>sleep</code> command to
+will only start when the SPUC service is <em>ready</em>.</p>
+<div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
+  <h3 class="accordion-header" id="headingSpoiler4">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Simulating a slow start
+  </h3>
+</button>
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div class="accordion-body">
+<p>This is a little hard to see in action as the SPUC service starts so
+quickly. To be able to see it, let’s add a <code>sleep</code> command to
 the <code>entrypoint</code> of the SPUC service to simulate a slow
 start.</p>
-<div class="codewrapper sourceCode" id="cb40">
-<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb54">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>services:</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  spuc:</span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>    build:</span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>      context: .</span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>      dockerfile: Dockerfile</span>
-<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>    container_name: spuc_container</span>
-<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a>    ports:</span>
-<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a>      - 8321:8321</span>
-<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>    volumes:</span>
-<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a>      - $PWD/print.config:/code/config/print.config</span>
-<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a>      - spuc-volume:/code/output</span>
-<span id="cb40-12"><a href="#cb40-12" tabindex="-1"></a>      - $PWD/stats.py:/spuc/plugins/stats.py</span>
-<span id="cb40-13"><a href="#cb40-13" tabindex="-1"></a>    environment:</span>
-<span id="cb40-14"><a href="#cb40-14" tabindex="-1"></a>      - EXPORT=true</span>
-<span id="cb40-15"><a href="#cb40-15" tabindex="-1"></a>    command: ["--units", "iulu"]</span>
-<span id="cb40-16"><a href="#cb40-16" tabindex="-1"></a><span class="va">+    entrypoint: ["sh", "-c", "sleep 10 &amp;&amp; python /spuc/spuc.py"]</span></span>
-<span id="cb40-17"><a href="#cb40-17" tabindex="-1"></a>    healthcheck:</span>
-<span id="cb40-18"><a href="#cb40-18" tabindex="-1"></a>      test: ["CMD", "curl", "--fail", "http://spuc:8321/export"]</span>
-<span id="cb40-19"><a href="#cb40-19" tabindex="-1"></a>      interval: 5s</span>
-<span id="cb40-20"><a href="#cb40-20" tabindex="-1"></a>      timeout: 10s</span>
-<span id="cb40-21"><a href="#cb40-21" tabindex="-1"></a>      retries: 3</span>
-<span id="cb40-22"><a href="#cb40-22" tabindex="-1"></a></span>
-<span id="cb40-23"><a href="#cb40-23" tabindex="-1"></a>  spucsvi:</span>
-<span id="cb40-24"><a href="#cb40-24" tabindex="-1"></a>    image: ghcr.io/uomresearchit/spucsvi:latest</span>
-<span id="cb40-25"><a href="#cb40-25" tabindex="-1"></a>    container_name: spucsvi</span>
-<span id="cb40-26"><a href="#cb40-26" tabindex="-1"></a>    ports:</span>
-<span id="cb40-27"><a href="#cb40-27" tabindex="-1"></a>      - "8322:8322"</span>
-<span id="cb40-28"><a href="#cb40-28" tabindex="-1"></a>    environment:</span>
-<span id="cb40-29"><a href="#cb40-29" tabindex="-1"></a>      - SPUC_URL=http://spuc:8321</span>
-<span id="cb40-30"><a href="#cb40-30" tabindex="-1"></a>    depends_on:</span>
-<span id="cb40-31"><a href="#cb40-31" tabindex="-1"></a>      spuc:</span>
-<span id="cb40-32"><a href="#cb40-32" tabindex="-1"></a>       condition: service_healthy</span>
-<span id="cb40-33"><a href="#cb40-33" tabindex="-1"></a></span>
-<span id="cb40-34"><a href="#cb40-34" tabindex="-1"></a>volumes:</span>
-<span id="cb40-35"><a href="#cb40-35" tabindex="-1"></a>  spuc-volume:</span></code></pre>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb54-6"><a href="#cb54-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb54-7"><a href="#cb54-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb54-8"><a href="#cb54-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb54-9"><a href="#cb54-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb54-10"><a href="#cb54-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb54-11"><a href="#cb54-11" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb54-12"><a href="#cb54-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=true</span></span>
+<span id="cb54-13"><a href="#cb54-13" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb54-14"><a href="#cb54-14" tabindex="-1"></a><span class="at">    </span><span class="fu">entrypoint</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"sh"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-c"</span><span class="kw">,</span><span class="at"> </span><span class="st">"sleep 5 &amp;&amp; python /spuc/spuc.py"</span><span class="kw">]</span><span class="co">   # Adds a sleep command to the entrypoint to simulate a slow start</span></span>
+<span id="cb54-15"><a href="#cb54-15" tabindex="-1"></a><span class="at">    </span><span class="fu">healthcheck</span><span class="kw">:</span></span>
+<span id="cb54-16"><a href="#cb54-16" tabindex="-1"></a><span class="at">      </span><span class="fu">test</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CMD"</span><span class="kw">,</span><span class="at"> </span><span class="st">"curl"</span><span class="kw">,</span><span class="at"> </span><span class="st">"--fail"</span><span class="kw">,</span><span class="at"> </span><span class="st">"http://spuc:8321/export"</span><span class="kw">]</span></span>
+<span id="cb54-17"><a href="#cb54-17" tabindex="-1"></a><span class="at">      </span><span class="fu">interval</span><span class="kw">:</span><span class="at"> 3s</span></span>
+<span id="cb54-18"><a href="#cb54-18" tabindex="-1"></a><span class="at">      </span><span class="fu">timeout</span><span class="kw">:</span><span class="at"> 2s</span></span>
+<span id="cb54-19"><a href="#cb54-19" tabindex="-1"></a><span class="at">      </span><span class="fu">retries</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb54-20"><a href="#cb54-20" tabindex="-1"></a></span>
+<span id="cb54-21"><a href="#cb54-21" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span></span>
+<span id="cb54-22"><a href="#cb54-22" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span></span>
+<span id="cb54-23"><a href="#cb54-23" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi</span></span>
+<span id="cb54-24"><a href="#cb54-24" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb54-25"><a href="#cb54-25" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span></span>
+<span id="cb54-26"><a href="#cb54-26" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb54-27"><a href="#cb54-27" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span></span>
+<span id="cb54-28"><a href="#cb54-28" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb54-29"><a href="#cb54-29" tabindex="-1"></a><span class="at">      </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb54-30"><a href="#cb54-30" tabindex="-1"></a><span class="at">       </span><span class="fu">condition</span><span class="kw">:</span><span class="at"> service_healthy</span></span>
+<span id="cb54-31"><a href="#cb54-31" tabindex="-1"></a></span>
+<span id="cb54-32"><a href="#cb54-32" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb54-33"><a href="#cb54-33" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
 </div>
-<p>Now, when you run <code>docker compose up</code>, you should see the
-SPUCSVi service start after the SPUC service!</p>
+<div class="codewrapper sourceCode" id="cb55">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
-<hr class="half-width"><p>In this lesson, we have taken a dive into Docker Compose and seen how
-it can help us run multiple services together - in addition to making
-running a single service easier!</p>
-<p>We have seen how to translate <code>docker run</code> commands into a
-<code>docker-compose.yml</code> file and how to run the services using
-<code>docker compose</code>.</p>
-<p>We have also seen how to build a container using Docker Compose and
-how to coordinate the starting of services using <code>depends_on</code>
-and <code>healthcheck</code>.</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[+] Running 3/3
+ ✔ Network docker_intro_default  Created                                   0.1s
+ ✔ Container spuc_container      Healthy                                   6.7s
+ ✔ Container spucsvi_container   Started                                   6.8s</code></pre>
+</div>
+<p>As yoy can see, the SPUCSVi service only started after the SPUC
+service was healthy.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler5" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler5" aria-expanded="false" aria-controls="collapseSpoiler5">
+  <h3 class="accordion-header" id="headingSpoiler5">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Simulating an unhealthy service
+  </h3>
+</button>
+<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
+<div class="accordion-body">
+<p>To simulate a service that does not pass the healthcheck, we can set
+the <code>EXPORT</code> environment variable to <code>false</code> in
+the SPUC service. This will mean that the export endpoint is not
+available, so the healthcheck will fail.</p>
+<div class="codewrapper sourceCode" id="cb57">
+<h3 class="code-label">YML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yml" tabindex="0"><code class="sourceCode yaml"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a><span class="at">      </span><span class="fu">context</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a><span class="at">      </span><span class="fu">dockerfile</span><span class="kw">:</span><span class="at"> Dockerfile</span></span>
+<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spuc_container</span></span>
+<span id="cb57-7"><a href="#cb57-7" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb57-8"><a href="#cb57-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./print.config:/spuc/config/print.config</span></span>
+<span id="cb57-9"><a href="#cb57-9" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> spuc-volume:/spuc/output</span></span>
+<span id="cb57-10"><a href="#cb57-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ./stats.py:/spuc/plugins/stats.py</span></span>
+<span id="cb57-11"><a href="#cb57-11" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb57-12"><a href="#cb57-12" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> EXPORT=false</span><span class="co">                                # Sets the EXPORT environment variable to false</span></span>
+<span id="cb57-13"><a href="#cb57-13" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"--units"</span><span class="kw">,</span><span class="at"> </span><span class="st">"iulu"</span><span class="kw">]</span></span>
+<span id="cb57-14"><a href="#cb57-14" tabindex="-1"></a><span class="at">    </span><span class="fu">healthcheck</span><span class="kw">:</span></span>
+<span id="cb57-15"><a href="#cb57-15" tabindex="-1"></a><span class="at">      </span><span class="fu">test</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CMD"</span><span class="kw">,</span><span class="at"> </span><span class="st">"curl"</span><span class="kw">,</span><span class="at"> </span><span class="st">"--fail"</span><span class="kw">,</span><span class="at"> </span><span class="st">"http://spuc:8321/export"</span><span class="kw">]</span></span>
+<span id="cb57-16"><a href="#cb57-16" tabindex="-1"></a><span class="at">      </span><span class="fu">interval</span><span class="kw">:</span><span class="at"> 3s</span></span>
+<span id="cb57-17"><a href="#cb57-17" tabindex="-1"></a><span class="at">      </span><span class="fu">timeout</span><span class="kw">:</span><span class="at"> 2s</span></span>
+<span id="cb57-18"><a href="#cb57-18" tabindex="-1"></a><span class="at">      </span><span class="fu">retries</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb57-19"><a href="#cb57-19" tabindex="-1"></a></span>
+<span id="cb57-20"><a href="#cb57-20" tabindex="-1"></a><span class="at">  </span><span class="fu">spucsvi</span><span class="kw">:</span></span>
+<span id="cb57-21"><a href="#cb57-21" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> spuacv/spucsvi:latest</span></span>
+<span id="cb57-22"><a href="#cb57-22" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> spucsvi</span></span>
+<span id="cb57-23"><a href="#cb57-23" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb57-24"><a href="#cb57-24" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"8322:8322"</span></span>
+<span id="cb57-25"><a href="#cb57-25" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb57-26"><a href="#cb57-26" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> SPUC_URL=http://spuc:8321</span></span>
+<span id="cb57-27"><a href="#cb57-27" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb57-28"><a href="#cb57-28" tabindex="-1"></a><span class="at">      </span><span class="fu">spuc</span><span class="kw">:</span></span>
+<span id="cb57-29"><a href="#cb57-29" tabindex="-1"></a><span class="at">       </span><span class="fu">condition</span><span class="kw">:</span><span class="at"> service_healthy</span></span>
+<span id="cb57-30"><a href="#cb57-30" tabindex="-1"></a></span>
+<span id="cb57-31"><a href="#cb57-31" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb57-32"><a href="#cb57-32" tabindex="-1"></a><span class="at">  </span><span class="fu">spuc-volume</span><span class="kw">:</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb58">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[+] Running 3/3
+ ✔ Network docker_intro_default  Created                                                            0.1s
+ ✘ Container spuc_container      Error                                                             15.7s
+ ✔ Container spucsvi_container   Created                                                            0.0s
+dependency failed to start: container spuc_container is unhealthy</code></pre>
+</div>
+<p>The SPUC service shows an error, because it failed all 5 retries, and
+the SPUCSVi service was not started.</p>
+<p><strong>Warning</strong>: Even though <em>unhealthy</em>, the
+<code>spuc_container</code> is running. You can check this by running
+<code>docker ps</code>.</p>
+</div>
+</div>
+</div>
+</div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -1286,11 +1588,29 @@ and <code>healthcheck</code>.</p>
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul><li>Docker Compose is a tool for defining and running multi-container
-Docker stacks</li>
-<li>Docker Compose files are written in YAML</li>
-<li>Docker Compose can build images using a Dockerfile</li>
-<li>Docker Compose allows containers to communicate with each other</li>
+stacks in a YAML file. They can also serve as a way of structuring and
+documenting <code>docker run</code> commands for single containers.</li>
+<li>Instructions are saved in a <code>docker-compose.yml</code> file,
+where services, networks, and volumes are defined.</li>
+<li>Each <code>service</code> is a separate container, and it can be
+fully configured from within the file.</li>
+<li>Bind mounts and <code>volumes</code> can be declared for each
+service, and they can be shared between containers too.</li>
+<li>You can define <code>networks</code>, which can be used to connect
+or isolate containers from each other.</li>
+<li>All the services, volumes and networks are started together using
+the <code>docker compose up</code> command.</li>
+<li>They can be stopped using the <code>docker compose down</code>
+command.</li>
+<li>Container images can be built as the services are spun up by using
+the <code>--build</code> flag.</li>
+<li>The order in which services start can be controlled using the
+<code>depends_on</code> key.</li>
+<li>A <code>healthcheck</code> can be defined to verify the status of a
+service. These are commands run from within the container to make sure
+it is <em>ready</em>.</li>
 </ul></div>
+</div>
 </div>
 </div>
 </section></div> <!-- / div.lesson-content -->
@@ -1351,8 +1671,8 @@ Docker stacks</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-compose.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-compose.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-10-18",
-  "datePublished": "2024-10-18"
+  "dateModified": "2024-10-21",
+  "datePublished": "2024-10-21"
 }
 
   </script><script>
