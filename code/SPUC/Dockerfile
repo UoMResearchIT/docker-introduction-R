@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+RUN apt update
+RUN apt install -y curl
+
 WORKDIR /spuc
 
 COPY ./requirements.txt /spuc/requirements.txt

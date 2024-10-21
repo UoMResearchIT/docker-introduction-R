@@ -1,38 +1,41 @@
 services:
   spuc:
     build:
-      context: SPUC
+      context: ./SPUC-Stats
       dockerfile: Dockerfile
-    image: ghcr.io/uomresearchit/spuc:latest
-    container_name: spuc
-    ports:
-      - "8321:8321"
+    container_name: spuc_container
     volumes:
-      - spuc-output:/spuc/output
-      - ${PWD}/SPUC/config:/spuc/config
-      - ${PWD}/SPUC/plugins:/spuc/plugins
+      - ./SPUC-Stats/print.config:/spuc/config/print.config
+      - spuc-volume:/spuc/output
+      - ./SPUC-Stats/stats.py:/spuc/plugins/stats.py
     environment:
-      - EXPORT=True
+      - EXPORT=true
+    command: [ "--units", "iulu" ]
     networks:
-      - spuc-net
+      - spuc_network
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://spuc:8321/export" ]
+      interval: 3s
+      timeout: 2s
+      retries: 5
 
   spucsvi:
-    build:
-      context: SPUCSVi
-      dockerfile: Dockerfile
-    image: ghcr.io/uomresearchit/spucsvi:latest
+    image: spuacv/spucsvi:latest
     container_name: spucsvi
     ports:
       - "8322:8322"
-    volumes:
-      - ${PWD}/SPUCSVi /spucsvi/
+    environment:
+      - SPUC_URL=http://spuc:8321
     networks:
-      - spuc-net
+      - spuc_network
     depends_on:
-      - spuc
+      spuc:
+        condition: service_healthy
+
 volumes:
-  spuc-output:
-    name: spuc-output
+  spuc-volume:
+
 
 networks:
-  spuc-net:
+  spuc_network:
+    name: spuc_network
