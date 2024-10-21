@@ -510,7 +510,7 @@ docker run --rm --name spuc-stats_container -p 8321:8321 -v spuc-volume:/spuc/ou
 
 Much better! A far cleaner command, much more customised for our use case!
 
-## Back to reality
+## Building containers from the ground up
 
 In this lesson we adjusted the SPUC image, which already contains a service.
 This is a perfectly valid way of using Dockerfiles!
@@ -525,6 +525,9 @@ The Dockerfile is reproduced below:
 
 ```Dockerfile
 FROM python:3.12-slim
+
+RUN apt update
+RUN apt install -y curl
 
 WORKDIR /spuc
 
@@ -544,10 +547,10 @@ CMD ["--units", "iuhc"]
 
 From this we can see the developers:
 
-* started `FROM` a `python:3.12-slim` image
-* Use `RUN` to install the required packages (from a file) using `pip`
+* Started `FROM` a `python:3.12-slim` image
+* Use `RUN` to install the required packages
 * `COPY` the source code and configuration files
-* set the default `ENTRYPOINT` and `CMD`.
+* Set the default `ENTRYPOINT` and `CMD`.
 
 There are also two other instructions in this Dockerfile that we haven't covered yet.
 
@@ -568,5 +571,3 @@ There are also two other instructions in this Dockerfile that we haven't covered
   `docker build -t <image_name> <context_path>`
 - You can run a container from a local image just like any other image, with docker run.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
