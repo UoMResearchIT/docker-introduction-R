@@ -67,6 +67,7 @@ episodes:
 - docker-run-configuration.Rmd
 - dockerfiles.Rmd
 - docker-compose.Rmd
+- docker-compose-microservices.Rmd
 
 # Information for Learners
 learners:
