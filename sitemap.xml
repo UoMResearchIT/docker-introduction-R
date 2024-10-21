@@ -31,6 +31,9 @@
     <loc>https://uomresearchit.github.io/docker-introduction/docker-cli.html</loc>
   </url>
   <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/docker-compose-microservices.html</loc>
+  </url>
+  <url>
     <loc>https://uomresearchit.github.io/docker-introduction/docker-compose.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>https://uomresearchit.github.io/docker-introduction/instructor/docker-cli.html</loc>
+  </url>
+  <url>
+    <loc>https://uomresearchit.github.io/docker-introduction/instructor/docker-compose-microservices.html</loc>
   </url>
   <url>
     <loc>https://uomresearchit.github.io/docker-introduction/instructor/docker-compose.html</loc>
