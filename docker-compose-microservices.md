@@ -155,4 +155,4 @@ In this lesson we have explored how to extend Docker Compose to create a true mi
 
 This has helped us to support the SPUA in their mission to protect the rare and valuable unicorns!
 
-![Thank you for supporting the SPUA!](fig/space_purple_unicorn_2.png)
+![Thank you for supporting the SPUA!](fig/SPUA/space_purple_unicorn_2.png)
