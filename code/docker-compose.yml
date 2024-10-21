@@ -11,6 +11,8 @@ services:
     environment:
       - EXPORT=true
     command: [ "--units", "iulu" ]
+    networks:
+      - spuc_network
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://spuc:8321/export" ]
       interval: 3s
@@ -24,9 +26,16 @@ services:
       - "8322:8322"
     environment:
       - SPUC_URL=http://spuc:8321
+    networks:
+      - spuc_network
     depends_on:
       spuc:
         condition: service_healthy
 
 volumes:
   spuc-volume:
+
+
+networks:
+  spuc_network:
+    name: spuc_network
