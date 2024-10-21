@@ -3,7 +3,7 @@ import requests
 import logging
 import pandas as pd
 from io import StringIO
-import os
+import os, sys
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -13,6 +13,24 @@ if os.environ.get("SPUC_URL"):
     spuc_url = os.environ.get("SPUC_URL")
 
 app = Flask(__name__)
+
+# Print the initialization message
+print(
+    r"""
+     .-'''-. .-------.   ___    _     _______      .-'''-. ,---.  ,---..-./`)
+    / _     \\  _(`)_ \.'   |  | |   /   __  \    / _     \|   /  |   |\ .-.')
+   (`' )/`--'| (_ o._)||   .'  | |  | ,_/  \__)  (`' )/`--'|  |   |  .'/ `-' \
+  (_ o _).   |  (_,_) /.'  '_  | |,-./  )       (_ o _).   |  | _ |  |  `-'`"`
+   (_,_). '. |   '-.-' '   ( \.-.|\  '_ '`)      (_,_). '. |  _( )_  |  .---.
+  .---.  \  :|   |     ' (`. _` /| > (_)  )  __ .---.  \  :\ (_ o._) /  |   |
+  \    `-'  ||   |     | (_ (_) _)(  .  .-'_/  )\    `-'  | \ (_,_) /   |   |
+   \       / /   )      \ /  . \ / `-'`-'     /  \       /   \     /    |   |
+    `-...-'  `---'       ``-'`-''    `._____.'    `-...-'     `---`     '---'
+
+    :::: SPUC Super Visualizer serving on localhost:8322 ::::
+"""
+)
+sys.stdout.flush()
 
 
 @app.route("/")
@@ -62,4 +80,5 @@ def put_unicorn():
 
 
 if __name__ == "__main__":
+
     app.run()
