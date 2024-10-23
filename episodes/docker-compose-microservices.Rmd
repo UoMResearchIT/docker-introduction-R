@@ -50,7 +50,7 @@ It is maintained by the University of Manchester's Research IT team, and can eas
 `Apperture` is comprised primarily of a `docker-compose.yml` file.
 Just like we have been looking at!
 
-The full `docker-compose.yml` file is available [here](https://raw.githubusercontent.com/UoMResearchIT/apperture/refs/heads/main/docker-compose.yml).
+The full `docker-compose.yml` file is available [on github](https://raw.githubusercontent.com/UoMResearchIT/apperture/refs/heads/main/docker-compose.yml).
 It is quite long, so we will reproduce a slimmed down version here.
 
 ```yml
@@ -113,7 +113,7 @@ This is the power of Docker Compose and microservices!
 
 To get an idea of what is going on, let's draw a diagram of the services in the `docker-compose.yml` file.
 
-![Apperture Services: Showing a user accessing WhoAmI via the web portal, which is protected by Authelia, which authenticates against an LDAP server, which pulls user data from a Postgres database.](fig/docker_compose_apperture.png)
+![](fig/docker_compose_apperture.png){alt='Apperture Services: Showing a user accessing WhoAmI via the web portal, which is protected by Authelia, which authenticates against an LDAP server, which pulls user data from a Postgres database.'}
 
 In short:
 **Without writing a single line of code, we have a fully functioning, secure web portal!**
@@ -142,7 +142,7 @@ Now we want join the networks of the SPUC and Apperture stacks so that they can 
 
 Couple this change with appropriate configuration of the proxy service, and you have a secure SPUC portal!
 
-![SPUC and Apperture Services: Showing a user accessing the SPUC interface via the web portal.](fig/docker_compose_spuc.png)
+![](fig/docker_compose_spuc.png){alt='SPUC and Apperture Services: Showing a user accessing the SPUC interface via the web portal.'}
 
 By combining the SPUC and Apperture stacks, we have created a powerful, secure web portal with no added code!
 But why stop there?
@@ -157,7 +157,7 @@ We can:
 * Add support for unicorn-detecting sensors using `RabbitMQ` and `Telegraf`
 * Allow users to upload images of unicorns using `MinIO`
 
-![SPUC and Apperture Services: Showing a user accessing the SPUC interface via the web portal, which is protected by Authelia, which authenticates against an LDAP server, which pulls user data from a Postgres database. The SPUC interface communicates with a Postgres database, a RabbitMQ message queue, a Telegraf sensor, and a MinIO object store.](fig/docker_compose_full.png)
+![](fig/docker_compose_full.png){alt='SPUC and Apperture Services: Showing a user accessing the SPUC interface via the web portal, which is protected by Authelia, which authenticates against an LDAP server, which pulls user data from a Postgres database. The SPUC interface communicates with a Postgres database, a RabbitMQ message queue, a Telegraf sensor, and a MinIO object store.'}
 
 This is the true strength of Docker Compose and microservices.
 By combining off the shelf tools, we can create powerful solutions with no or low code,
