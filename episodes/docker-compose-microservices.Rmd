@@ -1,35 +1,41 @@
 ---
-title: Add they lived happily ever after
+title: And they lived happily ever after
 teaching: 99
 exercises: 99
 ---
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: objectives
 - Learn how combinations of microservices can achieve complex tasks with no or low code.
-- Disect a real world example of a microservices architecture.
+- Dissect a real world example of a microservices architecture.
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::: questions
 - How do I get the most out of Docker Compose?
 - What is a microservices architecture?
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-So far in our exploration of Docker Compose we have focused on making our run commands more robust and on the orchestration of a stack.
-In this lesson we will explore how to extend Docker Compose to create a true microservices architecture.
-
-Much of the power of Docker is not just the ability to package your own tools but to use *off the shelf* tools to create powerful solutions.
-Which we will demonstrate in this lesson!
+So far, in our exploration of Docker Compose, we have focused on making our run commands more robust and on the orchestration of a stack.
+Much of the power of Docker, however, is not just the ability to package your own tools, but to use *off the shelf* tools to create powerful solutions.
 
 ## Microservices
 
-First, we should explain what we mean by a microservices architecture.
-The philosophy of microservices is to break down what could be a monolithic application into smaller, more manageable services.
+To be able to use Docker in this way, we need to use Docker Compose to create a *microservices architecture*.
 
-For example, a monoloithic application might have a database, a web server, front and back ends, an API, a caching layer, a message queue, a search engine, etc etc, all contained in the same codebase!
+The philosophy of microservices is to break down applications into small, manageable services.
+This is in contrast to the traditional monolithic approach, where all parts of an application are contained in a single codebase.
 
-By breaking down your application into smaller services, you can take advantage of the best tools available for each part of your application, maintained by an enthusiastic and expert community.
+For example, an application might have a database, a web server, front and back ends, an API, a caching layer, a message queue, a search engine, etc.
+A monolithic approach would be to package all of these in the same codebase, often justified with words like *simplicity*, *performance*, *ease of testing* or *security*.
+
+Using a tool like Docker Compose we can take a different approach.
+We can divide the application into smaller services, each of which is responsible for a single task.
+By breaking down the application into smaller services, we can take advantage of the best tools available for each part of the application.
 
 In a microservices architecture, each tool runs as its own service, and communicates with other services over a network.
-Now, your database, your web server, your front and back ends and all the other services are genuinely separate, and can be best in class for their particular task.
+The database, web server, front and back ends, and all the other services can be genuinely separate.
+This can enhance the security in the application, as each service can be isolated from the others.
+
+Furthermore, since each of the tools can be best in their class, and maintained by an enthusiastic and expert community, there can be gains in performance.
+Docker Desktop helps in orchestrating these services, making it easy to start, stop, and manage them, which ends up being at least as simple as in a monolithic application (if not more).
 
 For individual developers, it means less time writing code which has already been written, and more time focusing on the unique, and fun, parts of your application.
 
@@ -37,13 +43,17 @@ For individual developers, it means less time writing code which has already bee
 
 Let's take a look at this approach in the context of a real world example.
 
-The [Apperture](https://github.com/UoMResearchIT/apperture) project is a stack of microservices which combine to provide a log in secure web portal with built in user-mangement. It is maintained by the University of Manchester's Research IT team and can easily be combined with other stacks to provide them with a log in portal.
+The [Apperture](https://github.com/UoMResearchIT/apperture) project is a stack of microservices.
+They combine to provide a log-in secure web portal with built in user-mangement.
+It is maintained by the University of Manchester's Research IT team, and can easily be combined with other stacks to provide them with a log in portal.
 
-`Apperture` is comprised primarily of a `docker-compose.yml` file. Just like we have been looking at!
+`Apperture` is comprised primarily of a `docker-compose.yml` file.
+Just like we have been looking at!
 
-The full `docker-compose.yml` file is available [here](https://raw.githubusercontent.com/UoMResearchIT/apperture/refs/heads/main/docker-compose.yml). It is quite long so we will reproduce a slimmed down version here.
+The full `docker-compose.yml` file is available [here](https://raw.githubusercontent.com/UoMResearchIT/apperture/refs/heads/main/docker-compose.yml).
+It is quite long, so we will reproduce a slimmed down version here.
 
-```yaml
+```yml
 services:
   proxy:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -97,7 +107,9 @@ This `docker-compose.yml` file is a little more complex than the ones we have be
 
 You'll see some familiar things, like `image`, `ports`, `depends_on` (and `healthchecks`), `volumes`, and `environment`.
 
-Notice the `image` field in the `services` section of the `docker-compose.yml` file. Every service is using a pre-built Docker image from Docker Hub. This is the power of Docker Compose and microservices!
+Notice the `image` field in the `services` section of the `docker-compose.yml` file.
+Every service is using a pre-built Docker image from Docker Hub, straight off the shelf!
+This is the power of Docker Compose and microservices!
 
 To get an idea of what is going on, let's draw a diagram of the services in the `docker-compose.yml` file.
 
@@ -112,14 +124,14 @@ One of the most powerful features of Docker Compose is the ability to combine st
 There is no reason we cannot combine the Apperture stack with the SPUC stack we have been working with in previous lessons!
 
 This would allow us to protect our SPUC interface with the Apperture portal.
-An important addition! We need to ensure poachers cannot falsely record sightings of the rare yet valuable unicorns!
+An important addition!We need to ensure poachers cannot falsely record sightings of the rare yet valuable unicorns!
 
 This can be achieved by making a couple of changes to the SPUC `docker-compose.yml` file.
 
 In our previous lesson, we learned about networks, which allow services to communicate with each other.
 Now we want join the networks of the SPUC and Apperture stacks so that they can communicate with each other.
 
-```yaml
+```yml
 # SPUC docker-compose.yml
 
 + networks:
@@ -128,31 +140,34 @@ Now we want join the networks of the SPUC and Apperture stacks so that they can 
 +     name: apperture_default
 ```
 
-Couple this change with appropriate configuration of the proxy service and you have a secure SPUC portal!
+Couple this change with appropriate configuration of the proxy service, and you have a secure SPUC portal!
 
 ![SPUC and Apperture Services: Showing a user accessing the SPUC interface via the web portal.](fig/docker_compose_spuc.png)
 
-By combining the SPUC and Apperture stacks, we have created a powerful, secure web portal with no code!
+By combining the SPUC and Apperture stacks, we have created a powerful, secure web portal with no added code!
 But why stop there?
 
 ## Rapid extension
 
-There are some improvments we can make very quickly!
+There are some improvements we can make very quickly!
 
 We can:
 
 * Add a proper database to SPUC using `Postgres`
-* Add support for sensors using `RabbitMQ` and `Telegraf`
-* Allow users to record images of unicorns using `MinIO`
+* Add support for unicorn-detecting sensors using `RabbitMQ` and `Telegraf`
+* Allow users to upload images of unicorns using `MinIO`
 
 ![SPUC and Apperture Services: Showing a user accessing the SPUC interface via the web portal, which is protected by Authelia, which authenticates against an LDAP server, which pulls user data from a Postgres database. The SPUC interface communicates with a Postgres database, a RabbitMQ message queue, a Telegraf sensor, and a MinIO object store.](fig/docker_compose_full.png)
 
-This is the true strength of Docker Compose and microservices. By combining off the shelf tools, we can create powerful solutions with no or low code and in a fraction of the time it would take to write everything from scratch.
+This is the true strength of Docker Compose and microservices.
+By combining off the shelf tools, we can create powerful solutions with no or low code,
+and in a fraction of the time it would take to write everything from scratch.
 
 ## They Lived Happily Ever After
 
-In this lesson we have explored how to extend Docker Compose to create a true microservices architecture.
+We hope you now feel prepared to start your mission detecting unicorns,
+and that you use Docker for the good of our intergalactic community.
 
-This has helped us to support the SPUA in their mission to protect the rare and valuable unicorns!
+In behalf of the SPUA, we thank you for your commitment and support to the cause!
 
 ![Thank you for supporting the SPUA!](fig/SPUA/space_purple_unicorn_2.png)
