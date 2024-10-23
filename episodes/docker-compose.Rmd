@@ -702,19 +702,74 @@ volumes:
 Now both services will be started at the same time!
 
 ```bash
-docker compose up -d
+docker compose up
 ```
 ```output
 [+] Running 3/3
- ✔ Network docker_intro_default  Created                                                            0.1s 
- ✔ Container spuc_container      Started                                                            0.2s 
- ✔ Container spucsvi_container   Started                                                            0.2s
+ ✔ Network docker_intro_default  Created                                                           0.1s
+ ✔ Container spuc_container      Created                                                           0.0s
+ ✔ Container spucsvi_container   Created                                                           0.0s
+Attaching to spuc_container, spucsvi_container
+spuc_container     |
+spuc_container     |             \
+spuc_container     |              \
+spuc_container     |               \\
+spuc_container     |                \\\
+spuc_container     |                 >\/7
+spuc_container     |             _.-(º   \
+spuc_container     |            (=___._/` \            ____  ____  _    _  ____
+spuc_container     |                 )  \ |\          / ___||  _ \| |  | |/ ___|
+spuc_container     |                /   / ||\         \___ \| |_) | |  | | |
+spuc_container     |               /    > /\\\         ___) |  __/| |__| | |___
+spuc_container     |              j    < _\           |____/|_|    \____/ \____|
+spuc_container     |          _.-' :      ``.
+spuc_container     |          \ r=._\        `.       Space Purple Unicorn Counter
+spuc_container     |         <`\\_  \         .`-.
+spuc_container     |          \ r-7  `-. ._  ' .  `\
+spuc_container     |           \`,      `-.`7  7)   )
+spuc_container     |            \/         \|  \'  / `-._
+spuc_container     |                       ||    .'
+spuc_container     |                        \\  (
+spuc_container     |                         >\  >
+spuc_container     |                     ,.-' >.'
+spuc_container     |                    <.'_.''
+spuc_container     |                      <'
+spuc_container     |
+spuc_container     |
+spuc_container     | Welcome to the Space Purple Unicorn Counter!
+spuc_container     |
+spuc_container     | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
+spuc_container     |
+spuc_container     | :: Try recording a unicorn sighting with:
+spuc_container     |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+spuc_container     |
+spuc_container     | :::: Plugins loaded! ::::
+spuc_container     | :: Available plugins
+spuc_container     |     stats.py
+spuc_container     |
+spuc_container     | :::: Unicorn sightings export activated! ::::
+spuc_container     | :: Try downloading the unicorn sightings record with:
+spuc_container     |     curl localhost:8321/export
+spuc_container     |
+spucsvi_container  |
+spucsvi_container  |      .-'''-. .-------.   ___    _     _______      .-'''-. ,---.  ,---..-./`)
+spucsvi_container  |     / _     \\  _(`)_ \.'   |  | |   /   __  \    / _     \|   /  |   |\ .-.')
+spucsvi_container  |    (`' )/`--'| (_ o._)||   .'  | |  | ,_/  \__)  (`' )/`--'|  |   |  .'/ `-' \
+spucsvi_container  |   (_ o _).   |  (_,_) /.'  '_  | |,-./  )       (_ o _).   |  | _ |  |  `-'`"`
+spucsvi_container  |    (_,_). '. |   '-.-' '   ( \.-.|\  '_ '`)      (_,_). '. |  _( )_  |  .---.
+spucsvi_container  |   .---.  \  :|   |     ' (`. _` /| > (_)  )  __ .---.  \  :\ (_ o._) /  |   |
+spucsvi_container  |   \    `-'  ||   |     | (_ (_) _)(  .  .-'_/  )\    `-'  | \ (_,_) /   |   |
+spucsvi_container  |    \       / /   )      \ /  . \ / `-'`-'     /  \       /   \     /    |   |
+spucsvi_container  |     `-...-'  `---'       ``-'`-''    `._____.'    `-...-'     `---`     '---'
+spucsvi_container  |
+spucsvi_container  |     :::: SPUC Super Visualizer serving on localhost:8322 ::::
+spucsvi_container  |
 ```
 
 
-As the documentation said, we can now view the SPUCSVi interface by visiting `localhost:8322` in our browser.
+As the logs suggest, we can now view the SPUCSVi interface by visiting `localhost:8322` in our browser.
 
-A visual treat awaits! And an easier way to record and view our unicorn sightings.
+A visual treat awaits, and an easier way to record and view our unicorn sightings!
 
 ### Networks
 
