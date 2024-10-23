@@ -64,7 +64,6 @@ count,time,location,brightness,units
 4,2024-10-16 10:53:13.449393,jupyter,210,iuhc
 5,2024-10-16 12:53:51.726902,venus,148,iuhc
 ```
-### TODO: The curl returns a redirect, because it is a file download... do we want that??
 
 This is great! No need to bind mount or exec to get the data out of the container, we can just use the API endpoint.
 
