@@ -170,4 +170,4 @@ and that you use Docker for the good of our intergalactic community.
 
 In behalf of the SPUA, we thank you for your commitment and support to the cause!
 
-![Thank you for supporting the SPUA!](fig/SPUA/space_purple_unicorn_2.png)
+![](fig/SPUA/spua_thanks_you.png){alt='Thank you for supporting the SPUA!'}
