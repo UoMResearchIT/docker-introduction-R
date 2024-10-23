@@ -44,16 +44,16 @@ Lets go ahead and find the image we need for registering our unicorn sightings.
 
 Open your web browser to [https://hub.docker.com](https://hub.docker.com)
 
-![](fig/docker-hub/landing.png){alt='Dockerhub\_landing'}
+![](fig/docker-hub/01_dockerhub_landing.png){alt='Dockerhub\_landing'}
 
 In the search bar type "spuc" and hit enter.
 
-![](fig/docker-hub/search_spuc.png){alt='Dockerhub\_search'}
+![](fig/docker-hub/02_search_spuc_h.png){alt='Dockerhub\_search'}
 
 You should see a list of images related to spuc and, amongst them, the one we were directed to.
 Lets go ahead and select the [spuacv/spuc](https://hub.docker.com/r/spuacv/spuc) container image.
 
-![](fig/docker-hub/spuc.png){alt='Dockerhub\_spuc'}
+![](fig/docker-hub/03_spuc.png){alt='Dockerhub\_spuc'}
 
 This is a fairly standard docker repository page.
 The page is divided into several sections:
@@ -76,7 +76,7 @@ These versions are indicated by "tags".
 
 If we select the "Tags" tab, we can see the list of tags for this container image.
 
-![](fig/docker-hub/spuc_tags.png){alt='Dockerhub\_spuc\_tags'}
+![](fig/docker-hub/04_spuc_tags.png){alt='Dockerhub\_spuc\_tags'}
 
 If we click the version tag for `latest` of this image, Docker Hub shows it as `spuacv/spuc:latest`.
 
@@ -94,7 +94,7 @@ Tags are actually just labels, and the `latest` tag is just a convention.
 
 You may also have noticed that there are a lot more details about the container image in the page.
 
-![](fig/docker-hub/spuc_latest.png){alt='Dockerhub\_spuc_latest'}
+![](fig/docker-hub/05_spuc_latest.png){alt='Dockerhub\_spuc_latest'}
 
 In particular, we can see the image layers, which describe in part how the image was created.
 This is a very useful feature for understanding what is in the image and evaluating its security.
@@ -118,7 +118,7 @@ Select the top result, which is the endorsed [python](https://hub.docker.com/_/p
 
 The "official" badge is shown on the top right of the repository.
 
-![](fig/docker-hub/python.png){alt='Dockerhub\_python'}
+![](fig/docker-hub/06_python_h.png){alt='Dockerhub\_python'}
 
 Another thing you may have noticed is that the "owner" of the image is not shown.
 This is only true for official images, so instead of `OWNER/CONTAINER_IMAGE_NAME:TAG`,
