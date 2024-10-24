@@ -352,7 +352,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>The Docker Hub</h1>
-        <p>Last updated on 2024-10-22 |
+        <p>Last updated on 2024-10-24 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-hub.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -421,11 +421,11 @@ Internet.</p>
 container image. Lets go ahead and find the image we need for
 registering our unicorn sightings.</p>
 <p>Open your web browser to <a href="https://hub.docker.com" class="external-link">https://hub.docker.com</a></p>
-<figure><img src="../fig/docker-hub/landing.png" alt="Dockerhub_landing" class="figure mx-auto d-block"></figure><p>In the search bar type “spuc” and hit enter.</p>
-<figure><img src="../fig/docker-hub/search_spuc.png" alt="Dockerhub_search" class="figure mx-auto d-block"></figure><p>You should see a list of images related to spuc and, amongst them,
+<figure><img src="../fig/docker-hub/01_dockerhub_landing.png" alt="Dockerhub_landing" class="figure mx-auto d-block"></figure><p>In the search bar type “spuc” and hit enter.</p>
+<figure><img src="../fig/docker-hub/02_search_spuc_h.png" alt="Dockerhub_search" class="figure mx-auto d-block"></figure><p>You should see a list of images related to spuc and, amongst them,
 the one we were directed to. Lets go ahead and select the <a href="https://hub.docker.com/r/spuacv/spuc" class="external-link">spuacv/spuc</a> container
 image.</p>
-<figure><img src="../fig/docker-hub/spuc.png" alt="Dockerhub_spuc" class="figure mx-auto d-block"></figure><p>This is a fairly standard docker repository page. The page is divided
+<figure><img src="../fig/docker-hub/03_spuc.png" alt="Dockerhub_spuc" class="figure mx-auto d-block"></figure><p>This is a fairly standard docker repository page. The page is divided
 into several sections:</p>
 <p>The top provides information about the name, endorsements, creator, a
 short description, tags, and popularity (i.e. how many downloads it
@@ -442,7 +442,7 @@ single repository can have many different versions of container images.
 These versions are indicated by “tags”.</p>
 <p>If we select the “Tags” tab, we can see the list of tags for this
 container image.</p>
-<figure><img src="../fig/docker-hub/spuc_tags.png" alt="Dockerhub_spuc_tags" class="figure mx-auto d-block"></figure><p>If we click the version tag for <code>latest</code> of this image,
+<figure><img src="../fig/docker-hub/04_spuc_tags.png" alt="Dockerhub_spuc_tags" class="figure mx-auto d-block"></figure><p>If we click the version tag for <code>latest</code> of this image,
 Docker Hub shows it as <code>spuacv/spuc:latest</code>.</p>
 <p>This name structure is the full identifier of the container image and
 consists of three parts:</p>
@@ -456,7 +456,7 @@ most recent version of the software. Tags are actually just labels, and
 the <code>latest</code> tag is just a convention.</p>
 <p>You may also have noticed that there are a lot more details about the
 container image in the page.</p>
-<figure><img src="../fig/docker-hub/spuc_latest.png" alt="Dockerhub_spuc_latest" class="figure mx-auto d-block"></figure><p>In particular, we can see the image layers, which describe in part
+<figure><img src="../fig/docker-hub/05_spuc_latest.png" alt="Dockerhub_spuc_latest" class="figure mx-auto d-block"></figure><p>In particular, we can see the image layers, which describe in part
 how the image was created. This is a very useful feature for
 understanding what is in the image and evaluating its security.</p>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
@@ -478,7 +478,7 @@ get a feel of the sheer number of container images hosted here. There is
 upwards from 10,000 images related to python alone.</p>
 <p>Select the top result, which is the endorsed <a href="https://hub.docker.com/_/python" class="external-link">python</a> container image.</p>
 <p>The “official” badge is shown on the top right of the repository.</p>
-<figure><img src="../fig/docker-hub/python.png" alt="Dockerhub_python" class="figure mx-auto d-block"></figure><p>Another thing you may have noticed is that the “owner” of the image
+<figure><img src="../fig/docker-hub/06_python_h.png" alt="Dockerhub_python" class="figure mx-auto d-block"></figure><p>Another thing you may have noticed is that the “owner” of the image
 is not shown. This is only true for official images, so instead of
 <code>OWNER/CONTAINER_IMAGE_NAME:TAG</code>, the name is just
 <code>CONTAINER_IMAGE_NAME:TAG</code>.</p>
@@ -627,8 +627,8 @@ from Azuere, Microsoft.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/instructor/docker-hub.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/instructor/docker-hub.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-10-22",
-  "datePublished": "2024-10-22"
+  "dateModified": "2024-10-24",
+  "datePublished": "2024-10-24"
 }
 
   </script><script>
