@@ -44,7 +44,7 @@ For individual developers, it means less time writing code which has already bee
 Let's take a look at this approach in the context of a real world example.
 
 The [Apperture](https://github.com/UoMResearchIT/apperture) project is a stack of microservices.
-They combine to provide a log-in secure web portal with built in user-mangement.
+They combine to provide a log-in secure web portal with built in user-management.
 It is maintained by the University of Manchester's Research IT team, and can easily be combined with other stacks to provide them with a log in portal.
 
 `Apperture` is comprised primarily of a `docker-compose.yml` file.
