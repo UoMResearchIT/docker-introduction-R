@@ -103,7 +103,7 @@ if __name__ == "__main__":
     if units == "iuhc":
         unit_long_name = "Imperial Unicorn Hoove Candles"
     elif units == "iulu":
-        unit_long_name = "Intergalactic Unicorn Luminiocity Units"
+        unit_long_name = "Intergalactic Unicorn Luminosity Units"
 
     # Print the initialization message
     print(s.logo())

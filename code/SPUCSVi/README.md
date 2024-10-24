@@ -22,7 +22,8 @@ Simply fill and submit the form and continue your search for these fantastic cre
 
 ## Running the service
 
-This image is intended to be used in conjunction with the Space Purple Unicorn Counter (SPUC) image.
+This image is intended to be used in conjunction with the Space Purple Unicorn Counter (SPUC)
+[image](https://hub.docker.com/r/spuacv/spuc).
 
 Set the `SPUC_HOST` environment variable to the address of the SPUC service.
 

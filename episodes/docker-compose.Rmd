@@ -481,7 +481,7 @@ docker compose logs
 ```output
 [...]
 spuc_container  | 
-spuc_container  | :::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
+spuc_container  | :::: Units set to Intergalactic Unicorn Luminosity Units [iulu] ::::
 spuc_container  |
 [...]
 ```

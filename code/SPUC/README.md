@@ -29,7 +29,7 @@ This image provides a service with which you can register space purple unicorn s
 ## Running the service
 To start the service run:
 ```
-docker run -p 8321:8321 fcoherreazcue/spuc:latest
+docker run -p 8321:8321 spuacv/spuc:latest
 ```
 
 ## Registering a sighting
@@ -42,7 +42,7 @@ curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
 will register a unicorn sighting on the moon with a brightness of 100iuhc.
 
 The default behaviour is to set *Imperial Unicorn Hoove Candles* [iuhc],
-but it can be configured to use *Intergalactic Unicorn Luminiocity Units* [iulu].
+but it can be configured to use *Intergalactic Unicorn Luminosity Units* [iulu].
 
 ## Output configuration
 The running container will confirm the sighting record with a print output.
@@ -64,7 +64,7 @@ curl localhost:8321/export
 
 ## Changing units
 
-The brightness units can be changed from Imperial Unicorn Hoove Candles (iuhc) to Intergalactic Unicorn Luminiocity Units (iulu)
+The brightness units can be changed from Imperial Unicorn Hoove Candles (iuhc) to Intergalactic Unicorn Luminosity Units (iulu)
 by passing the parameters `--units iuhc` on container startup.
 
 ## Plugins

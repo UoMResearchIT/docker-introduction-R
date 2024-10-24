@@ -159,7 +159,7 @@ Although many of the containers made for docker are hosted in the Docker Hub, th
 - [Artifact Registry](https://cloud.google.com/artifact-registry) from Google.
 - [GLR](https://docs.gitlab.com/ee/user/packages/container_registry/) from GitLab.
 - [ECR](https://aws.amazon.com/ecr/) from Amazon.
-- [ACR](https://azure.microsoft.com/en-us/products/container-registry) from Azuere, Microsoft.
+- [ACR](https://azure.microsoft.com/en-us/products/container-registry) from Azure, Microsoft.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
