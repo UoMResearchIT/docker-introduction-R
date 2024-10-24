@@ -71,7 +71,7 @@ Let's dive into the structure of the command we looked at. Here is a diagram whi
 * Followed by the action to perform and the name of the object (e.g. run, pull)
 * You can also include additional arguments and switches as needed (e.g. the image name)
 
-But wait! We ran `docker pull spaucv/spuc:latest`, and the diagram shows the command as 'image'!
+But wait! We ran `docker pull spuacv/spuc:latest`, and the diagram shows the command as 'image'!
 
 We apologise for the trick but we were actually using a shorthand built into the Docker CLI.
 There are a few of these shortcuts; they are useful, but can be confusing.
