@@ -80,7 +80,7 @@ This is the case for the brightness units in the SPUC container.
 
 It is actually probably the first change you'd want to do to this particular container.
 It is recording the brightness of the unicorns in *Imperial Unicorn Hoove Candles* (iuhc)!
-This is a very outdated unit and we **must** change it to the much more standard *Intergalactic Unicorn Luminiocity Units* (iulu).
+This is a very outdated unit and we **must** change it to the much more standard *Intergalactic Unicorn Luminosity Units* (iulu).
 
 Fortunately the SPUC documentations tells us that we can pass a parameter to the container to set these units right.
 If we look carefully at the entrypoint and command of the container, we can see that the default units are set to `iuhc` there:
@@ -138,7 +138,7 @@ count,time,location,brightness,units
 4,2024-10-16 10:53:13.449393,jupyter,100,iuhc
 5,2024-10-16 12:49:52.512391,jupyter,100,iuhc
 6,2024-10-16 12:50:10.581131,jupyter,100,iuhc
-7,2024-10-16 12:53:51.726902,vennus,148,iuhc
+7,2024-10-16 12:53:51.726902,venus,148,iuhc
 ```
 
 Finally, we have the correct units for the brightness of the unicorns!

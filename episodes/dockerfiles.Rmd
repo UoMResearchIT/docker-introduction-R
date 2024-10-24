@@ -504,7 +504,7 @@ docker run --rm --name spuc-stats_container -p 8321:8321 -v spuc-volume:/spuc/ou
  => CACHED [4/4] COPY print.config /spuc/config/print.config                                        0.0s
  => exporting to image                                                                              0.0s
 [...]
-:::: Units set to Intergalactic Unicorn Luminiocity Units [iulu] ::::
+:::: Units set to Intergalactic Unicorn Luminosity Units [iulu] ::::
 [...]
 ```
 
