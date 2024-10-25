@@ -56,8 +56,8 @@ jobs:
         context: ${{ env.CONTEXT }}
         file: ${{ env.DOCKERFILE }}
         tags: ${{ steps.set-tag.outputs.tags }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: type=gha,scope=${{ env.CONTAINER_NAME }}
+        cache-to: type=gha,scope=${{ env.CONTAINER_NAME }},mode=max
         push: true
 
     - name: Update description
