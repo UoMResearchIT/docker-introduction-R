@@ -55,7 +55,6 @@ jobs:
         tags: ${{ steps.set-tag.outputs.tags }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        load: true
         push: true
 
     - name: Update description
@@ -64,4 +63,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}
-        readme-filepath: .${{ env.README }}
+        readme-filepath: ${{ env.README }}
