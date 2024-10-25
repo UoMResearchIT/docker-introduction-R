@@ -40,9 +40,9 @@ jobs:
       id: set-tag
       run: |
         if [ -z "${{ github.event.inputs.version }}" ]; then
-          echo "tag=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest" >> $GITHUB_OUTPUT
+          echo "tags=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest" >> $GITHUB_OUTPUT
         else
-          echo "tag=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          echo "tags=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:${{ github.event.inputs.version }},${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest" >> $GITHUB_OUTPUT
         fi
 
     - name: Build and push to dockerhub
@@ -50,14 +50,8 @@ jobs:
       with:
         context: ${{ env.CONTEXT }}
         file: ${{ env.DOCKERFILE }}
-        tags: ${{ steps.set-tag.outputs.tag }}
+        tags: ${{ steps.set-tag.outputs.tags }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
         load: true
         push: true
-
-    - name: Push latest
-      if: ${{ github.event.inputs.version }}
-      run: |
-        docker tag ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:${{ github.event.inputs.version }} ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
-        docker push ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
