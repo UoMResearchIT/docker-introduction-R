@@ -23,8 +23,8 @@ To be able to use Docker in this way, we need to use Docker Compose to create a 
 The philosophy of microservices is to break down applications into small, manageable services.
 This is in contrast to the traditional monolithic approach, where all parts of an application are contained in a single codebase.
 
-For example, an application might have a database, a web server, front and back ends, an API, a caching layer, a message queue, a search engine, etc.
-A monolithic approach would be to package all of these in the same codebase, often justified with words like *simplicity*, *performance*, *ease of testing* or *security*.
+For example, an application might have a database, a web server, front and back ends, an API, a file store, a message queue etc.
+A monolithic approach would be to package all of these in the same codebase. This is conceptually simple, but can rapidly become unwieldy and difficult to maintain.
 
 Using a tool like Docker Compose we can take a different approach.
 We can divide the application into smaller services, each of which is responsible for a single task.
