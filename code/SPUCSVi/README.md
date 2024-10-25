@@ -38,4 +38,4 @@ However, we highly recommend using Docker Compose to manage the services in conj
 
 ## Brought to you by:
 
-![LOGO](../../episodes/fig/SPUA/SPUA_logo.png){alt='SPUA Logo.'}
+![LOGO](/episodes/fig/SPUA/SPUA_logo.png "SPUA Logo.")
