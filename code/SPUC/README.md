@@ -1,5 +1,3 @@
-![LOGO](fig/SPUA/SPUA_logo.png){alt='SPUA Logo.'}
-
             \
              \
               \\
@@ -81,3 +79,7 @@ from __main__ import app
 def my_plugin():
     return {"message": "My plugin worked!"}, 200
 ```
+
+## Brought to you by:
+
+![LOGO](../../episodes/fig/SPUA/SPUA_logo.png){alt='SPUA Logo.'}

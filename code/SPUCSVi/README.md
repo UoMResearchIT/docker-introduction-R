@@ -1,5 +1,3 @@
-![LOGO](fig/SPUA/SPUA_logo.png){alt='SPUA Logo.'}
-
 ```
      .-'''-. .-------.   ___    _     _______      .-'''-. ,---.  ,---..-./`)
     / _     \\  _(`)_ \.'   |  | |   /   __  \    / _     \|   /  |   |\ .-.')
@@ -37,3 +35,7 @@ docker run -p 8322:8322 -e SPUC_HOST=http://spuc:8321 spuacv/spucsvi:latest
 ```
 
 However, we highly recommend using Docker Compose to manage the services in conjunction.
+
+## Brought to you by:
+
+![LOGO](../../episodes/fig/SPUA/SPUA_logo.png){alt='SPUA Logo.'}
