@@ -21,7 +21,7 @@ jobs:
     env:
       CONTAINER_NAME: spuc
       CONTEXT: ./code/SPUC
-      DOCKERFILE: Dockerfile
+      DOCKERFILE: ./code/SPUC/Dockerfile
     steps:
 
     - name: Check out the repo
