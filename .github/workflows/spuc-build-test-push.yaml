@@ -55,7 +55,7 @@ jobs:
         file: ${{ env.DOCKERFILE }}
         tags: ${{ steps.set-tag.outputs.tag }}
         cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
-        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:cache,mode=max
+        cache-to: type=inline
         load: true
         push: true
 
