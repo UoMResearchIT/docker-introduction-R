@@ -64,3 +64,4 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}
         readme-filepath: ${{ env.README }}
+        enable-url-completion: true
