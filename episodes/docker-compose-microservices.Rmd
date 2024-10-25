@@ -170,6 +170,6 @@ and in a fraction of the time it would take to write everything from scratch.
 We hope you now feel prepared to start your mission detecting unicorns,
 and that you use Docker for the good of our intergalactic community.
 
-In behalf of the SPUA, we thank you for your commitment and support to the cause!
+In behalf of the SPUA, we thank you for your commitment and support for the cause!
 
 ![](fig/SPUA/spua_thanks_you.png){alt='Thank you for supporting the SPUA!'}
