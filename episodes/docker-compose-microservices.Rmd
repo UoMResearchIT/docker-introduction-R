@@ -39,9 +39,11 @@ Docker Desktop helps in orchestrating these services, making it easy to start, s
 
 For individual developers, it means less time writing code which has already been written, and more time focusing on the unique, and fun, parts of your application.
 
-## A Real World Example
+## Microservices in Docker Compose
 
-Let's take a look at this approach in the context of a real world example.
+Docker Compose is the perfect tool for managing a microservices architecture.
+
+To demonstrate the power of Docker Compose and microservices, let's take a look at a more applied example.
 
 The [Apperture](https://github.com/UoMResearchIT/apperture) project is a stack of microservices.
 They combine to provide a log-in secure web portal with built in user-management.
