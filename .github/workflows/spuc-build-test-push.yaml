@@ -36,9 +36,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Pull latest image for caching
-      run: docker pull ${{ env.CONTAINER_NAME }}:latest || true
-
     - name: Set tag
       id: set-tag
       run: |
@@ -54,8 +51,8 @@ jobs:
         context: ${{ env.CONTEXT }}
         file: ${{ env.DOCKERFILE }}
         tags: ${{ steps.set-tag.outputs.tag }}
-        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
-        cache-to: type=inline
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
         load: true
         push: true
 
