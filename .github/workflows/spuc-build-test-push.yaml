@@ -54,4 +54,13 @@ jobs:
         context: ${{ env.CONTEXT }}
         file: ${{ env.DOCKERFILE }}
         tags: ${{ steps.set-tag.outputs.tag }}
+        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
+        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:cache,mode=max
+        load: true
         push: true
+
+    - name: Push latest
+      if: ${{ github.event.inputs.version }}
+      run: |
+        docker tag ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:${{ github.event.inputs.version }} ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
+        docker push ${{ secrets.DOCKERHUB_USER }}/${{ env.CONTAINER_NAME }}:latest
