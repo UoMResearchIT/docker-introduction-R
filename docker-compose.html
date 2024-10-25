@@ -291,7 +291,7 @@
 <div class="accordion accordion-flush" id="accordionFlush10">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading10">
-        <a href="docker-compose-microservices.html">9. Add they lived happily ever after</a>
+        <a href="docker-compose-microservices.html">9. And they lived happily ever after</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -349,13 +349,13 @@
           Previous: Creating Your Own
         </a>
         <a class="chapter-link float-end" href="docker-compose-microservices.html" rel="next">
-          Next: Add they lived...
+          Next: And they lived...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using Docker Compose</h1>
-        <p>Last updated on 2024-10-24 |
+        <p>Last updated on 2024-10-25 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-compose.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1218,20 +1218,75 @@ file!</p>
 <div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="ex">docker</span> compose up</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[+] Running 3/3
- ✔ Network docker_intro_default  Created                                                            0.1s
- ✔ Container spuc_container      Started                                                            0.2s
- ✔ Container spucsvi_container   Started                                                            0.2s</code></pre>
+ ✔ Network docker_intro_default  Created                                                           0.1s
+ ✔ Container spuc_container      Created                                                           0.0s
+ ✔ Container spucsvi_container   Created                                                           0.0s
+Attaching to spuc_container, spucsvi_container
+spuc_container     |
+spuc_container     |             \
+spuc_container     |              \
+spuc_container     |               \\
+spuc_container     |                \\\
+spuc_container     |                 &gt;\/7
+spuc_container     |             _.-(º   \
+spuc_container     |            (=___._/` \            ____  ____  _    _  ____
+spuc_container     |                 )  \ |\          / ___||  _ \| |  | |/ ___|
+spuc_container     |                /   / ||\         \___ \| |_) | |  | | |
+spuc_container     |               /    &gt; /\\\         ___) |  __/| |__| | |___
+spuc_container     |              j    &lt; _\           |____/|_|    \____/ \____|
+spuc_container     |          _.-' :      ``.
+spuc_container     |          \ r=._\        `.       Space Purple Unicorn Counter
+spuc_container     |         &lt;`\\_  \         .`-.
+spuc_container     |          \ r-7  `-. ._  ' .  `\
+spuc_container     |           \`,      `-.`7  7)   )
+spuc_container     |            \/         \|  \'  / `-._
+spuc_container     |                       ||    .'
+spuc_container     |                        \\  (
+spuc_container     |                         &gt;\  &gt;
+spuc_container     |                     ,.-' &gt;.'
+spuc_container     |                    &lt;.'_.''
+spuc_container     |                      &lt;'
+spuc_container     |
+spuc_container     |
+spuc_container     | Welcome to the Space Purple Unicorn Counter!
+spuc_container     |
+spuc_container     | :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
+spuc_container     |
+spuc_container     | :: Try recording a unicorn sighting with:
+spuc_container     |     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+spuc_container     |
+spuc_container     | :::: Plugins loaded! ::::
+spuc_container     | :: Available plugins
+spuc_container     |     stats.py
+spuc_container     |
+spuc_container     | :::: Unicorn sightings export activated! ::::
+spuc_container     | :: Try downloading the unicorn sightings record with:
+spuc_container     |     curl localhost:8321/export
+spuc_container     |
+spucsvi_container  |
+spucsvi_container  |      .-'''-. .-------.   ___    _     _______      .-'''-. ,---.  ,---..-./`)
+spucsvi_container  |     / _     \\  _(`)_ \.'   |  | |   /   __  \    / _     \|   /  |   |\ .-.')
+spucsvi_container  |    (`' )/`--'| (_ o._)||   .'  | |  | ,_/  \__)  (`' )/`--'|  |   |  .'/ `-' \
+spucsvi_container  |   (_ o _).   |  (_,_) /.'  '_  | |,-./  )       (_ o _).   |  | _ |  |  `-'`"`
+spucsvi_container  |    (_,_). '. |   '-.-' '   ( \.-.|\  '_ '`)      (_,_). '. |  _( )_  |  .---.
+spucsvi_container  |   .---.  \  :|   |     ' (`. _` /| &gt; (_)  )  __ .---.  \  :\ (_ o._) /  |   |
+spucsvi_container  |   \    `-'  ||   |     | (_ (_) _)(  .  .-'_/  )\    `-'  | \ (_,_) /   |   |
+spucsvi_container  |    \       / /   )      \ /  . \ / `-'`-'     /  \       /   \     /    |   |
+spucsvi_container  |     `-...-'  `---'       ``-'`-''    `._____.'    `-...-'     `---`     '---'
+spucsvi_container  |
+spucsvi_container  |     :::: SPUC Super Visualizer serving on localhost:8322 ::::
+spucsvi_container  |</code></pre>
 </div>
-<p>As the documentation said, we can now view the SPUCSVi interface by
+<p>As the logs suggest, we can now view the SPUCSVi interface by
 visiting <code>localhost:8322</code> in our browser.</p>
-<p>A visual treat awaits! And an easier way to record and view our
-unicorn sightings.</p>
+<p>A visual treat awaits, and an easier way to record and view our
+unicorn sightings!</p>
 </div>
 <div class="section level3">
 <h3 id="networks">Networks<a class="anchor" aria-label="anchor" href="#networks"></a></h3>
@@ -1634,7 +1689,7 @@ it is <em>ready</em>.</li>
           Previous: Creating Your Own
         </a>
         <a class="chapter-link float-end" href="docker-compose-microservices.html" rel="next">
-          Next: Add they lived...
+          Next: And they lived...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -1680,8 +1735,8 @@ it is <em>ready</em>.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-compose.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-compose.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-10-24",
-  "datePublished": "2024-10-24"
+  "dateModified": "2024-10-25",
+  "datePublished": "2024-10-25"
 }
 
   </script><script>
