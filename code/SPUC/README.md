@@ -82,4 +82,4 @@ def my_plugin():
 
 ## Brought to you by:
 
-![LOGO](SPUA_logo.png "SPUA Logo.")
+![LOGO](/episodes/fig/SPUA/SPUA_logo.png "SPUA Logo.")
