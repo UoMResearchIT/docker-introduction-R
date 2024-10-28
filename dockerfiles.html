@@ -356,7 +356,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Creating Your Own Container Images</h1>
-        <p>Last updated on 2024-10-25 |
+        <p>Last updated on 2024-10-28 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/dockerfiles.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -522,7 +522,7 @@ the current directory.</p>
   Context
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>By default, the <code>docker build</code> command looks for a file
 called <code>Dockerfile</code> in the path specified by the last
@@ -545,7 +545,7 @@ we were in the build context directory.</p>
   The Dockerfile name
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>As mentioned before, by default the <code>docker build</code> command
 looks for a file called <code>Dockerfile</code>.</p>
@@ -752,7 +752,7 @@ the destination in the container image.</p>
   Layers
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>You might have now noticed that on every build we are getting
 messages like <code>CACHED [2/3]...</code> above.</p>
@@ -883,6 +883,19 @@ Welcome to the Space Purple Unicorn Counter!
 </div>
 <p>The <code>EXPORT</code> variable is now set to <code>True</code> by
 default!</p>
+<div id="arg" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="arg" class="callout-inner">
+<h3 class="callout-title">ARG</h3>
+<div class="callout-content">
+<p>There is another instruction called <code>ARG</code> that is used to
+set variables in the <code>Dockerfile</code>. These variables are only
+available during the build process, and are not saved in the image.</p>
+</div>
+</div>
+</div>
 <div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
@@ -891,7 +904,7 @@ default!</p>
   Layers - continued
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>You might have noticed that the <code>ENV</code> instruction did not
 create a new layer in the image.</p>
@@ -1135,8 +1148,8 @@ image, with docker run.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/dockerfiles.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/dockerfiles.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-10-25",
-  "datePublished": "2024-10-25"
+  "dateModified": "2024-10-28",
+  "datePublished": "2024-10-28"
 }
 
   </script><script>
