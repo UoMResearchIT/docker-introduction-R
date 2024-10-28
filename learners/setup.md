@@ -62,10 +62,10 @@ However, if you have installed it using this service you will need to take the f
 `export TMPDIR=~/tmp`
 
 These commands will let you use docker in the current terminal instance,
-but you will have to run "export TEMPDIR=~/tmp" in every new terminal you want to use docker in.
+but you will have to run "export TMPDIR=~/tmp" in every new terminal you want to use docker in.
 
 An alternative is to append that command at the end of your bashrc file with the following command:  
-`echo "export TEMPDIR=~/tmp" >> ~/bashrc`
+`echo "export TMPDIR=~/tmp" >> ~/bashrc`
 
 This will configure each new instance of a terminal to run that command at the start of every new terminal instance.
 

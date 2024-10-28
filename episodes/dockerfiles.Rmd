@@ -415,6 +415,13 @@ Welcome to the Space Purple Unicorn Counter!
 
 The `EXPORT` variable is now set to `True` by default!
 
+::::: callout
+## ARG
+
+There is another instruction called `ARG` that is used to set variables in the `Dockerfile`.
+These variables are only available during the build process, and are not saved in the image.
+:::::::::::::
+
 :::::::::::: spoiler
 
 ## Layers - continued
