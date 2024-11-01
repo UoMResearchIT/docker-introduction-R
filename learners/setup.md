@@ -83,7 +83,7 @@ Installation on Windows requires two steps:
 - Installation of Docker Desktop.
 
 Microsoft publishes a [guide](https://learn.microsoft.com/en-us/windows/wsl/install) to installing WSL,
-and Docker provides a [guide](https://docs.docker.com/desktop/install/windows-install/") for installing Docker Desktop.
+and Docker provides a [guide](https://docs.docker.com/desktop/install/windows-install/) for installing Docker Desktop.
 
 We recommend following these guides directly, as they are updated regularly and provide the most current information.
 
