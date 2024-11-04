@@ -258,6 +258,8 @@ Welcome to the Space Purple Unicorn Counter!
 
 :: Try recording a unicorn sighting with:
     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+
+:: No plugins detected
 ```
 
 And there we have it! The SPUC container is running and ready to count unicorns.
@@ -429,15 +431,32 @@ connectivity on endpoint spuc_container (67e075648d16fafdf086573169d891bee9b33be
 Oops! It looks like we already have a container running on port 8321.
 Of course, it is the container that we ran earlier, unruffled_noyce, and we can't have two containers running on the same port!
 
-To fix this, we can stop the container that is running on port 8321 using the `docker stop` command:
+To fix this, we can stop and remove the container that is running on port 8321 using the `docker stop` command:
 ```bash
 docker stop unruffled_noyce
+docker rm unruffled_noyce
 ```
 ```output
 unruffled_noyce
+unruffled_noyce
 ```
 
-**Note:** Using `docker kill <container_name>`, will also work, although it is best to leave that as a last resort.
+::::::::::::::::::::::::::::::::::::::: callout
+
+### Killing containers
+Using `docker kill <container_name>`, will immediately stop a container.
+This is usually recommended against as a standard, and should be left as a last resort.
+However, in practice it is very often used.
+
+The SPUC container, in particular, responds very slowly to the `stop` signal, so we will use `kill` going forward.
+Try it with the other container we left running in the background:
+```bash
+docker kill ecstatic_nightingale
+```
+```output
+ecstatic_nightingale
+```
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 Right, now we can try running the container again:
 ```bash
@@ -587,7 +606,7 @@ We can of course do the same thing in the Docker CLI.
 
 To show this, lets first stop the container we have running:
 ```bash
-docker stop spuc_container
+docker kill spuc_container
 ```
 ```output
 spuc_container
@@ -619,10 +638,10 @@ As we can see, the container is alive and well, and we can now exec into it agai
 ## Cleaning up
 
 The last thing we need to know is how to clean up after ourselves.
-We can do this using the `docker rm` command to remove a container,
-and the `docker image rm` command to remove an image:
+We have already removed a container using the `docker rm` command,
+and we can use the `docker image rm` command to remove an image:
 ```bash
-docker stop spuc_container
+docker kill spuc_container
 ```
 ```output
 spuc_container
@@ -720,6 +739,7 @@ We will cover these in the next episode.
 | `docker logs <container>`       | Show the logs of a container                    |
 | `docker exec <container> <cmd>` | Run a command in a running container            |
 | `docker stop <container>`       | Stop a running container                        |
+| `docker kill <container>`       | Immediately stop a running container            |
 | `docker start <container>`      | Start a stopped container                       |
 | `docker rm <container>`         | Remove a container                              |
 | **System**                      |                                                 |
