@@ -46,9 +46,11 @@ or for persisting data between runs of a container.
 Let's have a look at how we can use a volume to persist the `unicorn_sightings.txt` file between runs of the container.
 We do this by modifying our `run` command to include a `-v` (for volume) flag, a volume name and a path inside the container.
 ```bash
+docker kill spuc_container
 docker run -d --rm --name spuc_container -p 8321:8321 -v spuc-volume:/spuc/output spuacv/spuc:latest
 ```
 ```output
+spuc_container
 f1bd2bb9062348b6a1815f5076fcd1b79e603020c2d58436408c6c60da7e73d2
 ```
 
@@ -116,7 +118,7 @@ count,time,location,brightness,units
 Now, for our test, we will stop the container.
 Since we used the `-rm` flag, the container will also be deleted.
 ```bash
-docker stop spuc_container
+docker kill spuc_container
 docker ps -a
 ```
 ```output
@@ -154,7 +156,7 @@ However, instead of a name for the volume, we have to specify a path on the host
 
 **Note:** In older versions of Docker the path had to be *absolute*; *relative* paths are now supported.
 ```bash
-docker stop spuc_container
+docker kill spuc_container
 docker run -d --rm --name spuc_container -p 8321:8321 -v ./spuc/output:/spuc/output spuacv/spuc:latest
 ```
 ```output
@@ -178,7 +180,7 @@ count,time,location,brightness,units
 
 and the file is still there even after stopping the container
 ```bash
-docker stop spuc_container
+docker kill spuc_container
 ls spuc/output
 ```
 ```output
@@ -208,6 +210,8 @@ ls -l spuc/unicorn_sightings.txt
 ```output
 -rw-r--r-- 1 root root 57 Oct 11 14:14 spuc/unicorn_sightings.txt
 ```
+
+**Note:** This no longer seems to be the case from Docker version 27.3.1 onwards.
 
 Argh, the file is owned by root!
 This is because the container runs as root, and so any files created by the container are owned by root.
@@ -239,7 +243,7 @@ echo "::::: {time} Unicorn number {count} spotted at {location}! Brightness: {br
 Now, to share it with the container, we need to put it in the path `/spuc/config/print.config`.
 Again we will use `-v`, but we will specify the path to the file, instead of a directory.
 ```bash
-docker stop spuc_container
+docker kill spuc_container
 docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output spuacv/spuc:latest
 ```
 

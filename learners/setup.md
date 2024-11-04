@@ -122,7 +122,7 @@ You can also find a summary of the steps below (buyer beware!).
 To check if the Docker and client and server are working run the following command in a new terminal session:
 
 ```bash
-$ docker version
+docker version
 ```
 ```output
 Client: Docker Engine - Community
