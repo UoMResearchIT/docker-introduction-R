@@ -359,7 +359,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Docker Desktop</h1>
-        <p>Last updated on 2024-11-01 |
+        <p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-desktop.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -488,7 +488,7 @@ specify a name for the container (which we could have done in the
 optional settings), Docker will generate a random name for it, which is
 what we see here.</p>
 <p>Exploring the <code>Inspect</code> tab will show us some information,
-but for now we are more interested in what the <code>Terminal</code> and
+but for now we are more interested in what the <code>Exec</code> and
 <code>Stats</code> tabs have to say. They both seem to indicate that we
 need to <em>run</em> or <em>start</em> the container.</p>
 <div class="tabs">
@@ -525,17 +525,17 @@ need to <em>run</em> or <em>start</em> the container.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-1" class="tab-content">
-<div id="nav-tabpanel-1-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-1-1">
+<div id="nav-tabpanel-1-1" class="tab-pane show active" aria-labelledby="nav-tab-1-1" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_log.png" alt="Logs tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-1-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-2">
+<div id="nav-tabpanel-1-2" class="tab-pane" aria-labelledby="nav-tab-1-2" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_inspect.png" alt="Inspect tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-1-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-3">
+<div id="nav-tabpanel-1-3" class="tab-pane" aria-labelledby="nav-tab-1-3" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_bind.png" alt="Bind mounts tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-1-4" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-4">
+<div id="nav-tabpanel-1-4" class="tab-pane" aria-labelledby="nav-tab-1-4" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_exec.png" alt="Exec tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-1-5" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-5">
+<div id="nav-tabpanel-1-5" class="tab-pane" aria-labelledby="nav-tab-1-5" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_files.png" alt="Files tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-1-6" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-6">
+<div id="nav-tabpanel-1-6" class="tab-pane" aria-labelledby="nav-tab-1-6" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_stats.png" alt="Stats tab in container from hello-world image." class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
@@ -617,25 +617,24 @@ container.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-2" class="tab-content">
-<div id="nav-tabpanel-2-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-2-1">
+<div id="nav-tabpanel-2-1" class="tab-pane show active" aria-labelledby="nav-tab-2-1" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_log.png" alt="Logs tab in container from spuc image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-2-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-2">
+<div id="nav-tabpanel-2-2" class="tab-pane" aria-labelledby="nav-tab-2-2" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_inspect.png" alt="Inspect tab in container from spuc image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-2-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-3">
+<div id="nav-tabpanel-2-3" class="tab-pane" aria-labelledby="nav-tab-2-3" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_bind.png" alt="Bind mounts tab in container from spuc image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-2-4" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-4">
+<div id="nav-tabpanel-2-4" class="tab-pane" aria-labelledby="nav-tab-2-4" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_exec.png" alt="Exec tab in container from spuc image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-2-5" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-5">
+<div id="nav-tabpanel-2-5" class="tab-pane" aria-labelledby="nav-tab-2-5" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_files.png" alt="Files tab in container from spuc image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-2-6" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-6">
+<div id="nav-tabpanel-2-6" class="tab-pane" aria-labelledby="nav-tab-2-6" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_stats.png" alt="Stats tab in container from spuc image." class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
-<p>Before trying to do anything in the terminal,
-let<code>s look at the container list by clicking on the</code>Containers`
-tab on the left. You’ll see the green icon of the container indicating
-that it is still live, and indication of how long it’s been running
-for.</p>
+<p>Before trying to do anything in the terminal, let’s look at the
+container list by clicking on the <code>Containers</code> tab on the
+left. You’ll see the green icon of the container indicating that it is
+still live, and indication of how long it’s been running for.</p>
 <figure><img src="fig/docker-desktop/containers_list_spuc_running.png" alt="Containers list, spuc still running." class="figure mx-auto d-block"></figure><p>Clicking on the container name again will take us back to the
 <code>Logs</code> tab in the container.</p>
 <div id="spot-a-unicorn" class="callout">
@@ -647,9 +646,13 @@ for.</p>
 <div class="callout-content">
 <p>If you look at the logs, you’ll see that the SPUC container is
 instructing you on how to interact with it. Lets go ahead and try that.
-Open a terminal and run the command
-<code>curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100</code>.
-If you look at the logs again, you’ll see that the container has
+Open a terminal and run the command</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=moon\&amp;brightness=100</span></code></pre>
+</div>
+<p>If you look at the logs again, you’ll see that the container has
 responded to your command with something like:</p>
 <figure><img src="fig/docker-desktop/spuc_unicorn_detected.png" alt="Detecting a unicorn, spuc logs." class="figure mx-auto d-block"></figure><p>The documentation also mentioned that you can configure this print by
 modifying the <code>print.config</code> file. How do we do that?</p>
@@ -756,8 +759,7 @@ weaknesses.</p>
 <p>One thing we have completely lost now is the record of our unicorn
 sightings. The containers are gone, and so are the changes we made to
 the <code>print.config</code> file. Data in the containers can be made
-persistent, but it is not the default behaviour, and it is not something
-you can do from Docker Desktop!</p>
+persistent, but it is not the default behaviour.</p>
 <p>Another very important thing is that Docker Desktop is very limited
 in <em>how</em> you can run the containers. The optional settings let
 you modify the instruction with which the container is run, but it is
@@ -801,17 +803,17 @@ the <code>Logs</code>, and no way to open a terminal inside Alpine.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-3" class="tab-content">
-<div id="nav-tabpanel-3-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-3-1">
+<div id="nav-tabpanel-3-1" class="tab-pane show active" aria-labelledby="nav-tab-3-1" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_logs.png" alt="Logs tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-3-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-2">
+<div id="nav-tabpanel-3-2" class="tab-pane" aria-labelledby="nav-tab-3-2" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_inspect.png" alt="Inspect tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-3-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-3">
+<div id="nav-tabpanel-3-3" class="tab-pane" aria-labelledby="nav-tab-3-3" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_bind.png" alt="Bind mounts tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-3-4" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-4">
+<div id="nav-tabpanel-3-4" class="tab-pane" aria-labelledby="nav-tab-3-4" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_exec.png" alt="Exec tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-3-5" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-5">
+<div id="nav-tabpanel-3-5" class="tab-pane" aria-labelledby="nav-tab-3-5" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_files.png" alt="Files tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
-<div id="nav-tabpanel-3-6" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-6">
+<div id="nav-tabpanel-3-6" class="tab-pane" aria-labelledby="nav-tab-3-6" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_stats.png" alt="Stats tab in container from alpine image." class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
@@ -910,8 +912,8 @@ and interact with the containers adequately.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-desktop.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-desktop.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>

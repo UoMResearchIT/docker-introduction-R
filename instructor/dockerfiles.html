@@ -355,7 +355,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Creating Your Own Container Images</h1>
-        <p>Last updated on 2024-11-01 |
+        <p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/dockerfiles.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -440,12 +440,14 @@ out the <code>-d</code> flag so we can see the output easily.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> ./stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>Traceback (most recent call last):
+<pre class="output" tabindex="0"><code>[...]
+Traceback (most recent call last):
   File "/spuc/spuc.py", line 31, in &lt;module&gt;
     __import__(f"{plugin_dir}.{plugin[:-3]}")
   File "/spuc/plugins/stats.py", line 4, in &lt;module&gt;
@@ -506,7 +508,7 @@ name the image we are building. We give the image a name with the
  =&gt; [internal] load metadata for docker.io/spuacv/spuc:latest                                          0.0s
  =&gt; [internal] load .dockerignore                                                                      0.0s
  =&gt; =&gt; transferring context: 2B                                                                        0.0s
- =&gt; CACHED [1/1] FROM docker.io/spuacv/spuc:latest                                                     0.0s
+ =&gt; [1/1] FROM docker.io/spuacv/spuc:latest                                                            0.1s
  =&gt; exporting to image                                                                                 0.0s
  =&gt; =&gt; exporting layers                                                                                0.0s
  =&gt; =&gt; writing image sha256:ccde35b1f9e872bde522e9fe91466ef983f9b579cffc2f457bff97f74206e839           0.0s
@@ -523,7 +525,7 @@ the current directory.</p>
   Context
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>By default, the <code>docker build</code> command looks for a file
 called <code>Dockerfile</code> in the path specified by the last
@@ -546,7 +548,7 @@ we were in the build context directory.</p>
   The Dockerfile name
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>As mentioned before, by default the <code>docker build</code> command
 looks for a file called <code>Dockerfile</code>.</p>
@@ -626,7 +628,7 @@ changed! In fact, we can pass all the same arguments to the
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> ./stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -678,7 +680,7 @@ software on our host machine, so we can ignore this warning.</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> ./stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -753,7 +755,7 @@ the destination in the container image.</p>
   Layers
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>You might have now noticed that on every build we are getting
 messages like <code>CACHED [2/3]...</code> above.</p>
@@ -776,7 +778,7 @@ work for the <code>COPY</code> layer.</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -905,7 +907,7 @@ available during the build process, and are not saved in the image.</p>
   Layers - continued
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>You might have noticed that the <code>ENV</code> instruction did not
 create a new layer in the image.</p>
@@ -1149,8 +1151,8 @@ image, with docker run.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/instructor/dockerfiles.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/instructor/dockerfiles.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>

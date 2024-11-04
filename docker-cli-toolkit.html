@@ -362,7 +362,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Building our Docker CLI toolkit</h1>
-        <p>Last updated on 2024-11-01 |
+        <p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-cli-toolkit.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -680,7 +680,9 @@ Welcome to the Space Purple Unicorn Counter!
 :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
 :: Try recording a unicorn sighting with:
-    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100</code></pre>
+    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+
+:: No plugins detected</code></pre>
 </div>
 <p>And there we have it! The SPUC container is running and ready to
 count unicorns. What we are seeing now is the equivalent of the ‘Logs’
@@ -881,26 +883,53 @@ connectivity on endpoint spuc_container (67e075648d16fafdf086573169d891bee9b33be
 <p>Oops! It looks like we already have a container running on port 8321.
 Of course, it is the container that we ran earlier, unruffled_noyce, and
 we can’t have two containers running on the same port!</p>
-<p>To fix this, we can stop the container that is running on port 8321
-using the <code>docker stop</code> command:</p>
+<p>To fix this, we can stop and remove the container that is running on
+port 8321 using the <code>docker stop</code> command:</p>
 <div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="ex">docker</span> stop unruffled_noyce</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="ex">docker</span> stop unruffled_noyce</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="ex">docker</span> rm unruffled_noyce</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code><span><span class="va">unruffled_noyce</span></span></code></pre>
+<pre class="output" tabindex="0"><code><span><span class="va">unruffled_noyce</span></span>
+<span><span class="va">unruffled_noyce</span></span></code></pre>
 </div>
-<p><strong>Note:</strong> Using
-<code>docker kill &lt;container_name&gt;</code>, will also work,
-although it is best to leave that as a last resort.</p>
-<p>Right, now we can try running the container again:</p>
+<div id="killing-containers" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="killing-containers" class="callout-inner">
+<h3 class="callout-title">Killing containers</h3>
+<div class="callout-content">
+<p>Using <code>docker kill &lt;container_name&gt;</code>, will
+immediately stop a container. This is usually recommended against as a
+standard, and should be left as a last resort. However, in practice it
+is very often used.</p>
+<p>The SPUC container, in particular, responds very slowly to the
+<code>stop</code> signal, so we will use <code>kill</code> going
+forward. Try it with the other container we left running in the
+background:</p>
 <div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="ex">docker</span> kill ecstatic_nightingale</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="va">ecstatic_nightingale</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Right, now we can try running the container again:</p>
+<div class="codewrapper sourceCode" id="cb41">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -909,10 +938,10 @@ although it is best to leave that as a last resort.</p>
 </div>
 <p>And now we can see the logs using the name of the container, and even
 follow the logs in real time using the <code>-f</code> flag:</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="ex">docker</span> logs <span class="at">-f</span> spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="ex">docker</span> logs <span class="at">-f</span> spuc_container</span></code></pre>
 </div>
 <div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
@@ -975,10 +1004,10 @@ following.</p>
 run commands inside a container. If you remember, we could do this using
 the <code>Exec</code> tab. In the Docker CLI, we can do this using the
 <code>docker exec</code> command. Lets try for example:</p>
-<div class="codewrapper sourceCode" id="cb43">
+<div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="ex">docker</span> exec spuc_container cat config/print.config</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="ex">docker</span> exec spuc_container cat config/print.config</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -997,10 +1026,10 @@ container, and we could run commands interactively.</p>
 command that will load the terminal, i.e. <code>bash</code>. Let’s try
 launching an interactive terminal session inside the container, running
 the bash shell:</p>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb47">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="ex">docker</span> exec <span class="at">-it</span> spuc_container bash</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="ex">docker</span> exec <span class="at">-it</span> spuc_container bash</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1009,12 +1038,12 @@ the bash shell:</p>
 </div>
 <p>This is more like it! now we can run commands as if we were inside
 the container itself, as we did in Docker Desktop.</p>
-<div class="codewrapper sourceCode" id="cb47">
+<div class="codewrapper sourceCode" id="cb49">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="ex">apt</span> update</span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="ex">apt</span> install tree</span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="ex">tree</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="ex">apt</span> update</span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a><span class="ex">apt</span> install tree</span>
+<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a><span class="ex">tree</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1050,10 +1079,10 @@ issue we had before. Namely, the container exits immediately and we
 can’t <code>exec</code> into it. However, we can use the
 <code>-it</code> flag on the <code>run</code> command, and get an
 interactive terminal session inside the container:</p>
-<div class="codewrapper sourceCode" id="cb49">
+<div class="codewrapper sourceCode" id="cb51">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> alpine:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> alpine:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1079,10 +1108,10 @@ on exit.</p>
 previously stopped container. We can of course do the same thing in the
 Docker CLI.</p>
 <p>To show this, lets first stop the container we have running:</p>
-<div class="codewrapper sourceCode" id="cb51">
+<div class="codewrapper sourceCode" id="cb53">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1091,10 +1120,10 @@ Docker CLI.</p>
 </div>
 <p>To <em>revive</em> the container, we can use the
 <code>docker start</code> command:</p>
-<div class="codewrapper sourceCode" id="cb53">
+<div class="codewrapper sourceCode" id="cb55">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="ex">docker</span> start spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="ex">docker</span> start spuc_container</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1104,10 +1133,10 @@ Docker CLI.</p>
 <p>We could now check that the container is running again using the
 <code>docker ps</code> command. However, lets try another useful
 command:</p>
-<div class="codewrapper sourceCode" id="cb55">
+<div class="codewrapper sourceCode" id="cb57">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="ex">docker</span> stats</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="ex">docker</span> stats</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1122,23 +1151,13 @@ stats with <code>[Ctrl+C]</code>.</p>
 into it again if we want to.</p>
 </section><section><h2 class="section-heading" id="cleaning-up">Cleaning up<a class="anchor" aria-label="anchor" href="#cleaning-up"></a></h2>
 <hr class="half-width"><p>The last thing we need to know is how to clean up after ourselves. We
-can do this using the <code>docker rm</code> command to remove a
-container, and the <code>docker image rm</code> command to remove an
-image:</p>
-<div class="codewrapper sourceCode" id="cb57">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code><span><span class="va">spuc_container</span></span></code></pre>
-</div>
+have already removed a container using the <code>docker rm</code>
+command, and we can use the <code>docker image rm</code> command to
+remove an image:</p>
 <div class="codewrapper sourceCode" id="cb59">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="ex">docker</span> rm spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1148,7 +1167,17 @@ image:</p>
 <div class="codewrapper sourceCode" id="cb61">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="ex">docker</span> image rm spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="ex">docker</span> rm spuc_container</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="va">spuc_container</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb63">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="ex">docker</span> image rm spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1170,10 +1199,10 @@ Deleted: sha256:8d853c8add5d1e7b0aafc4b68a3d9fb8e7a0da27970c2acf831fe63be4a0cd2c
 <p>An alternative is to do a single-line full clean up. We can also
 remove all stopped containers and unused images using the
 <code>docker system prune</code> command:</p>
-<div class="codewrapper sourceCode" id="cb63">
+<div class="codewrapper sourceCode" id="cb65">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="ex">docker</span> system prune</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="ex">docker</span> system prune</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1202,10 +1231,10 @@ that will remove the container when it is stopped: <code>--rm</code>.
 This can be very useful, especially when you are naming containers, as
 it prevents name conflicts.</p>
 <p>Lets try it:</p>
-<div class="codewrapper sourceCode" id="cb65">
+<div class="codewrapper sourceCode" id="cb67">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
 </div>
 <p>We can verify that the container exists using <code>docker ps</code>.
 When the container is stopped, however, the container is automatically
@@ -1256,17 +1285,19 @@ Docker CLI with:</li>
 <td>Run a command in a running container</td>
 </tr><tr class="even"><td><code>docker stop &lt;container&gt;</code></td>
 <td>Stop a running container</td>
-</tr><tr class="odd"><td><code>docker start &lt;container&gt;</code></td>
+</tr><tr class="odd"><td><code>docker kill &lt;container&gt;</code></td>
+<td>Immediately stop a running container</td>
+</tr><tr class="even"><td><code>docker start &lt;container&gt;</code></td>
 <td>Start a stopped container</td>
-</tr><tr class="even"><td><code>docker rm &lt;container&gt;</code></td>
+</tr><tr class="odd"><td><code>docker rm &lt;container&gt;</code></td>
 <td>Remove a container</td>
-</tr><tr class="odd"><td><strong>System</strong></td>
+</tr><tr class="even"><td><strong>System</strong></td>
 <td></td>
-</tr><tr class="even"><td><code>docker ps</code></td>
+</tr><tr class="odd"><td><code>docker ps</code></td>
 <td>List all running containers</td>
-</tr><tr class="odd"><td><code>docker stats</code></td>
+</tr><tr class="even"><td><code>docker stats</code></td>
 <td>Show live resource usage of containers</td>
-</tr><tr class="even"><td><code>docker system prune</code></td>
+</tr><tr class="odd"><td><code>docker system prune</code></td>
 <td>Remove all stopped containers and unused images</td>
 </tr></tbody></table><table class="table"><colgroup><col width="12%"><col width="19%"><col width="67%"></colgroup><thead><tr class="header"><th>Flag</th>
 <th>Used on</th>
@@ -1359,8 +1390,8 @@ Docker CLI with:</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-cli-toolkit.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-cli-toolkit.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>

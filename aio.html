@@ -402,7 +402,7 @@
         
 <section id="aio-introduction"><p>Content from <a href="introduction.html">The adventures of Docker and the Space Purple Unicorn Association</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -502,7 +502,7 @@ service, and encouraging your local community to join in the count!</p>
 </div>
 </section></section><section id="aio-docker-desktop"><p>Content from <a href="docker-desktop.html">Docker Desktop</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-desktop.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -635,7 +635,7 @@ specify a name for the container (which we could have done in the
 optional settings), Docker will generate a random name for it, which is
 what we see here.</p>
 <p>Exploring the <code>Inspect</code> tab will show us some information,
-but for now we are more interested in what the <code>Terminal</code> and
+but for now we are more interested in what the <code>Exec</code> and
 <code>Stats</code> tabs have to say. They both seem to indicate that we
 need to <em>run</em> or <em>start</em> the container.</p>
 <div class="tabs">
@@ -672,22 +672,22 @@ need to <em>run</em> or <em>start</em> the container.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-1" class="tab-content">
-<div id="nav-tabpanel-1-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-1-1">
+<div id="nav-tabpanel-1-1" class="tab-pane show active" aria-labelledby="nav-tab-1-1" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_log.png" alt="Logs tab in container from hello-world image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-1-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-2">
+<div id="nav-tabpanel-1-2" class="tab-pane" aria-labelledby="nav-tab-1-2" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_inspect.png" alt="Inspect tab in container from hello-world image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-1-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-3">
+<div id="nav-tabpanel-1-3" class="tab-pane" aria-labelledby="nav-tab-1-3" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_bind.png" alt="Bind mounts tab in container from hello-world image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-1-4" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-4">
+<div id="nav-tabpanel-1-4" class="tab-pane" aria-labelledby="nav-tab-1-4" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_exec.png" alt="Exec tab in container from hello-world image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-1-5" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-5">
+<div id="nav-tabpanel-1-5" class="tab-pane" aria-labelledby="nav-tab-1-5" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_files.png" alt="Files tab in container from hello-world image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-1-6" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-6">
+<div id="nav-tabpanel-1-6" class="tab-pane" aria-labelledby="nav-tab-1-6" role="tabpanel">
 <figure><img src="fig/docker-desktop/hello_stats.png" alt="Stats tab in container from hello-world image." class="figure mx-auto d-block"></figure>
 </div>
 </div>
@@ -772,31 +772,30 @@ container.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-2" class="tab-content">
-<div id="nav-tabpanel-2-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-2-1">
+<div id="nav-tabpanel-2-1" class="tab-pane show active" aria-labelledby="nav-tab-2-1" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_log.png" alt="Logs tab in container from spuc image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-2-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-2">
+<div id="nav-tabpanel-2-2" class="tab-pane" aria-labelledby="nav-tab-2-2" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_inspect.png" alt="Inspect tab in container from spuc image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-2-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-3">
+<div id="nav-tabpanel-2-3" class="tab-pane" aria-labelledby="nav-tab-2-3" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_bind.png" alt="Bind mounts tab in container from spuc image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-2-4" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-4">
+<div id="nav-tabpanel-2-4" class="tab-pane" aria-labelledby="nav-tab-2-4" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_exec.png" alt="Exec tab in container from spuc image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-2-5" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-5">
+<div id="nav-tabpanel-2-5" class="tab-pane" aria-labelledby="nav-tab-2-5" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_files.png" alt="Files tab in container from spuc image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-2-6" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-6">
+<div id="nav-tabpanel-2-6" class="tab-pane" aria-labelledby="nav-tab-2-6" role="tabpanel">
 <figure><img src="fig/docker-desktop/spuc_stats.png" alt="Stats tab in container from spuc image." class="figure mx-auto d-block"></figure>
 </div>
 </div>
 </div>
-<p>Before trying to do anything in the terminal,
-let<code>s look at the container list by clicking on the</code>Containers`
-tab on the left. You’ll see the green icon of the container indicating
-that it is still live, and indication of how long it’s been running
-for.</p>
+<p>Before trying to do anything in the terminal, let’s look at the
+container list by clicking on the <code>Containers</code> tab on the
+left. You’ll see the green icon of the container indicating that it is
+still live, and indication of how long it’s been running for.</p>
 <figure><img src="fig/docker-desktop/containers_list_spuc_running.png" alt="Containers list, spuc still running." class="figure mx-auto d-block"></figure><p>Clicking on the container name again will take us back to the
 <code>Logs</code> tab in the container.</p>
 <div id="spot-a-unicorn" class="callout">
@@ -808,9 +807,13 @@ for.</p>
 <div class="callout-content">
 <p>If you look at the logs, you’ll see that the SPUC container is
 instructing you on how to interact with it. Lets go ahead and try that.
-Open a terminal and run the command
-<code>curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100</code>.
-If you look at the logs again, you’ll see that the container has
+Open a terminal and run the command</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=moon\&amp;brightness=100</span></code></pre>
+</div>
+<p>If you look at the logs again, you’ll see that the container has
 responded to your command with something like:</p>
 <figure><img src="fig/docker-desktop/spuc_unicorn_detected.png" alt="Detecting a unicorn, spuc logs." class="figure mx-auto d-block"></figure><p>The documentation also mentioned that you can configure this print by
 modifying the <code>print.config</code> file. How do we do that?</p>
@@ -925,8 +928,7 @@ weaknesses.</p>
 <p>One thing we have completely lost now is the record of our unicorn
 sightings. The containers are gone, and so are the changes we made to
 the <code>print.config</code> file. Data in the containers can be made
-persistent, but it is not the default behaviour, and it is not something
-you can do from Docker Desktop!</p>
+persistent, but it is not the default behaviour.</p>
 <p>Another very important thing is that Docker Desktop is very limited
 in <em>how</em> you can run the containers. The optional settings let
 you modify the instruction with which the container is run, but it is
@@ -970,22 +972,22 @@ the <code>Logs</code>, and no way to open a terminal inside Alpine.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-3" class="tab-content">
-<div id="nav-tabpanel-3-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-3-1">
+<div id="nav-tabpanel-3-1" class="tab-pane show active" aria-labelledby="nav-tab-3-1" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_logs.png" alt="Logs tab in container from alpine image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-3-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-2">
+<div id="nav-tabpanel-3-2" class="tab-pane" aria-labelledby="nav-tab-3-2" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_inspect.png" alt="Inspect tab in container from alpine image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-3-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-3">
+<div id="nav-tabpanel-3-3" class="tab-pane" aria-labelledby="nav-tab-3-3" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_bind.png" alt="Bind mounts tab in container from alpine image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-3-4" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-4">
+<div id="nav-tabpanel-3-4" class="tab-pane" aria-labelledby="nav-tab-3-4" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_exec.png" alt="Exec tab in container from alpine image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-3-5" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-5">
+<div id="nav-tabpanel-3-5" class="tab-pane" aria-labelledby="nav-tab-3-5" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_files.png" alt="Files tab in container from alpine image." class="figure mx-auto d-block"></figure>
 </div>
-<div id="nav-tabpanel-3-6" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-3-6">
+<div id="nav-tabpanel-3-6" class="tab-pane" aria-labelledby="nav-tab-3-6" role="tabpanel">
 <figure><img src="fig/docker-desktop/alpine_stats.png" alt="Stats tab in container from alpine image." class="figure mx-auto d-block"></figure>
 </div>
 </div>
@@ -1031,7 +1033,7 @@ and interact with the containers adequately.</li>
 </div>
 </section></section><section id="aio-docker-cli-toolkit"><p>Content from <a href="docker-cli-toolkit.html">Building our Docker CLI toolkit</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-cli-toolkit.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1361,7 +1363,9 @@ Welcome to the Space Purple Unicorn Counter!
 :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
 :: Try recording a unicorn sighting with:
-    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100</code></pre>
+    curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+
+:: No plugins detected</code></pre>
 </div>
 <p>And there we have it! The SPUC container is running and ready to
 count unicorns. What we are seeing now is the equivalent of the ‘Logs’
@@ -1570,26 +1574,53 @@ connectivity on endpoint spuc_container (67e075648d16fafdf086573169d891bee9b33be
 <p>Oops! It looks like we already have a container running on port 8321.
 Of course, it is the container that we ran earlier, unruffled_noyce, and
 we can’t have two containers running on the same port!</p>
-<p>To fix this, we can stop the container that is running on port 8321
-using the <code>docker stop</code> command:</p>
+<p>To fix this, we can stop and remove the container that is running on
+port 8321 using the <code>docker stop</code> command:</p>
 <div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="ex">docker</span> stop unruffled_noyce</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="ex">docker</span> stop unruffled_noyce</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="ex">docker</span> rm unruffled_noyce</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code><span><span class="va">unruffled_noyce</span></span></code></pre>
+<pre class="output" tabindex="0"><code><span><span class="va">unruffled_noyce</span></span>
+<span><span class="va">unruffled_noyce</span></span></code></pre>
 </div>
-<p><strong>Note:</strong> Using
-<code>docker kill &lt;container_name&gt;</code>, will also work,
-although it is best to leave that as a last resort.</p>
-<p>Right, now we can try running the container again:</p>
+<div id="killing-containers" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="killing-containers" class="callout-inner">
+<h3 class="callout-title">Killing containers</h3>
+<div class="callout-content">
+<p>Using <code>docker kill &lt;container_name&gt;</code>, will
+immediately stop a container. This is usually recommended against as a
+standard, and should be left as a last resort. However, in practice it
+is very often used.</p>
+<p>The SPUC container, in particular, responds very slowly to the
+<code>stop</code> signal, so we will use <code>kill</code> going
+forward. Try it with the other container we left running in the
+background:</p>
 <div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="ex">docker</span> kill ecstatic_nightingale</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="va">ecstatic_nightingale</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Right, now we can try running the container again:</p>
+<div class="codewrapper sourceCode" id="cb41">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1598,10 +1629,10 @@ although it is best to leave that as a last resort.</p>
 </div>
 <p>And now we can see the logs using the name of the container, and even
 follow the logs in real time using the <code>-f</code> flag:</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="ex">docker</span> logs <span class="at">-f</span> spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="ex">docker</span> logs <span class="at">-f</span> spuc_container</span></code></pre>
 </div>
 <div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
@@ -1666,10 +1697,10 @@ following.</p>
 run commands inside a container. If you remember, we could do this using
 the <code>Exec</code> tab. In the Docker CLI, we can do this using the
 <code>docker exec</code> command. Lets try for example:</p>
-<div class="codewrapper sourceCode" id="cb43">
+<div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="ex">docker</span> exec spuc_container cat config/print.config</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="ex">docker</span> exec spuc_container cat config/print.config</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1688,10 +1719,10 @@ container, and we could run commands interactively.</p>
 command that will load the terminal, i.e. <code>bash</code>. Let’s try
 launching an interactive terminal session inside the container, running
 the bash shell:</p>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb47">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="ex">docker</span> exec <span class="at">-it</span> spuc_container bash</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="ex">docker</span> exec <span class="at">-it</span> spuc_container bash</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1700,12 +1731,12 @@ the bash shell:</p>
 </div>
 <p>This is more like it! now we can run commands as if we were inside
 the container itself, as we did in Docker Desktop.</p>
-<div class="codewrapper sourceCode" id="cb47">
+<div class="codewrapper sourceCode" id="cb49">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="ex">apt</span> update</span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="ex">apt</span> install tree</span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="ex">tree</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="ex">apt</span> update</span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a><span class="ex">apt</span> install tree</span>
+<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a><span class="ex">tree</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1741,10 +1772,10 @@ issue we had before. Namely, the container exits immediately and we
 can’t <code>exec</code> into it. However, we can use the
 <code>-it</code> flag on the <code>run</code> command, and get an
 interactive terminal session inside the container:</p>
-<div class="codewrapper sourceCode" id="cb49">
+<div class="codewrapper sourceCode" id="cb51">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> alpine:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> alpine:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1772,10 +1803,10 @@ on exit.</p>
 previously stopped container. We can of course do the same thing in the
 Docker CLI.</p>
 <p>To show this, lets first stop the container we have running:</p>
-<div class="codewrapper sourceCode" id="cb51">
+<div class="codewrapper sourceCode" id="cb53">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1784,10 +1815,10 @@ Docker CLI.</p>
 </div>
 <p>To <em>revive</em> the container, we can use the
 <code>docker start</code> command:</p>
-<div class="codewrapper sourceCode" id="cb53">
+<div class="codewrapper sourceCode" id="cb55">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="ex">docker</span> start spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="ex">docker</span> start spuc_container</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1797,10 +1828,10 @@ Docker CLI.</p>
 <p>We could now check that the container is running again using the
 <code>docker ps</code> command. However, lets try another useful
 command:</p>
-<div class="codewrapper sourceCode" id="cb55">
+<div class="codewrapper sourceCode" id="cb57">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="ex">docker</span> stats</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="ex">docker</span> stats</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1817,23 +1848,13 @@ into it again if we want to.</p>
 </h2>
 <hr class="half-width">
 <p>The last thing we need to know is how to clean up after ourselves. We
-can do this using the <code>docker rm</code> command to remove a
-container, and the <code>docker image rm</code> command to remove an
-image:</p>
-<div class="codewrapper sourceCode" id="cb57">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code><span><span class="va">spuc_container</span></span></code></pre>
-</div>
+have already removed a container using the <code>docker rm</code>
+command, and we can use the <code>docker image rm</code> command to
+remove an image:</p>
 <div class="codewrapper sourceCode" id="cb59">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="ex">docker</span> rm spuc_container</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1843,7 +1864,17 @@ image:</p>
 <div class="codewrapper sourceCode" id="cb61">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="ex">docker</span> image rm spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="ex">docker</span> rm spuc_container</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="va">spuc_container</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb63">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="ex">docker</span> image rm spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1865,10 +1896,10 @@ Deleted: sha256:8d853c8add5d1e7b0aafc4b68a3d9fb8e7a0da27970c2acf831fe63be4a0cd2c
 <p>An alternative is to do a single-line full clean up. We can also
 remove all stopped containers and unused images using the
 <code>docker system prune</code> command:</p>
-<div class="codewrapper sourceCode" id="cb63">
+<div class="codewrapper sourceCode" id="cb65">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="ex">docker</span> system prune</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="ex">docker</span> system prune</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1898,10 +1929,10 @@ that will remove the container when it is stopped: <code>--rm</code>.
 This can be very useful, especially when you are naming containers, as
 it prevents name conflicts.</p>
 <p>Lets try it:</p>
-<div class="codewrapper sourceCode" id="cb65">
+<div class="codewrapper sourceCode" id="cb67">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 spuacv/spuc:latest</span></code></pre>
 </div>
 <p>We can verify that the container exists using <code>docker ps</code>.
 When the container is stopped, however, the container is automatically
@@ -1983,26 +2014,30 @@ Docker CLI with:</li>
 <td>Stop a running container</td>
 </tr>
 <tr class="odd">
+<td><code>docker kill &lt;container&gt;</code></td>
+<td>Immediately stop a running container</td>
+</tr>
+<tr class="even">
 <td><code>docker start &lt;container&gt;</code></td>
 <td>Start a stopped container</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>docker rm &lt;container&gt;</code></td>
 <td>Remove a container</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>System</strong></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>docker ps</code></td>
 <td>List all running containers</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>docker stats</code></td>
 <td>Show live resource usage of containers</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>docker system prune</code></td>
 <td>Remove all stopped containers and unused images</td>
 </tr>
@@ -2070,7 +2105,7 @@ Docker CLI with:</li>
 </div>
 </section></section><section id="aio-docker-volumes"><p>Content from <a href="docker-volumes.html">Sharing information with containers</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-volumes.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2142,12 +2177,14 @@ container.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code><span><span class="va">f1bd2bb9062348b6a1815f5076fcd1b79e603020c2d58436408c6c60da7e73d2</span></span></code></pre>
+<pre class="output" tabindex="0"><code><span><span class="va">spuc_container</span></span>
+<span><span class="va">f1bd2bb9062348b6a1815f5076fcd1b79e603020c2d58436408c6c60da7e73d2</span></span></code></pre>
 </div>
 <p>Ok! But what is happening? We can see what containers we have created
 using:</p>
@@ -2233,7 +2270,7 @@ record these sightings.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="ex">docker</span> ps <span class="at">-a</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -2280,7 +2317,7 @@ the host filesystem.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./spuc/output:/spuc/output spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
@@ -2311,7 +2348,7 @@ count,time,location,brightness,units
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">ls</span> spuc/output</span></code></pre>
 </div>
 <div class="codewrapper">
@@ -2350,6 +2387,8 @@ just created.</p>
 </h3>
 <pre class="output" tabindex="0"><code>-rw-r--r-- 1 root root 57 Oct 11 14:14 spuc/unicorn_sightings.txt</code></pre>
 </div>
+<p><strong>Note:</strong> This no longer seems to be the case from
+Docker version 27.3.1 onwards.</p>
 <p>Argh, the file is owned by root! This is because the container runs
 as root, and so any files created by the container are owned by root.
 This can be a problem, as you will not have permission to access the
@@ -2385,7 +2424,7 @@ directory.</p>
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output spuacv/spuc:latest</span></code></pre>
 </div>
 <p>Now let’s check if this worked. For that, we need to record another
@@ -2533,7 +2572,7 @@ challenges.</li>
 </div>
 </section></section><section id="aio-docker-hub"><p>Content from <a href="docker-hub.html">The Docker Hub</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-hub.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2648,7 +2687,7 @@ understanding what is in the image and evaluating its security.</p>
   Official Images
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Some images on Docker Hub are “official images,” which means that
 they are endorsed by the Docker team.</p>
@@ -2675,7 +2714,7 @@ is not shown. This is only true for official images, so instead of
   Choosing Container Images on Docker Hub
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>Note that anyone can create an account on Docker Hub and share
 container images there, so it’s important to exercise caution when
@@ -2710,7 +2749,7 @@ over.</p>
   Other sources of Container Images
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>Although many of the containers made for docker are hosted in the
 Docker Hub, there are other places where these can be distributed,
@@ -2758,7 +2797,7 @@ from Azure, Microsoft.</li>
 </div>
 </section></section><section id="aio-docker-run-configuration"><p>Content from <a href="docker-run-configuration.html">Configuring containers</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-run-configuration.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2826,10 +2865,10 @@ Welcome to the Space Purple Unicorn Counter!
 
 :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
-:: No plugins detected
-
 :: Try recording a unicorn sighting with:
     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&amp;brightness=100
+
+:: No plugins detected
 
 :::: Unicorn sightings export activated! ::::
 :: Try downloading the unicorn sightings record with:
@@ -2893,8 +2932,7 @@ running containers. It is done by passing a parameter at the end of our
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="ex">docker</span> rm spuc-volume</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <p>if we now register some unicorn sightings, we should see the
 brightness in iulu units.</p>
@@ -2902,7 +2940,7 @@ brightness in iulu units.</p>
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=pluto\&amp;brightness=66</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">curl</span> localhost:8321/export/</span></code></pre>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">curl</span> localhost:8321/export</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2922,7 +2960,7 @@ re-register our sightings with the correct units</p>
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="ex">docker</span> rm spuc-volume</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="ex">docker</span> volume rm spuc-volume</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=moon\&amp;brightness=177</span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=earth\&amp;brightness=18</span>
@@ -2930,19 +2968,18 @@ re-register our sightings with the correct units</p>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=jupyter\&amp;brightness=372</span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=venus\&amp;brightness=262</span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PUT localhost:8321/unicorn_spotted<span class="pp">?</span>location=pluto\&amp;brightness=66</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="ex">curl</span> localhost:8321/export/</span></code></pre>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="ex">curl</span> localhost:8321/export</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>count,time,location,brightness,units
-1,2024-10-16 09:14:17.719447,moon,100,iuhc
-2,2024-10-16 09:14:17.726706,earth,10,iuhc
-3,2024-10-16 09:14:17.732191,mars,400,iuhc
-4,2024-10-16 10:53:13.449393,jupyter,100,iuhc
-5,2024-10-16 12:49:52.512391,jupyter,100,iuhc
-6,2024-10-16 12:50:10.581131,jupyter,100,iuhc
-7,2024-10-16 12:53:51.726902,venus,148,iuhc</code></pre>
+1,2024-10-16 13:15:03.719371,moon,177,iulu
+2,2024-10-16 13:15:03.719398,earth,18,iulu
+3,2024-10-16 13:15:03.719410,mars,709,iulu
+6,2024-10-16 13:15:03.719425,jupyter,372,iulu
+5,2024-10-16 13:15:03.719437,venus,262,iulu
+6,2024-10-16 13:15:03.719447,pluto,66,iulu</code></pre>
 </div>
 <p>Finally, we have the correct units for the brightness of the
 unicorns!</p>
@@ -3064,7 +3101,7 @@ container.</li>
 </div>
 </section></section><section id="aio-dockerfiles"><p>Content from <a href="dockerfiles.html">Creating Your Own Container Images</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/dockerfiles.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3145,12 +3182,14 @@ out the <code>-d</code> flag so we can see the output easily.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> ./stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuacv/spuc:latest <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>Traceback (most recent call last):
+<pre class="output" tabindex="0"><code>[...]
+Traceback (most recent call last):
   File "/spuc/spuc.py", line 31, in &lt;module&gt;
     __import__(f"{plugin_dir}.{plugin[:-3]}")
   File "/spuc/plugins/stats.py", line 4, in &lt;module&gt;
@@ -3213,7 +3252,7 @@ name the image we are building. We give the image a name with the
  =&gt; [internal] load metadata for docker.io/spuacv/spuc:latest                                          0.0s
  =&gt; [internal] load .dockerignore                                                                      0.0s
  =&gt; =&gt; transferring context: 2B                                                                        0.0s
- =&gt; CACHED [1/1] FROM docker.io/spuacv/spuc:latest                                                     0.0s
+ =&gt; [1/1] FROM docker.io/spuacv/spuc:latest                                                            0.1s
  =&gt; exporting to image                                                                                 0.0s
  =&gt; =&gt; exporting layers                                                                                0.0s
  =&gt; =&gt; writing image sha256:ccde35b1f9e872bde522e9fe91466ef983f9b579cffc2f457bff97f74206e839           0.0s
@@ -3230,7 +3269,7 @@ the current directory.</p>
   Context
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>By default, the <code>docker build</code> command looks for a file
 called <code>Dockerfile</code> in the path specified by the last
@@ -3253,7 +3292,7 @@ we were in the build context directory.</p>
   The Dockerfile name
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>As mentioned before, by default the <code>docker build</code> command
 looks for a file called <code>Dockerfile</code>.</p>
@@ -3333,7 +3372,7 @@ changed! In fact, we can pass all the same arguments to the
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> ./stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3385,7 +3424,7 @@ software on our host machine, so we can ignore this warning.</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> <span class="va">$PWD</span>/stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-v</span> ./stats.py:/spuc/plugins/stats.py <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3462,7 +3501,7 @@ the destination in the container image.</p>
   Layers
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>You might have now noticed that on every build we are getting
 messages like <code>CACHED [2/3]...</code> above.</p>
@@ -3485,7 +3524,7 @@ work for the <code>COPY</code> layer.</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> <span class="va">$PWD</span>/print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">--name</span> spuc-stats_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output <span class="at">-e</span> EXPORT=true spuc-stats <span class="at">--units</span> iulu</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3616,7 +3655,7 @@ available during the build process, and are not saved in the image.</p>
   Layers - continued
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>You might have noticed that the <code>ENV</code> instruction did not
 create a new layer in the image.</p>
@@ -3814,7 +3853,7 @@ image, with docker run.</li>
 </div>
 </section></section><section id="aio-docker-compose"><p>Content from <a href="docker-compose.html">Using Docker Compose</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-compose.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -5203,7 +5242,7 @@ it is <em>ready</em>.</li>
 </div>
 </section></section><section id="aio-docker-compose-microservices"><p>Content from <a href="docker-compose-microservices.html">And they lived happily ever after</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-compose-microservices.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -5462,8 +5501,8 @@ for the cause!</p>
   "url": "https://uomresearchit.github.io/docker-introduction/aio.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/aio.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>

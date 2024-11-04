@@ -354,7 +354,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Sharing information with containers</h1>
-        <p>Last updated on 2024-11-01 |
+        <p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-volumes.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -424,12 +424,14 @@ container.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output spuacv/spuc:latest</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> spuc-volume:/spuc/output spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code><span><span class="va">f1bd2bb9062348b6a1815f5076fcd1b79e603020c2d58436408c6c60da7e73d2</span></span></code></pre>
+<pre class="output" tabindex="0"><code><span><span class="va">spuc_container</span></span>
+<span><span class="va">f1bd2bb9062348b6a1815f5076fcd1b79e603020c2d58436408c6c60da7e73d2</span></span></code></pre>
 </div>
 <p>Ok! But what is happening? We can see what containers we have created
 using:</p>
@@ -515,7 +517,7 @@ record these sightings.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="ex">docker</span> ps <span class="at">-a</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -560,7 +562,7 @@ the host filesystem.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./spuc/output:/spuc/output spuacv/spuc:latest</span></code></pre>
 </div>
 <div class="codewrapper">
@@ -591,7 +593,7 @@ count,time,location,brightness,units
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">ls</span> spuc/output</span></code></pre>
 </div>
 <div class="codewrapper">
@@ -630,6 +632,8 @@ just created.</p>
 </h3>
 <pre class="output" tabindex="0"><code>-rw-r--r-- 1 root root 57 Oct 11 14:14 spuc/unicorn_sightings.txt</code></pre>
 </div>
+<p><strong>Note:</strong> This no longer seems to be the case from
+Docker version 27.3.1 onwards.</p>
 <p>Argh, the file is owned by root! This is because the container runs
 as root, and so any files created by the container are owned by root.
 This can be a problem, as you will not have permission to access the
@@ -664,7 +668,7 @@ directory.</p>
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="ex">docker</span> stop spuc_container</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="ex">docker</span> kill spuc_container</span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--rm</span> <span class="at">--name</span> spuc_container <span class="at">-p</span> 8321:8321 <span class="at">-v</span> ./print.config:/spuc/config/print.config <span class="at">-v</span> spuc-volume:/spuc/output spuacv/spuc:latest</span></code></pre>
 </div>
 <p>Now let’s check if this worked. For that, we need to record another
@@ -860,8 +864,8 @@ challenges.</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-volumes.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-volumes.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>
