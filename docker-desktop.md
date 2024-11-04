@@ -115,7 +115,7 @@ You might also find the heading in this page strange.
 Unless you specify a name for the container (which we could have done in the optional settings),
 Docker will generate a random name for it, which is what we see here.
 
-Exploring the `Inspect` tab will show us some information, but for now we are more interested in what the `Terminal` and `Stats` tabs have to say.
+Exploring the `Inspect` tab will show us some information, but for now we are more interested in what the `Exec` and `Stats` tabs have to say.
 They both seem to indicate that we need to *run* or *start* the container.
 
 ::: tab
@@ -223,7 +223,7 @@ The `Exec` tab also looks more interesting, we get access to a terminal inside t
 
 :::
 
-Before trying to do anything in the terminal, let`s look at the container list by clicking on the `Containers` tab on the left.
+Before trying to do anything in the terminal, let's look at the container list by clicking on the `Containers` tab on the left.
 You'll see the green icon of the container indicating that it is still live, and indication of how long it's been running for.
 
 ![](fig/docker-desktop/containers_list_spuc_running.png){alt='Containers list, spuc still running.'}
@@ -236,7 +236,10 @@ Clicking on the container name again will take us back to the `Logs` tab in the 
 
 If you look at the logs, you'll see that the SPUC container is instructing you on how to interact with it.
 Lets go ahead and try that.
-Open a terminal and run the command `curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100`.
+Open a terminal and run the command
+```bash
+curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+```
 If you look at the logs again, you'll see that the container has responded to your command with something like:
 
 ![](fig/docker-desktop/spuc_unicorn_detected.png){alt='Detecting a unicorn, spuc logs.'}
@@ -370,8 +373,7 @@ However, we've not touched on its weaknesses.
 
 One thing we have completely lost now is the record of our unicorn sightings.
 The containers are gone, and so are the changes we made to the `print.config` file.
-Data in the containers can be made persistent, but it is not the default behaviour,
-and it is not something you can do from Docker Desktop!
+Data in the containers can be made persistent, but it is not the default behaviour.
 
 Another very important thing is that Docker Desktop is very limited in *how* you can run the containers.
 The optional settings let you modify the instruction with which the container is run, but it is very limited.

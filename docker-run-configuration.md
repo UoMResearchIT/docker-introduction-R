@@ -41,10 +41,10 @@ Welcome to the Space Purple Unicorn Counter!
 
 :::: Units set to Imperial Unicorn Hoove Candles [iuhc] ::::
 
-:: No plugins detected
-
 :: Try recording a unicorn sighting with:
     curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=100
+
+:: No plugins detected
 
 :::: Unicorn sightings export activated! ::::
 :: Try downloading the unicorn sightings record with:
@@ -96,14 +96,13 @@ This is actually a very common thing to do when running containers.
 It is done by passing a parameter at the end of our `run` command, after the image name:
 ```bash
 docker stop spuc_container
-docker rm spuc-volume
 docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest --units iulu
 ```
 
 if we now register some unicorn sightings, we should see the brightness in iulu units.
 ```bash
 curl -X PUT localhost:8321/unicorn_spotted?location=pluto\&brightness=66
-curl localhost:8321/export/
+curl localhost:8321/export
 ```
 ```output
 count,time,location,brightness,units
@@ -119,7 +118,7 @@ We can already feel the weight lifting off our shoulders already!
 But we cannot mix iuhcs with iulus, so lets remove the volume and re-register our sightings with the correct units
 ```bash
 docker stop spuc_container
-docker rm spuc-volume
+docker volume rm spuc-volume
 docker run -d --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuacv/spuc:latest --units iulu
 curl -X PUT localhost:8321/unicorn_spotted?location=moon\&brightness=177
 curl -X PUT localhost:8321/unicorn_spotted?location=earth\&brightness=18
@@ -127,17 +126,16 @@ curl -X PUT localhost:8321/unicorn_spotted?location=mars\&brightness=709
 curl -X PUT localhost:8321/unicorn_spotted?location=jupyter\&brightness=372
 curl -X PUT localhost:8321/unicorn_spotted?location=venus\&brightness=262
 curl -X PUT localhost:8321/unicorn_spotted?location=pluto\&brightness=66
-curl localhost:8321/export/
+curl localhost:8321/export
 ```
 ```output
 count,time,location,brightness,units
-1,2024-10-16 09:14:17.719447,moon,100,iuhc
-2,2024-10-16 09:14:17.726706,earth,10,iuhc
-3,2024-10-16 09:14:17.732191,mars,400,iuhc
-4,2024-10-16 10:53:13.449393,jupyter,100,iuhc
-5,2024-10-16 12:49:52.512391,jupyter,100,iuhc
-6,2024-10-16 12:50:10.581131,jupyter,100,iuhc
-7,2024-10-16 12:53:51.726902,venus,148,iuhc
+1,2024-10-16 13:15:03.719371,moon,177,iulu
+2,2024-10-16 13:15:03.719398,earth,18,iulu
+3,2024-10-16 13:15:03.719410,mars,709,iulu
+6,2024-10-16 13:15:03.719425,jupyter,372,iulu
+5,2024-10-16 13:15:03.719437,venus,262,iulu
+6,2024-10-16 13:15:03.719447,pluto,66,iulu
 ```
 
 Finally, we have the correct units for the brightness of the unicorns!

@@ -53,9 +53,11 @@ We already know how to load this file.
 Let's use a bind mount to share the file with the container.
 Since we are debugging, we'll leave out the `-d` flag so we can see the output easily.
 ```bash
-docker run --rm --name spuc_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true spuacv/spuc:latest --units iulu
+docker kill spuc_container
+docker run --rm --name spuc_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v ./stats.py:/spuc/plugins/stats.py -e EXPORT=true spuacv/spuc:latest --units iulu
 ```
 ```output
+[...]
 Traceback (most recent call last):
   File "/spuc/spuc.py", line 31, in <module>
     __import__(f"{plugin_dir}.{plugin[:-3]}")
@@ -112,7 +114,7 @@ docker build -t spuc-stats ./
  => [internal] load metadata for docker.io/spuacv/spuc:latest                                          0.0s
  => [internal] load .dockerignore                                                                      0.0s
  => => transferring context: 2B                                                                        0.0s
- => CACHED [1/1] FROM docker.io/spuacv/spuc:latest                                                     0.0s
+ => [1/1] FROM docker.io/spuacv/spuc:latest                                                            0.1s
  => exporting to image                                                                                 0.0s
  => => exporting layers                                                                                0.0s
  => => writing image sha256:ccde35b1f9e872bde522e9fe91466ef983f9b579cffc2f457bff97f74206e839           0.0s
@@ -202,7 +204,7 @@ Welcome to the Space Purple Unicorn Counter!
 So we have a copy of the SPUC image with a new name, but nothing has changed!
 In fact, we can pass all the same arguments to the `docker run` command as we did before:
 ```bash
-docker run --rm --name spuc-stats_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true spuc-stats --units iulu
+docker run --rm --name spuc-stats_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v ./stats.py:/spuc/plugins/stats.py -e EXPORT=true spuc-stats --units iulu
 ```
 ```output
 Traceback (most recent call last):
@@ -245,7 +247,7 @@ so we can ignore this warning.
 
 Let's run the image again:
 ```bash
-docker run --rm --name spuc-stats_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v $PWD/stats.py:/spuc/plugins/stats.py -e EXPORT=true spuc-stats --units iulu
+docker run --rm --name spuc-stats_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -v ./stats.py:/spuc/plugins/stats.py -e EXPORT=true spuc-stats --units iulu
 ```
 ```output
 [...]
@@ -325,7 +327,7 @@ and only had to do some work for the `COPY` layer.
 
 And run the image again, but this time without the bind mount for the `stats.py` file:
 ```bash
-docker run --rm --name spuc-stats_container -p 8321:8321 -v $PWD/print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuc-stats --units iulu
+docker run --rm --name spuc-stats_container -p 8321:8321 -v ./print.config:/spuc/config/print.config -v spuc-volume:/spuc/output -e EXPORT=true spuc-stats --units iulu
 ```
 ```output
 [...]
