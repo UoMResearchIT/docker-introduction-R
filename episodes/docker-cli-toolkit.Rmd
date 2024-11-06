@@ -156,7 +156,7 @@ Entrypoint: [python /spuc/spuc.py]
 
 or even get them both at the same time:
 ```bash
-docker inspect spuacv/spuc:latest -f "Command: {{.Config.Cmd}}\nEntrypoint: {{.Config.Entrypoint}}"
+docker inspect spuacv/spuc:latest -f $'Command: {{.Config.Cmd}}\nEntrypoint: {{.Config.Entrypoint}}'
 ```
 ```output
 Command: [--units iuhc]

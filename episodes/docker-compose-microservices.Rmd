@@ -47,9 +47,9 @@ To demonstrate the power of Docker Compose and microservices, let's take a look 
 
 The [Apperture](https://github.com/UoMResearchIT/apperture) project is a stack of microservices.
 They combine to provide a log-in secure web portal with built in user-management.
-It is maintained by the University of Manchester's Research IT team, and can easily be combined with other stacks to provide them with a log in portal.
+It is maintained by the University of Manchester's Research IT team, and can easily be combined with other stacks to provide them with a login portal.
 
-`Apperture` is comprised primarily of a `docker-compose.yml` file.
+`Apperture` is comprised primarily of a compose file.
 Just like we have been looking at!
 
 The full `docker-compose.yml` file is available [on github](https://raw.githubusercontent.com/UoMResearchIT/apperture/refs/heads/main/docker-compose.yml).
@@ -126,7 +126,7 @@ One of the most powerful features of Docker Compose is the ability to combine st
 There is no reason we cannot combine the Apperture stack with the SPUC stack we have been working with in previous lessons!
 
 This would allow us to protect our SPUC interface with the Apperture portal.
-An important addition!We need to ensure poachers cannot falsely record sightings of the rare yet valuable unicorns!
+An important addition! We need to ensure poachers cannot falsely record sightings of the rare yet valuable unicorns!
 
 This can be achieved by making a couple of changes to the SPUC `docker-compose.yml` file.
 
