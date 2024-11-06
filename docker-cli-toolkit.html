@@ -362,7 +362,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Building our Docker CLI toolkit</h1>
-        <p>Last updated on 2024-11-05 |
+        <p>Last updated on 2024-11-06 |
 
         <a href="https://github.com/UoMResearchIT/docker-introduction/edit/main/episodes/docker-cli-toolkit.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -565,7 +565,7 @@ to access the value of the key <code>Cmd</code> in the
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> inspect spuacv/spuc:latest <span class="at">-f</span> <span class="st">"Command: {{.Config.Cmd}}\nEntrypoint: {{.Config.Entrypoint}}"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">docker</span> inspect spuacv/spuc:latest <span class="at">-f</span> <span class="st">$'Command: {{.Config.Cmd}}</span><span class="dt">\n</span><span class="st">Entrypoint: {{.Config.Entrypoint}}'</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1390,8 +1390,8 @@ Docker CLI with:</li>
   "url": "https://uomresearchit.github.io/docker-introduction/docker-cli-toolkit.html",
   "identifier": "https://uomresearchit.github.io/docker-introduction/docker-cli-toolkit.html",
   "dateCreated": "2015-04-18",
-  "dateModified": "2024-11-05",
-  "datePublished": "2024-11-05"
+  "dateModified": "2024-11-06",
+  "datePublished": "2024-11-06"
 }
 
   </script><script>
