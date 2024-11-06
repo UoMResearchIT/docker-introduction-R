@@ -105,7 +105,8 @@ spuc-1  |
 ```
 
 So we have our container running! With a couple of interesting bits of output to note:
-- A container was created named `spuc-1`
+
+- A container was created named `docker-intro-spuc-1`. (The directory name is prepended to the container name)
 - A `network` was created for the container - we will dig into what this means later!
 - The tool is running in the foreground, so we can see the output of the tool
 
@@ -147,7 +148,7 @@ $ docker compose up -d
 ```
 ```output
 [+] Running 1/1
- ✔ Container docker-intro-testing-spuc-1  Started                           0.2s
+ ✔ Container docker-intro-spuc-1  Started                                   0.2s
 ```
 
 Of course, this means we can no longer see the logs! But we can still access them using the `logs` command.
@@ -230,7 +231,7 @@ spuc-1  |
 Now... something a bit funny is happening here... why are we seeing the output twice?
 
 We've actually started the same container twice!
-We only `stop`ped the container when we pressed `[Ctrl+C]`, and didn't remove it.
+We only **stopped** the container when we pressed `[Ctrl+C]`, and didn't remove it.
 
 ### Removing the container when it stops
 
@@ -240,8 +241,8 @@ docker compose down
 ```
 ```output
 [+] Running 2/2
- ✔ Container docker_intro-spuc-1  Removed                           10.1s
- ✔ Network docker_intro_default   Removed                            0.2s
+ ✔ Container docker_intro-spuc-1  Removed                                  0.1s
+ ✔ Network docker_intro_default   Removed                                  0.2s
 ```
 
 In practice, you only *need* to use `down` if you *need* to remove the container.
@@ -262,8 +263,8 @@ docker compose up -d
 ```
 ```output
 [+] Running 2/0
- ✔ Network docker-intro-testing_default  Created                           0.0s 
- ✔ Container spuc_container              Created                           0.0s
+ ✔ Network docker-intro_default          Created                           0.0s
+ ✔ Container spuc_container              Started                           0.0s
 ```
 
 ::::::::::::::::::::::::::::: spoiler
@@ -309,7 +310,7 @@ docker compose up -d
 ```
 ```output
 [+] Running 2/0
- ✔ Network docker-intro-testing_default  Created                           0.0s
+ ✔ Network docker-intro_default          Created                           0.0s
  ✔ Container spuc_container              Created                           0.0s
 ```
 
@@ -414,6 +415,19 @@ You can confirm this by running `docker volume ls` before and after running `dow
 $ docker volume ls
 $ docker compose down -v
 $ docker volume ls
+```
+```output
+DRIVER        VOLUME NAME
+local         docker_intro_spuc-volume
+local         spuc-volume
+
+[+] Running 3/3
+ ✔ Container spuc_container         Removed                   10.2s
+ ✔ Volume docker_intro_spuc-volume  Removed                    0.0s
+ ✔ Network docker_intro_default     Removed                    0.2s
+
+DRIVER        VOLUME NAME
+local         spuc-volume
 ```
 
 ### Setting an environment variable
@@ -702,7 +716,8 @@ volumes:
 Now both services will be started at the same time!
 
 ```bash
-docker compose up
+docker compose up -d
+docker compose logs
 ```
 ```output
 [+] Running 3/3
@@ -810,6 +825,10 @@ services:
 
 volumes:
   spuc-volume:
+```
+
+```bash
+docker compose up -d
 ```
 
 Now, the SPUC service is only accessible from within the Docker network!
