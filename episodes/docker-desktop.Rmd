@@ -57,7 +57,24 @@ You may have noticed that it already shows some information about the image.
 If you click on the image you'll be shown more information.
 You should be able to see the documentation, and it lets you select a tag (version) from the dropdown menu.
 
-![](fig/docker-desktop/search_and_pull_spuc.gif){alt='Search and pull of SPUC container.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//search_and_pull_spuc/DockerDesktop_00.png){alt='Search and pull of SPUC container - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//search_and_pull_spuc/DockerDesktop_01.png){alt='Search and pull of SPUC container - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//search_and_pull_spuc/DockerDesktop_03.png){alt='Search and pull of SPUC container - Step 3'}
+
+### Step 4
+![](fig/docker-desktop/cropped_screenshots/gifs//search_and_pull_spuc/DockerDesktop_04.png){alt='Search and pull of SPUC container - Step 4'}
+
+### Step 5
+![](fig/docker-desktop/cropped_screenshots/gifs//search_and_pull_spuc/DockerDesktop_05.png){alt='Search and pull of SPUC container - Step 5'}
+
+:::
 
 Once you find the image you were looking for, you can either download it (pull), or directly run it.
 
@@ -82,7 +99,18 @@ Clicking on the image will open a window with information on how the image is bu
 If any of the building blocks of the image are vulnerable, we can see which, and where they come from (Image hierarchy).
 For example, the vulnerabilities in the `spuc` image come from its base image, `python3-slim".
 
-![](fig/docker-desktop/image_inspect_spuc.gif){alt='Inspecting spuc image.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//image_inspect_spuc/DockerDesktop_06.png){alt='Inspecting spuc image - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//image_inspect_spuc/DockerDesktop_07.png){alt='Inspecting spuc image - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//image_inspect_spuc/DockerDesktop_08.png){alt='Inspecting spuc image - Step 3'}
+
+:::
 
 This all looks rather scary, and it is important that we are careful with the images that we download.
 It is therefore quite useful to be able to analyse them like this.
@@ -150,12 +178,31 @@ They both seem to indicate that we need to *run* or *start* the container.
 Indeed, if we look carefully, we will find an 'Exited (0)' status under the container name, and a `Start` button near the top-right corner.
 However, if we click on that button we will see the output duplicated in the logs, and the `Exited (0)` status again.
 
-![](fig/docker-desktop/hello_start.gif){alt='Clicking Start on the already run hello-world container.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//hello_start/DockerDesktop_17.png){alt='Clicking Start on the already run hello-world container - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//hello_start/DockerDesktop_18.png){alt='Clicking Start on the already run hello-world container - Step 2'}
+
+:::
 
 If we go back to the images tab and run the image again, we'll see that the same thing happens.
 We get the "Hello from Docker!", and the container (with a new random name) exits.
 
-![](fig/docker-desktop/hello_re-ran.gif){alt='Running hello-world image for a second time.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//hello_re-ran/DockerDesktop_19.png){alt='Running hello-world image for a second time - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//hello_re-ran/DockerDesktop_20.png){alt='Running hello-world image for a second time - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//hello_re-ran/DockerDesktop_21.png){alt='Running hello-world image for a second time - Step 3'}
+
+:::
 
 The nature of most containers is *ephemeral*.
 
@@ -187,7 +234,18 @@ Lets try running the `spuacv/spuc`, but look at the optional settings this time.
 If you remember, we were instructed to run the container and configure a port.
 Lets add a map to the port `8321` in the local machine.
 
-![](fig/docker-desktop/run_spuc_opt.gif){alt='Optional settings for spuc.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_opt/DockerDesktop_24.png){alt='Optional settings for spuc - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_opt/DockerDesktop_25.png){alt='Optional settings for spuc - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_opt/DockerDesktop_26.png){alt='Optional settings for spuc - Step 3'}
+
+:::
 
 We are now ready to run it.
 You can immediately notice the status under the container name is `Running`,
@@ -266,7 +324,30 @@ Replace the the print config line with:
 
 Another curl now should show the changes we made to the `print.config` file.
 
-![](fig/docker-desktop/spuc_exec.gif){alt='Interacting with spuc terminal in the Exec tab.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_34.png){alt='Interacting with spuc terminal in the Exec tab - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_35.png){alt='Interacting with spuc terminal in the Exec tab - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_36.png){alt='Interacting with spuc terminal in the Exec tab - Step 3'}
+
+### Step 4
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_37.png){alt='Interacting with spuc terminal in the Exec tab - Step 4'}
+
+### Step 5
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_38.png){alt='Interacting with spuc terminal in the Exec tab - Step 5'}
+
+### Step 6
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_39.png){alt='Interacting with spuc terminal in the Exec tab - Step 6'}
+
+### Step 7
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec/DockerDesktop_40.png){alt='Interacting with spuc terminal in the Exec tab - Step 7'}
+
+:::
 
 At this point, it seems like the container is very much like a virtual machine, and we can do whatever we want with it. 
 However, as we've mentioned before, containers are *meant to be ephemeral*.
@@ -274,14 +355,39 @@ However, as we've mentioned before, containers are *meant to be ephemeral*.
 If we stop the container, we get a familiar empty tab in `Exec` and `Stats`.
 The `Containers` tab on the left will also show the container status as `Exited`.
 
-![](fig/docker-desktop/spuc_stopping.gif){alt='Stop the spuc container.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_stopping/DockerDesktop_41.png){alt='Stop the spuc container - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_stopping/DockerDesktop_42.png){alt='Stop the spuc container - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_stopping/DockerDesktop_43.png){alt='Stop the spuc container - Step 3'}
+
+:::
 
 Lets go back to the `Images` tab, and run the `spuc` image again.
 Now lets go to the `Exec` tab, and try and edit the `print.config` file again.
 You'll notice that `nano` is not there anymore.
 If you look at the contents of the file, for example with `cat config/print.config`, you'll see that the changes we made are gone.
 
-![](fig/docker-desktop/spuc_exec_2.gif){alt='Exec in fresh spuc container.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec_2/DockerDesktop_44.png){alt='Exec in fresh spuc container - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec_2/DockerDesktop_45.png){alt='Exec in fresh spuc container - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec_2/DockerDesktop_51.png){alt='Exec in fresh spuc container - Step 3'}
+
+### Step 4
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_exec_2/DockerDesktop_52.png){alt='Exec in fresh spuc container - Step 4'}
+
+:::
 
 When we re-ran the *image*, we created a **new** *container*.
 The new container is created from the template saved in the image, and so our changes have banished.
@@ -298,7 +404,21 @@ We *can* get the old container running again, although this is rarely something 
 
 In Docker Desktop, all we need to do is click on the `Start` button from the `Containers` list.
 The terminal will appear empty, because it is a new session, but you will be able to see the changes we made before.
-![](fig/docker-desktop/spuc_revival.gif){alt='Reviving container spuc.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_revival/DockerDesktop_54.png){alt='Reviving container spuc - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_revival/DockerDesktop_55.png){alt='Reviving container spuc - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_revival/DockerDesktop_58.png){alt='Reviving container spuc - Step 3'}
+
+### Step 4
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_revival/DockerDesktop_61.png){alt='Reviving container spuc - Step 4'}
+
+:::
 
 
 ## Naming containers
@@ -309,14 +429,45 @@ However, it can also cause us problems.
 
 Lets run the `spuc` image again, and name the container `SPUC`.
 
-![](fig/docker-desktop/run_spuc_named.gif){alt='Optional settings for spuc.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_named/DockerDesktop_62.png){alt='Optional settings for spuc - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_named/DockerDesktop_63.png){alt='Optional settings for spuc - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_named/DockerDesktop_64.png){alt='Optional settings for spuc - Step 3'}
+
+:::
 
 If we look at the container list, it is much easier to find it, so the name is useful!
 
 However, we forgot to map the port.
 So lets stop this container, and launch another one.
 This time we'll map the port, and use the name we wanted.
-![](fig/docker-desktop/run_spuc_name_conflict.gif){alt='Optional settings for spuc.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_name_conflict/DockerDesktop_65.png){alt='Optional settings for spuc - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_name_conflict/DockerDesktop_66.png){alt='Optional settings for spuc - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_name_conflict/DockerDesktop_67.png){alt='Optional settings for spuc - Step 3'}
+
+### Step 4
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_name_conflict/DockerDesktop_68.png){alt='Optional settings for spuc - Step 4'}
+
+### Step 5
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_name_conflict/DockerDesktop_69.png){alt='Optional settings for spuc - Step 5'}
+
+### Step 6
+![](fig/docker-desktop/cropped_screenshots/gifs//run_spuc_name_conflict/DockerDesktop_70.png){alt='Optional settings for spuc - Step 6'}
+
+:::
 
 This time we got an error! This is because the name `SPUC` is already "in use" by another container.
 If we want the same name, we'll have to delete the old container first.
@@ -327,7 +478,18 @@ If we want the same name, we'll have to delete the old container first.
 Lets go to the containers list, and delete the `SPUC` container.
 There is a very convenient bin icon on the right, which will prompt you for confirmation.
 
-![](fig/docker-desktop/spuc_delete_container.gif){alt='Deleting container SPUC.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_delete_container/DockerDesktop_71.png){alt='Deleting container SPUC - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_delete_container/DockerDesktop_72.png){alt='Deleting container SPUC - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//spuc_delete_container/DockerDesktop_73.png){alt='Deleting container SPUC - Step 3'}
+
+:::
 
 You should now be able to run the `spuc` image again, and name the container `SPUC`.
 
@@ -335,7 +497,18 @@ Since we are deleting stuff, the `hello-world` image was nice and useful to test
 If I want to delete it, the `Images` tab on the left has a convenient bin icon to do so.
 Clicking on it will prompt you for confirmation, but it will fail.
 
-![](fig/docker-desktop/images_delete_in_use_fail.gif){alt='Failing to delete image.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//images_delete_in_use_fail/DockerDesktop_73.png){alt='Failing to delete image - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//images_delete_in_use_fail/DockerDesktop_74.png){alt='Failing to delete image - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//images_delete_in_use_fail/DockerDesktop_75.png){alt='Failing to delete image - Step 3'}
+
+:::
 
 You'll probably notice that the status of the image is `In use`.
 That seems strange though, given that all the containers from that image excited immediately.
@@ -351,7 +524,21 @@ Particularly so because we were a bit sloppy and did not name the containers.
 Let's try and get rid of the containers then.
 We can conveniently select them all with the tick-box at the top, and an option to `Delete` shows up.
 Clicking on it will prompt for confirmation, and we can go ahead and accept.
-![](fig/docker-desktop/delete_all_containers.gif){alt='Deleting containers.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//delete_all_containers/DockerDesktop_76.png){alt='Deleting containers - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//delete_all_containers/DockerDesktop_77.png){alt='Deleting containers - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//delete_all_containers/DockerDesktop_78.png){alt='Deleting containers - Step 3'}
+
+### Step 4
+![](fig/docker-desktop/cropped_screenshots/gifs//delete_all_containers/DockerDesktop_79.png){alt='Deleting containers - Step 4'}
+
+:::
 
 All our containers are now gone. Forever. We can't get them back.
 This is fine though - they were meant to be ephemeral.
@@ -362,7 +549,18 @@ You can filter the containers before you select them "all".
 On the up-side, the `Images` tab shows the `hello-world` image as `Unused` now.
 For docker, an image is `In use` as long as at least one container has been created from it.
 Since we have no containers from that image, Docker now knows the images can be safely deleted.
-![](fig/docker-desktop/images_delete_hello.gif){alt='Successfully deleting images.'}
+::: tab
+
+### Step 1
+![](fig/docker-desktop/cropped_screenshots/gifs//images_delete_hello/DockerDesktop_80.png){alt='Successfully deleting images - Step 1'}
+
+### Step 2
+![](fig/docker-desktop/cropped_screenshots/gifs//images_delete_hello/DockerDesktop_81.png){alt='Successfully deleting images - Step 2'}
+
+### Step 3
+![](fig/docker-desktop/cropped_screenshots/gifs//images_delete_hello/DockerDesktop_82.png){alt='Successfully deleting images - Step 3'}
+
+:::
 
 
 ## Limitations - Why not Docker Desktop?
