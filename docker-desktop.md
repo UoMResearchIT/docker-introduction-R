@@ -404,6 +404,7 @@ We *can* get the old container running again, although this is rarely something 
 
 In Docker Desktop, all we need to do is click on the `Start` button from the `Containers` list.
 The terminal will appear empty, because it is a new session, but you will be able to see the changes we made before.
+
 ::: tab
 
 ### Step 1
@@ -447,6 +448,7 @@ If we look at the container list, it is much easier to find it, so the name is u
 However, we forgot to map the port.
 So lets stop this container, and launch another one.
 This time we'll map the port, and use the name we wanted.
+
 ::: tab
 
 ### Step 1
@@ -524,6 +526,7 @@ Particularly so because we were a bit sloppy and did not name the containers.
 Let's try and get rid of the containers then.
 We can conveniently select them all with the tick-box at the top, and an option to `Delete` shows up.
 Clicking on it will prompt for confirmation, and we can go ahead and accept.
+
 ::: tab
 
 ### Step 1
@@ -549,6 +552,7 @@ You can filter the containers before you select them "all".
 On the up-side, the `Images` tab shows the `hello-world` image as `Unused` now.
 For docker, an image is `In use` as long as at least one container has been created from it.
 Since we have no containers from that image, Docker now knows the images can be safely deleted.
+
 ::: tab
 
 ### Step 1
