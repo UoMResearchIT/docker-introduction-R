@@ -341,7 +341,7 @@ services:
 ```bash
 docker compose up -d
 ```
-``` output
+```output
 [+] Running 2/2
  ✔ Network docker_intro_default  Created                           0.1s
  ✔ Container spuc_container      Started                           0.2s
