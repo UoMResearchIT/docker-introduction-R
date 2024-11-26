@@ -697,7 +697,7 @@ the container using the <code>container_name</code> key.</p>
   Updating the compose file
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>You do not necessarily need to <code>down</code> your containers to
 update the configuration, Docker Compose can be <em>smart</em> like
@@ -1134,7 +1134,7 @@ enabled!</p>
   Simpler Dockerfile
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>You may have noticed that we ended up <em>duplicating</em> most of
 the configuration from the Dockerfile within the
@@ -1370,7 +1370,7 @@ frontend can connect only to backend, but not to the database.</p>
   Network names
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>You may have noticed that the network that Docker Compose created for
 our stack is named <code>docker_intro_default</code>. This is because
@@ -1534,7 +1534,7 @@ will only start when the SPUC service is <em>ready</em>.</p>
   Simulating a slow start
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>This is a little hard to see in action as the SPUC service starts so
 quickly. To be able to see it, let’s add a <code>sleep</code> command to
@@ -1604,7 +1604,7 @@ service was healthy.</p>
   Simulating an unhealthy service
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
 <p>To simulate a service that does not pass the healthcheck, we can set
 the <code>EXPORT</code> environment variable to <code>false</code> in
