@@ -5,14 +5,19 @@ class:
     - lead
     - invert
 paginate: false
-backgroundColor: rgba(255,255,255,1)
+backgroundImage: url('./fig/purple-space-background-dark.jpg')
+backgroundColor: rgba(0,0,0,0.5)
 ---
 
 ![width:1000](./fig/Docker_Desktop_keypoints.png)
 
 ---
 
-![width:1000](../episodes/fig/docker_cmd.png)
+<div style="background-color: white; padding: 10px;">
+
+  ![width:1000](../episodes/fig/docker_cmd.png)
+
+</div>
 
 ---
 

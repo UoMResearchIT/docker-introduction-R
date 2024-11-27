@@ -27,7 +27,7 @@ Environment variables are a very common tool for configuring containers.
 
 ## Passing parameters (overriding the command)
 
-SPUC is recording the brightness of the unicorns in **Imperial Unicorn Hoove Candles** (iuhc)!
+SPUC is recording the brightness of the unicorns in **Imperial Unicorn Hoove Candles** (iuhc)!  
 We must change it to the much more standard **Intergalactic Unicorn Luminosity Units** (iulu).
 
 Parameters are passed on the command. Remember:

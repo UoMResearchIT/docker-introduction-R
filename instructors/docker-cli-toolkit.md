@@ -7,7 +7,7 @@ docker pull spuacv/spuc:latest
 ```
 
 ## The structure of a Docker command
-Image: A diagram showing the syntactic structure of a Docker command
+**Image:** A diagram showing the syntactic structure of a Docker command
 
 ## Listing Images
 ```bash
@@ -29,10 +29,10 @@ docker inspect spuacv/spuc:latest -f $'Command: {{.Config.Cmd}}\nEntrypoint: {{.
 ```
 
 ## Default Command
-Image: A diagram representing the lifecycle of a container
+**Image:** A diagram representing the lifecycle of a container
 
 ### Further examples of container lifecycle
-Image: Further details and examples of the lifecycle of a container
+**Image:** Further details and examples of the lifecycle of a container
 
 
 ## Running
@@ -154,7 +154,7 @@ docker system prune
 ```bash
 docker run -d --rm --name spuc_container -p 8321:8321 spuacv/spuc:latest
 ```
-This is a relatively standard command.
+This is a relatively standard command.  
 It will get worse.
 
 Already ahead of Docker Desktop, but lets do more, like persist data.
