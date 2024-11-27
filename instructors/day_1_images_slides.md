@@ -66,3 +66,11 @@ backgroundColor: rgba(0,0,0,0.5)
 ---
 
 ![width:1000](./fig/docker_run_configuration_keypoints.png)
+
+---
+
+# Feedback
+
+![width:400](./fig/feedback_qr.png)
+
+https://forms.gle/cCt5UDus4HwytZda6
