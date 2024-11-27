@@ -49,3 +49,7 @@ backgroundColor: rgba(255,255,255,1)
 ---
 
 ![width:1000](./fig/docker_volumes_keypoints.png)
+
+---
+
+![width:1000](./fig/docker_hub_keypoints.png)
