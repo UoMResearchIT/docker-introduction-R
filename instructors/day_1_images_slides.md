@@ -25,9 +25,11 @@ backgroundColor: rgba(0,0,0,0.5)
 
 ---
 
-* ![width:1000](../episodes/fig/docker_life_1.png)
+![width:1000](../episodes/fig/docker_life_1.png)
 
-* ![width:1000](../episodes/fig/docker_life_2.png)
+---
+
+![width:1000](../episodes/fig/docker_life_2.png)
 
 ---
 
