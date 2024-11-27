@@ -14,14 +14,14 @@ You are much more likely to use the command line interface to interact with Dock
 It is also important to note that while Docker Desktop is mostly free, some features are offered at a premium.
 Additionally, it is not fully functional on all operating systems; it can produce conflicts with the docker engine on Linux, for example.
 
-Therefore, **this episode is meant to be demonstrative, that is, you do not *need* to follow along**.
+Therefore, **this episode is meant to be demonstrative, you do not *need* to follow along**.
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 - Show Docker Desktop and its components.
 - Understand what images and containers are.
 - Visualize the process of image acquisition, container execution and where it ends.
 - Understand the ephemeral nature of containers.
-- Have a glimpse at containers that allow interaction.
+- Have a look at containers that allow interaction.
 - Understand the importance of cleaning up in docker.
 - Understand the limitations of Docker Desktop.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -30,7 +30,7 @@ Therefore, **this episode is meant to be demonstrative, that is, you do not *nee
 :::::::::::::::::::::::::::::::::::::::: questions
 - What is Docker Desktop?
 - What can it be used for?
-- Why can't it replace the cli?
+- Why can't it replace the CLI?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -331,7 +331,7 @@ There is a very convenient bin icon on the right, which will prompt you for conf
 
 You should now be able to run the `spuc` image again, and name the container `SPUC`.
 
-Since we are deleting stuff, the `hello-world` image was nice and useful to test docker was working, but it is now rather useless.
+Since we are deleting stuff, the `hello-world` image was nice and useful to test Docker was working, but it is now rather useless.
 If I want to delete it, the `Images` tab on the left has a convenient bin icon to do so.
 Clicking on it will prompt you for confirmation, but it will fail.
 

@@ -4,9 +4,6 @@ teaching: 99
 exercises: 99
 ---
 
-Before we start to tackle Docker tasks that are only possible in the command line,
-we need to build up our toolkit of Docker commands that allow us to perform the same tasks we learned to do in Docker Desktop.
-
 :::::::::::::::::::::::::::::::::::::::: questions
 - How do I use the Docker CLI to perform the same tasks we learned to do in Docker Desktop?
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -14,6 +11,9 @@ we need to build up our toolkit of Docker commands that allow us to perform the 
 ::::::::::::::::::::::::::::::::::::::: objectives
 - Build our fundamental Docker CLI toolkit
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Before we start to tackle Docker tasks that are only possible in the command line,
+we need to build up our toolkit of Docker commands that allow us to perform the same tasks we learned to do in Docker Desktop.
 
 ## Pulling and Listing Images
 
@@ -99,9 +99,8 @@ You should see the SPUC image listed here, along with some other information abo
 
 ## Inspecting
 
-You may remember that in Docker Desktop we could explore the image buildup and the image's metadata.
-We called this 'inspecting' the image.
-To inspect an image using the Docker CLI, we can use:
+You may remember that in Docker Desktop we could explore the image composition and metadata.
+We called this 'inspecting' the image and to do this in the Docker CLI, we can use:
 ```bash
 docker inspect spuacv/spuc:latest
 ```
@@ -411,7 +410,7 @@ docker logs unruffled_noyce
 ::::: 2024-10-15 11:19:47.751212 Unicorn spotted at moon!! Brightness: 100 iuhc
 ```
 
-It can be quite inconvenient to have to find out the name of the container every time we want to see the logs,
+It can be **quite** inconvenient to have to find out the name of the container every time we want to see the logs,
 and it is not the only time in which we'll need the name of the container to interact with it.
 We can make our lives easier by naming the container when we run it.
 
@@ -429,7 +428,7 @@ connectivity on endpoint spuc_container (67e075648d16fafdf086573169d891bee9b33be
 ```
 
 Oops! It looks like we already have a container running on port 8321.
-Of course, it is the container that we ran earlier, unruffled_noyce, and we can't have two containers running on the same port!
+Of course, it is the container that we ran earlier (`unruffled_noyce`) and we can't have two containers running on the same port!
 
 To fix this, we can stop and remove the container that is running on port 8321 using the `docker stop` command:
 ```bash
@@ -514,12 +513,14 @@ Welcome to the Space Purple Unicorn Counter!
 ::::::::::::::::::::
 
 This also blocks the terminal, so you will need to use `[Ctrl+C]` to stop following the logs.
+
+
 There is an important difference though.
 Because the container is running in the background, using `[Ctrl+C]` will not stop the container, only the log following.
 
 ## Executing commands in a running container
 
-One of the very useful things we could do in docker compose was to run commands inside a container.
+One of the very useful things we could do in Docker Desktop was to run commands inside a container.
 If you remember, we could do this using the `Exec` tab.
 In the Docker CLI, we can do this using the `docker exec` command.
 Lets try for example:
@@ -548,7 +549,7 @@ docker exec -it spuc_container bash
 root@50159dddde44:/spuc#
 ```
 
-This is more like it! now we can run commands as if we were inside the container itself, as we did in Docker Desktop.
+This is more like it! Now we can run commands as if we were inside the container itself, as we did in Docker Desktop.
 ```bash
 apt update
 apt install tree

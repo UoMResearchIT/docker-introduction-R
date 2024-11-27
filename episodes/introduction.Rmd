@@ -23,7 +23,7 @@ exercises: 0
 
 Once upon a time this was just a joke, but now it's a reality!
 
-Docker is a tool that allows you to create, deploy, and run applications using containers.
+Docker is a tool that lets you package your software in perfectly tailored environments, called *containers*.
 
 ### Why Containers?
 
@@ -37,8 +37,8 @@ There are two major motivations for using containers:
 
 - **Microservices**.
   Containers make it very easy to use *microservices*.
-  These are small, independent programs that work together, and provide similar advantages to using libraries in your code:
-  they make your *software stack* more modular, more powerful, and easier to understand.
+  These are small, independent programs that work together and provide similar advantages to using libraries in your code:
+  they make your software more modular, more powerful, and easier to understand.
 
 ### Why Docker?
 
@@ -46,21 +46,25 @@ There are other ways to make containers, but Docker is the most popular and prob
 
 On some specialised environments (such as HPC), you might use a different container system (i.e. Apptainer).
 However, there are usually ways to convert from Docker to the other system.
-The reverse doesn't always hold.
+The reverse isn't always true.
 
 If you learn only one container system, learn Docker! As it has become the Rosetta Stone of containers.
+
+Now, to serious business! Let's talk about the Space Purple Unicorn Association and how you can help them!
 
 ## The Space Purple Unicorn Association
 
 <div class="columns" style="display: flex; flex-wrap: wrap;">
 <div class="column" style="flex: 3; padding: 10px; box-sizing: border-box; min-width: 300px;">
 
-The Space Purple Unicorn Association is a community effort to count the number of purple unicorns in space.
+Welcome to the Space Purple Unicorn Association!
+
+The SPUA is a community effort to count the number of purple unicorns in space.
 
 We are a friendly group of developers, data scientists, and unicorn enthusiasts,
 who are passionate about surveying and conserving the purple unicorn population.
 
-To help you join the effort, we have created a set of tools and resources to help your community count the number of purple unicorns in space.
+To help you join the effort, we have created a set of tools and resources to help you and your community.
 These tools are distributed via Docker containers and should be easy to use.
 
 If you'd like to join the effort to preserve this keystone species,

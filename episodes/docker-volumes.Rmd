@@ -147,7 +147,7 @@ and we can't easily access it from the host filesystem.
 ## Bind mounts
 
 Another way to allow a container to access the host filesystem is by using a `bind mount`.
-A bind mount is a direct mapping of a specified directory on the host filesystem to a directory in the container filesystem.
+A bind mount is a direct mapping of a specified file or directory on the host filesystem to the container filesystem.
 This allows you to directly access files on the host filesystem from the container, but it has its own challenges.
 
 Let's have a look at how we can use a bind mount to persist the `unicorn_sightings.txt` file between runs of the container.

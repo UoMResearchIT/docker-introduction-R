@@ -22,84 +22,25 @@ Actually, they were never part of Docker Desktop, they are part of the Docker Hu
 ## Introducing the Docker Hub
 
 The Docker Hub is an online repository of container images, a vast number of which are publicly available.
-A large number of the container images are curated by the developers of the software that they package.
+Many of the images are curated by the developers of the software they contain.
 Also, many commonly used pieces of software that have been containerized into images are officially endorsed,
 which means that you can trust the container images to have been checked for functionality,
 stability, and that they don't contain malware.
 
+:::::::::::::::::::::::::::::::::::::::::  spoiler
 
-:::::::::::::::::::::::::::::::::::::::::  callout
-## Docker can be used without connecting to the Docker Hub
+## Alternatives to the Docker Hub
 
-Note that while the Docker Hub is well integrated into Docker functionality,
-the Docker Hub is certainly not required for all types of use of Docker containers.
-For example, some organizations may run container infrastructure that is entirely disconnected from the Internet.
+Although many of the containers made for docker are hosted in the Docker Hub, there are other places where these can be distributed, including (but not limited to):
+
+- [GHCR](https://github.com/features/packages) from Github.
+- [Quay](https://quay.io/) from Red Hat.
+- [Artifact Registry](https://cloud.google.com/artifact-registry) from Google.
+- [GLR](https://docs.gitlab.com/ee/user/packages/container_registry/) from GitLab.
+- [ECR](https://aws.amazon.com/ecr/) from Amazon.
+- [ACR](https://azure.microsoft.com/en-us/products/container-registry) from Azure, Microsoft.
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
-## Exploring an example Docker Hub page
-
-The reason we are here is to find the documentation for the SPUC container image.
-Lets go ahead and find the image we need for registering our unicorn sightings.
-
-Open your web browser to [https://hub.docker.com](https://hub.docker.com)
-
-![](fig/docker-hub/01_dockerhub_landing.png){alt='Dockerhub\_landing'}
-
-In the search bar type "spuc" and hit enter.
-
-![](fig/docker-hub/02_search_spuc_h.png){alt='Dockerhub\_search'}
-
-You should see a list of images related to spuc and, amongst them, the one we were directed to.
-Lets go ahead and select the [spuacv/spuc](https://hub.docker.com/r/spuacv/spuc) container image.
-
-![](fig/docker-hub/03_spuc.png){alt='Dockerhub\_spuc'}
-
-This is a fairly standard docker repository page.
-The page is divided into several sections:
-
-The top provides information about the name, endorsements, creator, a short description, tags,
-and popularity (i.e. how many downloads it has).
-
-The top-right provides the command to pull this container image to your computer.
-
-The main body of the page contains two tabs, one with the overview, and another with the tags.
-
-The overview tab contains the documentation of the container image.
-This is what we wanted!
-
-Since we are here though, lets also look at the tags tab.
-
-The tags tab contains the list of versions of the container image. 
-A single repository can have many different versions of container images.
-These versions are indicated by "tags".
-
-If we select the "Tags" tab, we can see the list of tags for this container image.
-
-![](fig/docker-hub/04_spuc_tags.png){alt='Dockerhub\_spuc\_tags'}
-
-If we click the version tag for `latest` of this image, Docker Hub shows it as `spuacv/spuc:latest`.
-
-This name structure is the full identifier of the container image and consists of three parts:
-
-```
-OWNER/REPOSITORY:TAG
-```
-The `REPOSITORY` is what we would commonly refer to as the name of the container image.
-
-The `latest` tag is actually the default, and it is used if no tag is specified.
-
-**Note:** The `latest` tag is not always the most recent version of the software.
-Tags are actually just labels, and the `latest` tag is just a convention.
-
-You may also have noticed that there are a lot more details about the container image in the page.
-
-![](fig/docker-hub/05_spuc_latest.png){alt='Dockerhub\_spuc_latest'}
-
-In particular, we can see the image layers, which describe in part how the image was created.
-This is a very useful feature for understanding what is in the image and evaluating its security.
-
-
 :::::::::::::::::::::::::::::::::::::::::  spoiler
 
 ## Official Images
@@ -148,22 +89,88 @@ of metadata, it is probably worth skipping over.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::::  spoiler
+## Exploring an example Docker Hub page
 
-## Other sources of Container Images
+The reason we are here is to find the documentation for the SPUC container image.
+Lets go ahead and find the image we need for registering our unicorn sightings.
 
-Although many of the containers made for docker are hosted in the Docker Hub, there are other places where these can be distributed, including (but not limited to):
+Open your web browser to [https://hub.docker.com](https://hub.docker.com)
 
-- [GHCR](https://github.com/features/packages) from Github.
-- [Quay](https://quay.io/) from Red Hat.
-- [Artifact Registry](https://cloud.google.com/artifact-registry) from Google.
-- [GLR](https://docs.gitlab.com/ee/user/packages/container_registry/) from GitLab.
-- [ECR](https://aws.amazon.com/ecr/) from Amazon.
-- [ACR](https://azure.microsoft.com/en-us/products/container-registry) from Azure, Microsoft.
+![](fig/docker-hub/01_dockerhub_landing.png){alt='Dockerhub\_landing'}
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+In the search bar type "spuc" and hit enter.
 
-So we found our documentation, lets have a careful read through.
+![](fig/docker-hub/02_search_spuc_h.png){alt='Dockerhub\_search'}
+
+You should see a list of images related to spuc and, amongst them, the one we were directed to.
+Lets go ahead and select the [spuacv/spuc](https://hub.docker.com/r/spuacv/spuc) container image.
+
+![](fig/docker-hub/03_spuc.png){alt='Dockerhub\_spuc'}
+
+This is a fairly standard docker repository page.
+The page is divided into several sections:
+
+The top provides information about the name, endorsements, creator, a short description, tags,
+and popularity (i.e. how many downloads it has).
+
+The top-right (`Docker Pull Command`) provides the command to pull this container image to your computer.
+The main body of the page contains two tabs, one with the `Overview`, and another with the `Tags`.
+
+The Overview tab contains the documentation of the container image.
+This is what we wanted!
+
+Since we are here though, lets also look at the Tags tab.
+
+## Tags
+
+The Tags tab contains the list of versions of the container image. 
+A single repository can have many different versions of container images.
+These versions are indicated by "tags".
+
+If we select the "Tags" tab, we can see the list of tags for this container image.
+
+![](fig/docker-hub/04_spuc_tags.png){alt='Dockerhub\_spuc\_tags'}
+
+If we click the version tag for `latest` of this image, Docker Hub shows it as `spuacv/spuc:latest`.
+
+This name structure is the full identifier of the container image and consists of three parts:
+
+```
+OWNER/REPOSITORY:TAG
+```
+The `REPOSITORY` is what we would commonly refer to as the name of the container image.
+
+The `latest` tag is actually the default, and it is used if no tag is specified.
+
+**Note:** The `latest` tag is not always the most recent version of the software.
+Tags are actually just labels, and the `latest` tag is just a convention.
+
+You may also have noticed that there are a lot more details about the container image in the page.
+
+![](fig/docker-hub/05_spuc_latest.png){alt='Dockerhub\_spuc_latest'}
+
+In particular, we can see the image layers, which describe in part how the image was created.
+This can be a useful feature for understanding what is in the image and evaluating its security, but it is not always easy to interpret.
+
+## Overview (Documentation)
+
+The Overview tab contains the documentation of the container image.
+
+For well maintained images, this will contain a lot of useful information.
+This can include how to use the image and how to configure it.
+
+For the SPUC image, the documentation contains a few useful pointers.
+It tells us how to:
+
+* Run the service
+* Register a new unicorn sighting
+* Configure the output format
+* Export the sightings
+* Change the unit of measurement
+* Add plugins
+
+This is exactly what we were looking for!
+Lets go ahead and follow these instructions to get our SPUC service configured just right.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 - The Docker Hub is an online repository of container images.

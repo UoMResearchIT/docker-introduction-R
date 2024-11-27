@@ -77,7 +77,6 @@ They are used to set things like API keys, database connection strings, and othe
 In some other cases, parameters are passed to the container to configure its behaviour.
 This is the case for the brightness units in the SPUC container.
 
-It is actually probably the first change you'd want to do to this particular container.
 It is recording the brightness of the unicorns in *Imperial Unicorn Hoove Candles* (iuhc)!
 This is a very outdated unit and we **must** change it to the much more standard *Intergalactic Unicorn Luminosity Units* (iulu).
 
