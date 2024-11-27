@@ -160,4 +160,4 @@ It will get worse.
 Already ahead of Docker Desktop, but lets do more, like persist data.
 
 
-## Show keypoints slide.
+## Show keypoints slide

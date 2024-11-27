@@ -6,26 +6,26 @@ class:
     - invert
 paginate: false
 backgroundColor: rgba(255,255,255,1)
-
 ---
 
 ![width:1000](./fig/Docker_Desktop_keypoints.png)
 
 ---
 
-![width:1000 background:#FFF](../episodes/fig/docker_cmd.png)
+![width:1000](../episodes/fig/docker_cmd.png)
 
 ---
 
-![width:1000 background:#FFF](../episodes/fig/docker_life_0.png)
+![width:1000](../episodes/fig/docker_life_0.png)
 
 ---
 
-* ![width:1000 background:#FFF](../episodes/fig/docker_life_1.png)
+* ![width:1000](../episodes/fig/docker_life_1.png)
 
-* ![width:1000 background:#FFF](../episodes/fig/docker_life_2.png)
+* ![width:1000](../episodes/fig/docker_life_2.png)
 
 ---
+
 <div style="display: flex; font-size: 1.8rem;">
 
 <div style="flex: 1; padding: 10px;">
@@ -41,3 +41,11 @@ backgroundColor: rgba(255,255,255,1)
 </div>
 
 </div>
+
+---
+
+![width:1000](./fig/common_mistakes_with_volumes.png)
+
+---
+
+![width:1000](./fig/docker_volumes_keypoints.png)
