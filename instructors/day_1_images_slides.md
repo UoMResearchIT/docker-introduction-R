@@ -53,3 +53,11 @@ backgroundColor: rgba(255,255,255,1)
 ---
 
 ![width:1000](./fig/docker_hub_keypoints.png)
+
+---
+
+![width:1000](./fig/entrypoint_command_combination.png)
+
+---
+
+![width:1000](./fig/docker_run_configuration_keypoints.png)
